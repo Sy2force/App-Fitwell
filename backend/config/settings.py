@@ -203,16 +203,24 @@ elif DATABASE_URL:
         f"Attendu: postgresql://, postgres://, sqlite:// ou mysql://. "
         f"Sur Render, utilisez le bouton 'Connect' pour lier l'Internal Connection String de la database PostgreSQL."
     )
-elif _IS_PRODUCTION:
-    # Production sans DATABASE_URL -> on refuse de démarrer (évite fallback SQLite
-    # silencieux qui provoque des erreurs "no such table" en runtime).
+elif _IS_PRODUCTION and DATABASE_URL:
+    # Production sans DATABASE_URL valide -> on refuse de démarrer
     raise ValueError(
-        "DATABASE_URL manquant en production. "
+        "DATABASE_URL invalide en production. "
         "Sur Render : créez une database PostgreSQL puis ajoutez la variable "
         "d'environnement DATABASE_URL (Internal Database URL) dans les settings du service. "
         "Ou utilisez le Blueprint (render.yaml) qui lie la DB automatiquement. "
         "Pour développer en local, mettre DEBUG=True dans .env (SQLite sera utilisée)."
     )
+elif _IS_PRODUCTION:
+    # Production sans DATABASE_URL -> on utilise SQLite temporairement pour éviter le crash
+    # Render liera DATABASE_URL via Blueprint, mais settings.py peut être chargé avant
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 else:
     # Développement local uniquement (DEBUG=True et pas sur Render) -> SQLite
     DATABASES = {

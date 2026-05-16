@@ -1,11 +1,11 @@
 services:
   - type: web
-    name: fitwell-monolith
+    name: fitwell
     runtime: python
     rootDir: backend
     plan: free
     buildCommand: ./build.sh
-    startCommand: gunicorn config.wsgi:application
+    startCommand: gunicorn config.wsgi:application --log-file - --capture-output --log-level debug
     healthCheckPath: /
     envVars:
       - key: PYTHON_VERSION
@@ -19,9 +19,9 @@ services:
           name: fitwell-db
           property: connectionString
       - key: ALLOWED_HOSTS
-        value: fitwell-monolith.onrender.com,.onrender.com
+        value: fitwell-3dv8.onrender.com,.onrender.com
       - key: CSRF_TRUSTED_ORIGINS
-        value: https://fitwell-monolith.onrender.com
+        value: https://fitwell-3dv8.onrender.com
       - key: RENDER
         value: "True"
 
