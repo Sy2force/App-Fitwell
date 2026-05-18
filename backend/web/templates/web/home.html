@@ -72,27 +72,118 @@
                 {% trans "Des chiffres, mais surtout des résultats concrets" %}
             </h3>
         </div>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-6">
             <div class="text-center">
                 <span class="block text-4xl md:text-5xl font-black italic text-tse_accent">100+</span>
-                <span class="text-[10px] font-black uppercase tracking-widest text-tse_muted mt-2 block">{% trans "Exercices expliqués" %}</span>
-                <p class="text-xs text-tse_muted mt-3">{% trans "Technique, muscles ciblés, niveau" %}</p>
+                <span class="text-[10px] font-black uppercase tracking-widest text-tse_muted mt-2 block">{% trans "Exercices" %}</span>
             </div>
             <div class="text-center">
                 <span class="block text-4xl md:text-5xl font-black italic text-tse_accent">40+</span>
-                <span class="text-[10px] font-black uppercase tracking-widest text-tse_muted mt-2 block">{% trans "Recettes saines" %}</span>
-                <p class="text-xs text-tse_muted mt-3">{% trans "Simples, rapides, délicieuses" %}</p>
+                <span class="text-[10px] font-black uppercase tracking-widest text-tse_muted mt-2 block">{% trans "Recettes" %}</span>
             </div>
             <div class="text-center">
-                <span class="block text-4xl md:text-5xl font-black italic text-tse_accent">7</span>
-                <span class="text-[10px] font-black uppercase tracking-widest text-tse_muted mt-2 block">{% trans "Articles conseils" %}</span>
-                <p class="text-xs text-tse_muted mt-3">{% trans "Nutrition, motivation, progression" %}</p>
+                <span class="block text-4xl md:text-5xl font-black italic text-tse_accent">10+</span>
+                <span class="text-[10px] font-black uppercase tracking-widest text-tse_muted mt-2 block">{% trans "Programmes" %}</span>
+            </div>
+            <div class="text-center">
+                <span class="block text-4xl md:text-5xl font-black italic text-tse_accent">50+</span>
+                <span class="text-[10px] font-black uppercase tracking-widest text-tse_muted mt-2 block">{% trans "Produits" %}</span>
             </div>
             <div class="text-center">
                 <span class="block text-4xl md:text-5xl font-black italic text-tse_accent">24/7</span>
-                <span class="text-[10px] font-black uppercase tracking-widest text-tse_muted mt-2 block">{% trans "Accessible partout" %}</span>
-                <p class="text-xs text-tse_muted mt-3">{% trans "Sur ton téléphone, ton ordi, où tu veux" %}</p>
+                <span class="text-[10px] font-black uppercase tracking-widest text-tse_muted mt-2 block">{% trans "Accessible" %}</span>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- Section Programmes en Vedette -->
+<div class="py-24 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <span class="text-[10px] font-black uppercase tracking-widest text-tse_accent mb-4 block">{% trans "Programmes d'entraînement" %}</span>
+            <h2 class="text-3xl md:text-5xl font-black uppercase tracking-tighter italic mb-4">
+                {% trans "Des programmes structurés" %}
+            </h2>
+            <p class="text-base text-tse_muted max-w-2xl mx-auto">
+                {% trans "Que tu sois débutant ou avancé, nos programmes t'accompagnent étape par étape vers tes objectifs." %}
+            </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <a href="{% url 'program_list' %}" class="bg-white rounded-tse-card p-6 shadow-soft hover:shadow-lg transition-all border border-gray-100 hover:border-tse_accent group">
+                <div class="aspect-video bg-gradient-to-br from-tse_accent/20 to-green-500/20 rounded-lg mb-4 flex items-center justify-center">
+                    <span class="text-6xl">💪</span>
+                </div>
+                <h3 class="text-lg font-black text-tse_text mb-2">{% trans "Perte de poids" %}</h3>
+                <p class="text-sm text-tse_muted mb-4">{% trans "Programmes cardio + nutrition pour perdre du poids sainement" %}</p>
+                <span class="text-xs font-black uppercase tracking-widest text-tse_accent group-hover:underline">{% trans "Voir les programmes →" %}</span>
+            </a>
+            <a href="{% url 'program_list' %}" class="bg-white rounded-tse-card p-6 shadow-soft hover:shadow-lg transition-all border border-gray-100 hover:border-tse_accent group md:mt-8">
+                <div class="aspect-video bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-lg mb-4 flex items-center justify-center">
+                    <span class="text-6xl">🏋️</span>
+                </div>
+                <h3 class="text-lg font-black text-tse_text mb-2">{% trans "Prise de muscle" %}</h3>
+                <p class="text-sm text-tse_muted mb-4">{% trans "Programmes musculation progressifs pour gagner en force" %}</p>
+                <span class="text-xs font-black uppercase tracking-widest text-tse_accent group-hover:underline">{% trans "Voir les programmes →" %}</span>
+            </a>
+            <a href="{% url 'program_list' %}" class="bg-white rounded-tse-card p-6 shadow-soft hover:shadow-lg transition-all border border-gray-100 hover:border-tse_accent group">
+                <div class="aspect-video bg-gradient-to-br from-orange-500/20 to-red-500/20 rounded-lg mb-4 flex items-center justify-center">
+                    <span class="text-6xl">🧘</span>
+                </div>
+                <h3 class="text-lg font-black text-tse_text mb-2">{% trans "Mobilité & Yoga" %}</h3>
+                <p class="text-sm text-tse_muted mb-4">{% trans "Programmes souplesse pour améliorer ta mobilité" %}</p>
+                <span class="text-xs font-black uppercase tracking-widest text-tse_accent group-hover:underline">{% trans "Voir les programmes →" %}</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Section Boutique en Vedette -->
+<div class="py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <span class="text-[10px] font-black uppercase tracking-widest text-tse_accent mb-4 block">{% trans "Boutique Sport" %}</span>
+            <h2 class="text-3xl md:text-5xl font-black uppercase tracking-tighter italic mb-4">
+                {% trans "Équipe-toi comme un pro" %}
+            </h2>
+            <p class="text-base text-tse_muted max-w-2xl mx-auto">
+                {% trans "Le meilleur équipement pour maximiser tes entraînements et atteindre tes objectifs." %}
+            </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <a href="{% url 'shop_list' %}" class="bg-gray-50 rounded-tse-card p-4 shadow-soft hover:shadow-lg transition-all group">
+                <div class="aspect-square bg-gradient-to-br from-tse_accent/10 to-green-500/10 rounded-lg mb-4 flex items-center justify-center">
+                    <span class="text-5xl">🏋️</span>
+                </div>
+                <h3 class="text-sm font-black text-tse_text mb-1">{% trans "Musculation" %}</h3>
+                <span class="text-xs font-black uppercase tracking-widest text-tse_accent group-hover:underline">{% trans "Découvrir →" %}</span>
+            </a>
+            <a href="{% url 'shop_list' %}" class="bg-gray-50 rounded-tse-card p-4 shadow-soft hover:shadow-lg transition-all group md:mt-4">
+                <div class="aspect-square bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-lg mb-4 flex items-center justify-center">
+                    <span class="text-5xl">🏃</span>
+                </div>
+                <h3 class="text-sm font-black text-tse_text mb-1">{% trans "Cardio" %}</h3>
+                <span class="text-xs font-black uppercase tracking-widest text-tse_accent group-hover:underline">{% trans "Découvrir →" %}</span>
+            </a>
+            <a href="{% url 'shop_list' %}" class="bg-gray-50 rounded-tse-card p-4 shadow-soft hover:shadow-lg transition-all group">
+                <div class="aspect-square bg-gradient-to-br from-orange-500/10 to-red-500/10 rounded-lg mb-4 flex items-center justify-center">
+                    <span class="text-5xl">🧘</span>
+                </div>
+                <h3 class="text-sm font-black text-tse_text mb-1">{% trans "Yoga" %}</h3>
+                <span class="text-xs font-black uppercase tracking-widest text-tse_accent group-hover:underline">{% trans "Découvrir →" %}</span>
+            </a>
+            <a href="{% url 'shop_list' %}" class="bg-gray-50 rounded-tse-card p-4 shadow-soft hover:shadow-lg transition-all group md:mt-4">
+                <div class="aspect-square bg-gradient-to-br from-pink-500/10 to-purple-500/10 rounded-lg mb-4 flex items-center justify-center">
+                    <span class="text-5xl">🥗</span>
+                </div>
+                <h3 class="text-sm font-black text-tse_text mb-1">{% trans "Nutrition" %}</h3>
+                <span class="text-xs font-black uppercase tracking-widest text-tse_accent group-hover:underline">{% trans "Découvrir →" %}</span>
+            </a>
+        </div>
+        <div class="text-center mt-8">
+            <a href="{% url 'shop_list' %}" class="btn-tse py-4 px-8 text-sm inline-block">
+                {% trans "Voir toute la boutique" %}
+            </a>
         </div>
     </div>
 </div>

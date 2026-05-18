@@ -1,0 +1,152 @@
+{% extends 'web/base.html' %}
+{% load i18n %}
+
+{% block title %}{{ program.name }} | FitWell{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-50 pt-20">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 py-12">
+        <!-- Header -->
+        <div class="bg-white rounded-tse-card overflow-hidden shadow-soft mb-8">
+            {% if program.image %}
+            <div class="aspect-video bg-gray-100">
+                <img src="{{ program.image }}" alt="{{ program.name }}" class="w-full h-full object-cover">
+            </div>
+            {% endif %}
+            <div class="p-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="px-4 py-2 bg-tse_accent/10 text-tse_accent text-xs font-black uppercase tracking-widest rounded-tse-pill">
+                        {{ program.get_goal_display }}
+                    </span>
+                    <span class="px-4 py-2 bg-gray-100 text-gray-600 text-xs font-black uppercase tracking-widest rounded-tse-pill">
+                        {{ program.get_level_display }}
+                    </span>
+                    <span class="px-4 py-2 bg-blue-50 text-blue-600 text-xs font-black uppercase tracking-widest rounded-tse-pill">
+                        {{ program.get_duration_display }}
+                    </span>
+                </div>
+                <h1 class="text-4xl md:text-5xl font-black uppercase tracking-tighter italic text-tse_text mb-4">
+                    {{ program.name }}
+                </h1>
+                <p class="text-lg text-tse_muted mb-6">{{ program.description_short }}</p>
+                <p class="text-base text-tse_text mb-8">{{ program.description_long }}</p>
+                
+                <!-- Stats -->
+                <div class="grid grid-cols-3 gap-6 mb-8">
+                    <div class="text-center">
+                        <div class="text-3xl font-black text-tse_accent">{{ program.total_sessions }}</div>
+                        <div class="text-xs font-black uppercase tracking-widest text-tse_muted">{% trans "Séances" %}</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-black text-tse_accent">{{ program.duration_weeks }}</div>
+                        <div class="text-xs font-black uppercase tracking-widest text-tse_muted">{% trans "Semaines" %}</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-black text-tse_accent">{{ program.estimated_duration_minutes|default:45 }}</div>
+                        <div class="text-xs font-black uppercase tracking-widest text-tse_muted">{% trans "Minutes/séance" %}</div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                {% if user.is_authenticated %}
+                    {% if user_progress and user_progress.status == 'in_progress' %}
+                    <div class="bg-gradient-to-r from-tse_accent to-green-500 rounded-tse-card p-6 text-white mb-6">
+                        <p class="text-sm font-black uppercase tracking-widest mb-2">{% trans "Ta progression" %}</p>
+                        <div class="flex items-center justify-between mb-4">
+                            <span>{% trans "Jour" %} {{ user_progress.current_day }} / {{ program.total_sessions }}</span>
+                            <span class="font-black">{{ user_progress.progress_percentage }}%</span>
+                        </div>
+                        <div class="bg-white/20 rounded-full h-2 mb-4">
+                            <div class="bg-white rounded-full h-2" style="width: {{ user_progress.progress_percentage }}%"></div>
+                        </div>
+                        <a href="{% url 'program_detail' slug=program.slug %}" class="inline-block bg-white text-tse_accent px-6 py-2 rounded-tse-pill text-xs font-black uppercase tracking-widest">
+                            {% trans "Continuer" %}
+                        </a>
+                    </div>
+                    {% else %}
+                    <form method="post" action="{% url 'start_program' program_id=program.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-tse py-4 px-8 text-sm w-full md:w-auto">
+                            {% trans "Commencer ce programme" %}
+                        </button>
+                    </form>
+                    {% endif %}
+                {% else %}
+                <a href="{% url 'login' %}" class="btn-tse py-4 px-8 text-sm inline-block">
+                    {% trans "Connecte-toi pour commencer" %}
+                </a>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Programme Days -->
+        <div class="space-y-6">
+            <h2 class="text-2xl font-black uppercase tracking-tighter italic text-tse_text mb-6">
+                {% trans "Calendrier du programme" %}
+            </h2>
+            {% for day in days %}
+            <div class="bg-white rounded-tse-card p-6 shadow-soft">
+                <div class="flex items-start justify-between mb-4">
+                    <div>
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="px-3 py-1 bg-tse_accent text-white text-xs font-black uppercase tracking-widest rounded-tse-pill">
+                                {% trans "Jour" %} {{ day.day_number }}
+                            </span>
+                            {% if day.is_rest_day %}
+                            <span class="px-3 py-1 bg-green-500 text-white text-xs font-black uppercase tracking-widest rounded-tse-pill">
+                                {% trans "Repos" %}
+                            </span>
+                            {% endif %}
+                        </div>
+                        <h3 class="text-xl font-black text-tse_text">{{ day.name }}</h3>
+                        <p class="text-sm text-tse_muted">{{ day.description }}</p>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-sm font-black text-tse_muted">{{ day.estimated_duration_minutes }} {% trans "min" %}</div>
+                    </div>
+                </div>
+                
+                {% if not day.is_rest_day %}
+                <div class="space-y-3">
+                    {% for exercise in day.exercises.all %}
+                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                        <div>
+                            <div class="font-bold text-tse_text">{{ exercise.exercise.name }}</div>
+                            <div class="text-sm text-tse_muted">
+                                {{ exercise.sets }} × {{ exercise.reps }} | {% trans "Repos" %}: {{ exercise.rest_seconds }}s
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <span class="px-2 py-1 bg-gray-200 text-gray-600 text-xs font-black rounded">
+                                {{ exercise.exercise.get_muscle_group_display }}
+                            </span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Conseils -->
+        {% if program.nutrition_tips %}
+        <div class="bg-white rounded-tse-card p-8 shadow-soft mt-8">
+            <h2 class="text-2xl font-black uppercase tracking-tighter italic text-tse_text mb-4">
+                {% trans "Conseils nutritionnels" %}
+            </h2>
+            <p class="text-tse_text whitespace-pre-line">{{ program.nutrition_tips }}</p>
+        </div>
+        {% endif %}
+
+        {% if program.equipment_needed %}
+        <div class="bg-white rounded-tse-card p-8 shadow-soft mt-8">
+            <h2 class="text-2xl font-black uppercase tracking-tighter italic text-tse_text mb-4">
+                {% trans "Matériel nécessaire" %}
+            </h2>
+            <p class="text-tse_text whitespace-pre-line">{{ program.equipment_needed }}</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

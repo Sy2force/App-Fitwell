@@ -35,6 +35,17 @@ class Exercise(models.Model):
     equipment = models.CharField(max_length=100, blank=True)
     image_url = models.CharField(max_length=500, blank=True, null=True)
     
+    # Champs supplémentaires pour plus de détails
+    instructions = models.TextField(blank=True, help_text="Instructions étape par étape")
+    video_url = models.CharField(max_length=500, blank=True, null=True, help_text="URL de la vidéo tutoriel")
+    calories_per_minute = models.IntegerField(null=True, blank=True, help_text="Calories brûlées par minute (estimation)")
+    is_compound = models.BooleanField(default=False, help_text="Exercice polyarticulaire vs isolation")
+    secondary_muscles = models.JSONField(default=list, blank=True, help_text="Groupes musculaires secondaires sollicités")
+    
+    # Timestamps
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)

@@ -1,0 +1,114 @@
+{% extends 'web/base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Panier" %} | FitWell{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-50 pt-20">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 py-12">
+        <!-- Header -->
+        <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-black uppercase tracking-tighter italic text-tse_text mb-4">
+                {% trans "Ton" %} <span class="text-tse_accent">{% trans "Panier" %}</span>
+            </h1>
+            <p class="text-lg text-tse_muted max-w-2xl mx-auto">
+                {% trans "Finalise tes achats et prépare-toi à performer." %}
+            </p>
+        </div>
+
+        {% if items %}
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Cart Items -->
+            <div class="lg:col-span-2">
+                <div class="bg-white rounded-tse-card p-8 shadow-soft">
+                    <div class="space-y-6">
+                        {% for item in items %}
+                        <div class="flex items-start gap-6 pb-6 border-b border-gray-200 last:border-0 last:pb-0">
+                            <div class="w-24 h-24 bg-gray-100 rounded-lg flex-shrink-0">
+                                {% if item.product.image %}
+                                <img src="{{ item.product.image }}" alt="{{ item.product.name }}" class="w-full h-full object-cover rounded-lg">
+                                {% else %}
+                                <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-tse_accent/20 to-green-500/20 rounded-lg">
+                                    <span class="text-3xl">🏋️</span>
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-lg font-black text-tse_text mb-1">{{ item.product.name }}</h3>
+                                <p class="text-sm text-tse_muted mb-3">{{ item.product.description_short }}</p>
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-4">
+                                        <form method="post" action="{% url 'update_cart_quantity' item_id=item.id %}" class="flex items-center gap-2">
+                                            {% csrf_token %}
+                                            <input type="number" name="quantity" value="{{ item.quantity }}" min="0" max="10" class="w-16 px-3 py-2 border border-gray-200 rounded-lg text-center">
+                                            <button type="submit" class="text-xs font-black uppercase tracking-widest text-tse_accent hover:text-tse_text">
+                                                {% trans "Mettre à jour" %}
+                                            </button>
+                                        </form>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="text-2xl font-black text-tse_accent">{{ item.total_price }}€</div>
+                                        <div class="text-sm text-gray-400">{{ item.product.price }}€ × {{ item.quantity }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="{% url 'remove_from_cart' item_id=item.id %}" class="text-red-500 hover:text-red-600 text-sm font-black uppercase tracking-widest">
+                                {% trans "Supprimer" %}
+                            </a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cart Summary -->
+            <div class="lg:col-span-1">
+                <div class="bg-white rounded-tse-card p-8 shadow-soft sticky top-24">
+                    <h3 class="text-lg font-black uppercase tracking-widest text-tse_text mb-6">{% trans "Récapitulatif" %}</h3>
+                    
+                    <div class="space-y-4 mb-6">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-tse_muted">{% trans "Sous-total" %} ({{ cart.total_items }} {% trans "articles" %})</span>
+                            <span class="text-lg font-black text-tse_text">{{ cart.total_price }}€</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-tse_muted">{% trans "Livraison" %}</span>
+                            <span class="text-lg font-black text-tse_text">{% trans "Gratuit" %}</span>
+                        </div>
+                        <hr class="border-gray-200">
+                        <div class="flex items-center justify-between">
+                            <span class="text-base font-black uppercase tracking-widest text-tse_text">{% trans "Total" %}</span>
+                            <span class="text-3xl font-black text-tse_accent">{{ cart.total_price }}€</span>
+                        </div>
+                    </div>
+
+                    <form method="post" action="{% url 'fake_checkout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="w-full btn-tse py-4 px-8 text-sm mb-4">
+                            {% trans "Commander" %}
+                        </button>
+                    </form>
+
+                    <p class="text-xs text-tse_muted text-center">
+                        {% trans "Mode démo : Pas de vrai paiement" %}
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="bg-white rounded-tse-card p-12 shadow-soft text-center">
+            <div class="text-6xl mb-4">🛒</div>
+            <h2 class="text-2xl font-black uppercase tracking-tighter italic text-tse_text mb-4">
+                {% trans "Ton panier est vide" %}
+            </h2>
+            <p class="text-tse_muted mb-8">
+                {% trans "Découvre nos produits pour préparer tes prochains entraînements." %}
+            </p>
+            <a href="{% url 'shop_list' %}" class="inline-block btn-tse py-4 px-8 text-sm">
+                {% trans "Explorer la boutique" %}
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

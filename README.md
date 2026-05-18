@@ -103,7 +103,30 @@ Interface HUD futuriste inspirée d'Iron Man :
 - Recherche et filtrage
 - Catégories
 
-### 🌍 Internationalisation
+### Programmes d'Entraînement
+- **3 programmes** pré-configurés (Perte de poids, Prise de masse, Mobilité & Yoga)
+- Structure détaillée (ProgramDays, ProgramExercises)
+- Suivi de progression utilisateur
+- Instructions complètes par jour
+
+### Boutique Sport
+- **13 produits** (Musculation, Cardio, Yoga, Vêtements, Nutrition, Accessoires)
+- Filtres par catégorie
+- Détails produits avec caractéristiques
+- Évaluation et stock
+
+### Panier & Commandes
+- Système de panier fonctionnel
+- Gestion des quantités
+- Processus de commande (mode démo)
+- Historique des commandes
+
+### Favoris
+- Système de favoris polymorphique (exercices, recettes, produits)
+- Gestion centralisée des favoris
+- Notes personnelles sur chaque favori
+
+### Internationalisation
 - Support complet **FR/EN**
 - Sélecteur de langue navbar
 - Messages compilés
@@ -172,6 +195,9 @@ python3 manage.py seed_exercises   # 101 exercices
 python3 manage.py seed_blog        # 5 articles
 python3 manage.py seed_badges      # 20 badges
 python3 manage.py seed_recipes     # 39 recettes
+python3 manage.py seed_programs    # 3 programmes d'entraînement
+python3 manage.py seed_shop        # 13 produits boutique
+python3 manage.py seed_demo_user   # Utilisateur demo (demo@fitwell.com / demo123)
 
 # Compiler traductions
 python3 manage.py compilemessages
@@ -224,6 +250,19 @@ python3 manage.py runserver
 #### 🍽️ Nutrition
 - **Recipe List** (`/en/nutrition/`) - 39 recettes avec macros
 - **Recipe Detail** (`/en/nutrition/<id>/`) - Détails complets
+
+#### 🎯 Programmes
+- **Program List** (`/en/programs/`) - Liste des programmes d'entraînement
+- **Program Detail** (`/en/programs/<slug>/`) - Détails du programme avec jours et exercices
+
+#### 🛍️ Boutique
+- **Shop List** (`/en/shop/`) - Catalogue des produits
+- **Shop Detail** (`/en/shop/<slug>/`) - Détails produit avec caractéristiques
+
+#### 🛒 E-commerce
+- **Cart** (`/en/cart/`) - Panier d'achat
+- **Favorites** (`/en/favorites/`) - Favoris (exercices, recettes, produits)
+- **Order Success** (`/en/order-success/`) - Confirmation de commande
 
 #### 📊 Analytics & Social
 - **Analytics** (`/en/analytics/`) - 6 graphiques de progression
@@ -359,10 +398,10 @@ git push origin main
 
 Render créera automatiquement :
 - PostgreSQL Database (fitwell-db)
-- Web Service (fitwell-monolith)
+- Web Service (fitwell)
 - Seed data automatique
 
-**URL :** `https://fitwell-monolith.onrender.com`
+**URL :** `https://fitwell.onrender.com`
 
 ### Configuration Production
 
@@ -518,7 +557,7 @@ fitwell/
 └── README.md                   # Ce fichier
 ```
 
-### Modèles de Données (10)
+### Modèles de Données (18)
 
 **User & Stats :**
 - `User` (custom AbstractUser)
@@ -536,6 +575,15 @@ fitwell/
 **Planning :**
 - `WellnessPlan`, `DailyLog`, `CustomEvent`
 
+**Programs :**
+- `Program`, `ProgramDay`, `ProgramExercise`, `UserProgramProgress`
+
+**Shop :**
+- `Product`, `Cart`, `CartItem`, `Order`, `OrderItem`
+
+**Favorites :**
+- `Favorite` (polymorphique: exercise, recipe, product)
+
 **Gamification :**
 - `Badge`, `UserBadge`
 
@@ -545,7 +593,9 @@ fitwell/
 - ✅ **39 recettes** (avec macros détaillées)
 - ✅ **20 badges** (système de récompenses)
 - ✅ **5 articles** (contenu blog)
-- ✅ **9 utilisateurs** (dont admin)
+- ✅ **3 programmes** (Perte de poids, Prise de masse, Mobilité & Yoga)
+- ✅ **13 produits** (Boutique sport)
+- ✅ **9 utilisateurs** (dont admin + demo)
 
 ---
 
@@ -603,18 +653,18 @@ fitwell/
 ## 📊 Statistiques du Projet
 
 ### Code
-- **80 fichiers** Python
-- **35 templates** HTML
+- **80+ fichiers** Python
+- **40+ templates** HTML
 - **2 CSS** + **7 JavaScript**
-- **~8000+ lignes** de code
+- **~9000+ lignes** de code
 
 ### Base de Données
-- **10 modèles** de données
-- **15 relations**
-- **174 entrées** seed
+- **18 modèles** de données
+- **20+ relations**
+- **200+ entrées** seed
 
 ### Tests
-- **6 tests** unitaires (100%)
+- **23 tests** unitaires (100%)
 - **31 tests** E2E (70%)
 - **30 vérifications** système (100%)
 
@@ -691,13 +741,13 @@ python3 manage.py check --deploy
 
 **Backend Django :**
 - ✅ 10 Apps installées
-- ✅ 10 Modèles fonctionnels
+- ✅ 18 Modèles fonctionnels
 - ✅ 8 Modules de vues
-- ✅ 35 Templates HTML
-- ✅ 6/6 Tests unitaires
+- ✅ 40+ Templates HTML
+- ✅ 23/23 Tests unitaires
 
 **Frontend :**
-- ✅ 19 Pages fonctionnelles
+- ✅ 23+ Pages fonctionnelles
 - ✅ Design "The Shredded Edition"
 - ✅ Responsive mobile/desktop
 - ✅ i18n FR/EN complet
@@ -707,6 +757,9 @@ python3 manage.py check --deploy
 - ✅ 39 Recettes
 - ✅ 20 Badges
 - ✅ 5 Articles
+- ✅ 3 Programmes
+- ✅ 13 Produits
+- ✅ Utilisateur Demo
 
 **Qualité :**
 - ✅ 0 Erreurs système

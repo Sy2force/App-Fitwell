@@ -1,0 +1,124 @@
+{% extends 'web/base.html' %}
+{% load i18n %}
+
+{% block title %}{{ exercise.name }} | FitWell{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-50 pt-20">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 py-12">
+        <!-- Breadcrumb -->
+        <nav class="mb-8">
+            <ol class="flex items-center space-x-2 text-sm text-tse_muted">
+                <li><a href="{% url 'exercise_library' %}" class="hover:text-tse_accent">{% trans "Exercices" %}</a></li>
+                <li>/</li>
+                <li class="text-tse_text font-black">{{ exercise.name }}</li>
+            </ol>
+        </nav>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Main Content -->
+            <div class="lg:col-span-2">
+                <!-- Exercise Image -->
+                <div class="bg-white rounded-tse-card overflow-hidden shadow-soft mb-6">
+                    {% if exercise.image_url %}
+                    <div class="aspect-video bg-gray-100">
+                        <img src="{{ exercise.image_url }}" alt="{{ exercise.name }}" class="w-full h-full object-cover">
+                    </div>
+                    {% else %}
+                    <div class="aspect-video bg-gradient-to-br from-tse_accent/20 to-green-500/20 flex items-center justify-center">
+                        <span class="text-8xl">💪</span>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Exercise Details -->
+                <div class="bg-white rounded-tse-card p-8 shadow-soft mb-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="px-4 py-2 bg-tse_accent/10 text-tse_accent text-xs font-black uppercase tracking-widest rounded-tse-pill">
+                            {{ exercise.get_muscle_group_display }}
+                        </span>
+                        <span class="px-4 py-2 bg-gray-100 text-gray-600 text-xs font-black uppercase tracking-widest rounded-tse-pill">
+                            {{ exercise.get_difficulty_display }}
+                        </span>
+                    </div>
+                    <h1 class="text-4xl md:text-5xl font-black uppercase tracking-tighter italic text-tse_text mb-4">
+                        {{ exercise.name }}
+                    </h1>
+                    <p class="text-lg text-tse_muted mb-6">{{ exercise.description }}</p>
+                    
+                    {% if exercise.equipment %}
+                    <div class="flex items-center gap-2 mb-6">
+                        <span class="text-xs font-black uppercase tracking-widest text-tse_muted">{% trans "Équipement" %}:</span>
+                        <span class="text-sm text-tse_text">{{ exercise.equipment }}</span>
+                    </div>
+                    {% endif %}
+
+                    {% if user.is_authenticated %}
+                    <div class="flex gap-4">
+                        <a href="{% url 'add_favorite' content_type='exercise' content_id=exercise.id %}" class="flex-1 text-center border-2 border-tse_accent text-tse_accent py-3 px-6 rounded-tse-pill text-sm font-black uppercase tracking-widest hover:bg-tse_accent hover:text-white transition-colors">
+                            {% trans "Ajouter aux favoris" %}
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Similar Exercises -->
+                {% if similar_exercises %}
+                <div class="bg-white rounded-tse-card p-8 shadow-soft">
+                    <h2 class="text-2xl font-black uppercase tracking-tighter italic text-tse_text mb-6">
+                        {% trans "Exercices similaires" %}
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {% for similar in similar_exercises %}
+                        <a href="{% url 'exercise_detail' slug=similar.slug %}" class="block p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                            <div class="font-bold text-tse_text mb-1">{{ similar.name }}</div>
+                            <div class="text-sm text-tse_muted">{{ similar.get_muscle_group_display }}</div>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Sidebar -->
+            <div class="lg:col-span-1">
+                <div class="bg-white rounded-tse-card p-6 shadow-soft sticky top-24">
+                    <h3 class="text-lg font-black uppercase tracking-widest text-tse_text mb-4">{% trans "Détails" %}</h3>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <div class="text-xs font-black uppercase tracking-widest text-tse_muted mb-1">{% trans "Groupe musculaire" %}</div>
+                            <div class="text-tse_text">{{ exercise.get_muscle_group_display }}</div>
+                        </div>
+                        <div>
+                            <div class="text-xs font-black uppercase tracking-widest text-tse_muted mb-1">{% trans "Difficulté" %}</div>
+                            <div class="text-tse_text">{{ exercise.get_difficulty_display }}</div>
+                        </div>
+                        {% if exercise.equipment %}
+                        <div>
+                            <div class="text-xs font-black uppercase tracking-widest text-tse_muted mb-1">{% trans "Équipement" %}</div>
+                            <div class="text-tse_text">{{ exercise.equipment }}</div>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <hr class="my-6 border-gray-200">
+
+                    <h3 class="text-lg font-black uppercase tracking-widest text-tse_text mb-4">{% trans "Actions" %}</h3>
+                    
+                    <div class="space-y-3">
+                        <a href="{% url 'workout_setup' %}" class="block text-center btn-tse py-3 px-4 text-sm">
+                            {% trans "Ajouter à une séance" %}
+                        </a>
+                        {% if user.is_authenticated %}
+                        <a href="{% url 'add_favorite' content_type='exercise' content_id=exercise.id %}" class="block text-center border-2 border-tse_accent text-tse_accent py-3 px-4 rounded-tse-pill text-sm font-black uppercase tracking-widest hover:bg-tse_accent hover:text-white transition-colors">
+                            {% trans "Favori" %}
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

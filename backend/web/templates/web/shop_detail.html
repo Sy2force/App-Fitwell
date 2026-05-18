@@ -1,0 +1,167 @@
+{% extends 'web/base.html' %}
+{% load i18n static %}
+
+{% block title %}{{ product.name }} | FitWell{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950 text-white relative overflow-hidden pt-20">
+    <!-- Background Effects -->
+    <div class="absolute top-0 left-0 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl -z-0"></div>
+    <div class="absolute bottom-0 right-0 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl -z-0"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Breadcrumb -->
+        <nav class="mb-8">
+            <ol class="flex items-center space-x-2 text-sm text-slate-400">
+                <li><a href="{% url 'shop_list' %}" class="hover:text-emerald-400 transition-colors">{% trans "Boutique" %}</a></li>
+                <li>/</li>
+                <li class="text-emerald-400 font-black">{{ product.name }}</li>
+            </ol>
+        </nav>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <!-- Product Image -->
+            <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden shadow-2xl">
+                <div class="aspect-square bg-slate-900 relative">
+                    {% if product.image %}
+                    <img src="{{ product.image }}" alt="{{ product.name }}" loading="eager" decoding="async" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="hidden w-full h-full flex items-center justify-center bg-gradient-to-br from-emerald-500/20 to-blue-500/20">
+                        <span class="text-8xl">🏋️</span>
+                    </div>
+                    {% else %}
+                    <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-emerald-500/20 to-blue-500/20">
+                        <span class="text-8xl">🏋️</span>
+                    </div>
+                    {% endif %}
+                    {% if product.discount_percentage > 0 %}
+                    <div class="absolute top-6 right-6 bg-red-500/90 px-4 py-2 text-sm font-black uppercase tracking-widest text-white rounded-2xl backdrop-blur-sm">
+                        -{{ product.discount_percentage }}%
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Product Details -->
+            <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 shadow-2xl">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="px-4 py-2 bg-emerald-500/20 text-emerald-400 text-xs font-black uppercase tracking-widest rounded-2xl border border-emerald-500/30">
+                        {{ product.get_category_display }}
+                    </span>
+                    {% if not product.is_in_stock %}
+                    <span class="px-4 py-2 bg-red-500/20 text-red-400 text-xs font-black uppercase tracking-widest rounded-2xl border border-red-500/30">
+                        {% trans "Rupture de stock" %}
+                    </span>
+                    {% endif %}
+                </div>
+                
+                {% if product.brand %}
+                <p class="text-sm font-black uppercase tracking-widest text-emerald-400 mb-2">{{ product.brand }}</p>
+                {% endif %}
+                
+                <h1 class="text-4xl md:text-5xl font-black uppercase tracking-tighter italic text-white mb-4">
+                    {{ product.name }}
+                </h1>
+                
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="flex items-center gap-2">
+                        <span class="text-4xl font-black bg-gradient-to-r from-emerald-400 to-blue-400 bg-clip-text text-transparent">{{ product.price }}€</span>
+                        {% if product.old_price %}
+                        <span class="text-lg text-slate-400 line-through">{{ product.old_price }}€</span>
+                        {% endif %}
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <span class="text-yellow-400 text-2xl">★</span>
+                        <span class="text-lg font-bold text-white">{{ product.rating }}/5</span>
+                    </div>
+                </div>
+
+                <p class="text-lg text-slate-300 mb-6">{{ product.description_short }}</p>
+                <p class="text-base text-slate-200 mb-8 leading-relaxed">{{ product.description_long }}</p>
+
+                {% if product.features %}
+                <div class="mb-8">
+                    <h3 class="text-sm font-black uppercase tracking-widest text-emerald-400 mb-4">{% trans "Caractéristiques" %}</h3>
+                    <ul class="space-y-3">
+                        {% for feature in product.features %}
+                        <li class="flex items-start gap-3 text-sm text-slate-200">
+                            <span class="text-emerald-400 mt-1">✓</span>
+                            {{ feature }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+
+                {% if product.recommended_for %}
+                <div class="mb-8 p-6 bg-emerald-500/10 rounded-2xl border border-emerald-500/20">
+                    <h3 class="text-sm font-black uppercase tracking-widest text-emerald-400 mb-2">{% trans "Recommandé pour" %}</h3>
+                    <p class="text-sm text-slate-200">{{ product.recommended_for }}</p>
+                </div>
+                {% endif %}
+
+                <!-- Actions -->
+                <div class="space-y-4">
+                    {% if product.is_in_stock %}
+                        {% if user.is_authenticated %}
+                        <a href="{% url 'add_to_cart' product_id=product.id %}" class="block text-center bg-gradient-to-r from-emerald-500 to-emerald-600 text-white py-4 px-8 rounded-2xl text-sm font-black uppercase tracking-widest hover:from-emerald-400 hover:to-emerald-500 transition-all shadow-lg">
+                            {% trans "Ajouter au panier" %}
+                        </a>
+                        {% else %}
+                        <a href="{% url 'login' %}" class="block text-center bg-gradient-to-r from-emerald-500 to-emerald-600 text-white py-4 px-8 rounded-2xl text-sm font-black uppercase tracking-widest hover:from-emerald-400 hover:to-emerald-500 transition-all shadow-lg">
+                            {% trans "Connecte-toi pour acheter" %}
+                        </a>
+                        {% endif %}
+                    {% else %}
+                    <button disabled class="w-full bg-slate-700/50 text-slate-400 py-4 px-8 rounded-2xl text-sm font-black uppercase tracking-widest cursor-not-allowed border border-slate-600">
+                        {% trans "Rupture de stock" %}
+                    </button>
+                    {% endif %}
+                    
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'add_favorite' content_type='product' content_id=product.id %}" class="block text-center border-2 border-emerald-500/50 text-emerald-400 py-3 px-8 rounded-2xl text-sm font-black uppercase tracking-widest hover:bg-emerald-500/10 transition-all">
+                        {% trans "Ajouter aux favoris" %}
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Related Products -->
+        {% if related_products %}
+        <div class="mt-16">
+            <h2 class="text-3xl font-black uppercase tracking-tighter italic text-white mb-8">
+                {% trans "Produits similaires" %}
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {% for related in related_products %}
+                <a href="{% url 'shop_detail' slug=related.slug %}" class="group h-full flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-xl hover:-translate-y-1 hover:border-emerald-400/40 transition-all duration-300">
+                    <div class="relative h-56 w-full overflow-hidden bg-slate-900">
+                        {% if related.image %}
+                        <img src="{{ related.image }}" alt="{{ related.name }}" loading="lazy" decoding="async" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="hidden h-full w-full flex items-center justify-center bg-gradient-to-br from-emerald-500/20 to-blue-500/20">
+                            <span class="text-4xl">🏋️</span>
+                        </div>
+                        {% else %}
+                        <div class="h-full w-full flex items-center justify-center bg-gradient-to-br from-emerald-500/20 to-blue-500/20">
+                            <span class="text-4xl">🏋️</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="flex flex-1 flex-col p-5">
+                        <h3 class="min-h-[56px] text-lg font-bold text-white line-clamp-2 mb-2">{{ related.name }}</h3>
+                        <div class="mt-auto flex items-center justify-between">
+                            <span class="text-2xl font-black text-emerald-400">{{ related.price }}€</span>
+                            <div class="flex items-center gap-1">
+                                <span class="text-yellow-400">★</span>
+                                <span class="text-sm font-bold text-white">{{ related.rating }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

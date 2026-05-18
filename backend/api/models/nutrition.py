@@ -34,7 +34,16 @@ class Recipe(models.Model):
     instructions = models.TextField(help_text="Étapes de préparation")
     image_url = models.CharField(max_length=500, blank=True, null=True)
     
+    # Champs supplémentaires
+    servings = models.IntegerField(default=1, help_text="Nombre de portions")
+    fiber_g = models.IntegerField(default=0, help_text="Fibres en grammes")
+    sugar_g = models.IntegerField(default=0, help_text="Sucres en grammes")
+    sodium_mg = models.IntegerField(default=0, help_text="Sodium en milligrammes")
+    tags = models.JSONField(default=list, blank=True, help_text="Tags pour le filtrage (ex: vegan, gluten-free)")
+    
+    # Timestamps
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:

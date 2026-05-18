@@ -1282,6 +1282,29 @@ msgid ""
 "explore par difficulté pour progresser à ton rythme."
 msgstr ""
 
+#: web/templates/web/exercise_library.html:82
+msgid "Rechercher un exercice..."
+msgstr "Rechercher un exercice..."
+
+#: web/templates/web/exercise_library.html:101
+msgid "Groupe musculaire"
+msgstr "Groupe musculaire"
+
+#: web/templates/web/exercise_library.html:118
+msgid "Difficulté"
+msgstr "Difficulté"
+
+#: web/templates/web/exercise_library.html:142
+#, python-format
+msgid "%(count)s exercice trouvé"
+msgid_plural "%(count)s exercices trouvés"
+msgstr[0] "%(count)s exercice trouvé"
+msgstr[1] "%(count)s exercices trouvés"
+
+#: web/templates/web/exercise_library.html:187
+msgid "Essaie de modifier tes filtres ou ta recherche"
+msgstr "Essaie de modifier tes filtres ou ta recherche"
+
 #: web/templates/web/exercise_library.html:66
 msgid "Aucun exercice trouvé"
 msgstr ""

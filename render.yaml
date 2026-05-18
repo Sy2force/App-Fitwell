@@ -19,9 +19,9 @@ services:
           name: fitwell-db
           property: connectionString
       - key: ALLOWED_HOSTS
-        value: fitwell-3dv8.onrender.com,.onrender.com
+        value: fitwell.onrender.com,.onrender.com
       - key: CSRF_TRUSTED_ORIGINS
-        value: https://fitwell-3dv8.onrender.com
+        value: https://fitwell.onrender.com
       - key: RENDER
         value: "True"
 

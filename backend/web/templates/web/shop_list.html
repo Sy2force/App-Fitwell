@@ -1,0 +1,199 @@
+{% extends 'web/base.html' %}
+{% load i18n static %}
+
+{% block title %}{% trans "Boutique Sport FitWell" %} | FitWell{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950 text-white relative overflow-hidden pt-20">
+    <!-- Background Effects -->
+    <div class="absolute top-0 left-0 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl -z-0"></div>
+    <div class="absolute bottom-0 right-0 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl -z-0"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Premium Header -->
+        <div class="text-center mb-16">
+            <div class="inline-flex items-center gap-2 px-4 py-2 bg-emerald-500/10 rounded-full mb-6">
+                <span class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
+                <span class="text-emerald-400 text-xs font-black uppercase tracking-widest">{% trans "Équipements Premium" %}</span>
+            </div>
+            <h1 class="text-5xl md:text-7xl font-black uppercase tracking-tighter italic mb-6">
+                {% trans "Boutique" %} <span class="bg-gradient-to-r from-emerald-400 to-blue-400 bg-clip-text text-transparent">{% trans "Sport FitWell" %}</span>
+            </h1>
+            <p class="text-lg text-slate-300 max-w-2xl mx-auto mb-8">
+                {% trans "Découvre une sélection d'équipements de sport pour t'entraîner, progresser et compléter tes programmes FitWell." %}
+            </p>
+            <div class="flex flex-wrap justify-center gap-3">
+                <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-xs font-black uppercase tracking-widest text-slate-300">💪 {% trans "Musculation" %}</span>
+                <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-xs font-black uppercase tracking-widest text-slate-300">🏃 {% trans "Cardio" %}</span>
+                <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-xs font-black uppercase tracking-widest text-slate-300">🧘 {% trans "Yoga" %}</span>
+                <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-xs font-black uppercase tracking-widest text-slate-300">👟 {% trans "Running" %}</span>
+                <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-xs font-black uppercase tracking-widest text-slate-300">🎒 {% trans "Accessoires" %}</span>
+            </div>
+        </div>
+
+        <!-- Category Cards -->
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-12">
+            <a href="?category=strength" class="group p-4 bg-white/5 border border-white/10 rounded-2xl hover:bg-emerald-500/10 hover:border-emerald-500/30 transition-all">
+                <div class="text-3xl mb-2">💪</div>
+                <div class="text-xs font-black uppercase tracking-widest text-slate-300 group-hover:text-emerald-400">{% trans "Musculation" %}</div>
+            </a>
+            <a href="?category=cardio" class="group p-4 bg-white/5 border border-white/10 rounded-2xl hover:bg-emerald-500/10 hover:border-emerald-500/30 transition-all">
+                <div class="text-3xl mb-2">🏃</div>
+                <div class="text-xs font-black uppercase tracking-widest text-slate-300 group-hover:text-emerald-400">{% trans "Cardio" %}</div>
+            </a>
+            <a href="?category=yoga" class="group p-4 bg-white/5 border border-white/10 rounded-2xl hover:bg-emerald-500/10 hover:border-emerald-500/30 transition-all">
+                <div class="text-3xl mb-2">🧘</div>
+                <div class="text-xs font-black uppercase tracking-widest text-slate-300 group-hover:text-emerald-400">{% trans "Yoga" %}</div>
+            </a>
+            <a href="?category=running" class="group p-4 bg-white/5 border border-white/10 rounded-2xl hover:bg-emerald-500/10 hover:border-emerald-500/30 transition-all">
+                <div class="text-3xl mb-2">👟</div>
+                <div class="text-xs font-black uppercase tracking-widest text-slate-300 group-hover:text-emerald-400">{% trans "Running" %}</div>
+            </a>
+            <a href="?category=clothing" class="group p-4 bg-white/5 border border-white/10 rounded-2xl hover:bg-emerald-500/10 hover:border-emerald-500/30 transition-all">
+                <div class="text-3xl mb-2">👕</div>
+                <div class="text-xs font-black uppercase tracking-widest text-slate-300 group-hover:text-emerald-400">{% trans "Vêtements" %}</div>
+            </a>
+            <a href="?category=nutrition" class="group p-4 bg-white/5 border border-white/10 rounded-2xl hover:bg-emerald-500/10 hover:border-emerald-500/30 transition-all">
+                <div class="text-3xl mb-2">💊</div>
+                <div class="text-xs font-black uppercase tracking-widest text-slate-300 group-hover:text-emerald-400">{% trans "Nutrition" %}</div>
+            </a>
+        </div>
+
+        <!-- Filters Glassmorphism -->
+        <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6 mb-12">
+            <form method="get" class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                <div>
+                    <label class="block text-xs font-black uppercase tracking-widest text-slate-400 mb-2">{% trans "Catégorie" %}</label>
+                    <select name="category" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400">
+                        <option value="">{% trans "Toutes" %}</option>
+                        <option value="strength" {% if category_filter == 'strength' %}selected{% endif %}>{% trans "Musculation" %}</option>
+                        <option value="cardio" {% if category_filter == 'cardio' %}selected{% endif %}>{% trans "Cardio" %}</option>
+                        <option value="yoga" {% if category_filter == 'yoga' %}selected{% endif %}>{% trans "Yoga & Mobilité" %}</option>
+                        <option value="running" {% if category_filter == 'running' %}selected{% endif %}>{% trans "Running" %}</option>
+                        <option value="clothing" {% if category_filter == 'clothing' %}selected{% endif %}>{% trans "Vêtements" %}</option>
+                        <option value="accessories" {% if category_filter == 'accessories' %}selected{% endif %}>{% trans "Accessoires" %}</option>
+                        <option value="nutrition" {% if category_filter == 'nutrition' %}selected{% endif %}>{% trans "Nutrition Sportive" %}</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-black uppercase tracking-widest text-slate-400 mb-2">{% trans "Prix min" %}</label>
+                    <input type="number" name="min_price" value="{{ min_price }}" placeholder="0" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400">
+                </div>
+                <div>
+                    <label class="block text-xs font-black uppercase tracking-widest text-slate-400 mb-2">{% trans "Prix max" %}</label>
+                    <input type="number" name="max_price" value="{{ max_price }}" placeholder="500" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400">
+                </div>
+                <div>
+                    <label class="block text-xs font-black uppercase tracking-widest text-slate-400 mb-2">{% trans "Recherche" %}</label>
+                    <input type="text" name="search" value="{{ search }}" placeholder="{% trans 'Rechercher...' %}" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400">
+                </div>
+                <div class="flex items-end gap-2">
+                    <button type="submit" class="flex-1 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white py-3 px-6 rounded-xl text-xs font-black uppercase tracking-widest hover:from-emerald-400 hover:to-emerald-500 transition-all">
+                        {% trans "Filtrer" %}
+                    </button>
+                    <a href="{% url 'shop_list' %}" class="px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-xs font-black uppercase tracking-widest text-slate-300 hover:bg-white/10 transition-all">
+                        {% trans "Réinitialiser" %}
+                    </a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Product Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 auto-rows-fr">
+            {% for product in products %}
+            <article class="group h-full flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-xl hover:-translate-y-1 hover:border-emerald-400/40 transition-all duration-300">
+                <!-- Product Image -->
+                <div class="relative h-56 w-full overflow-hidden bg-slate-900">
+                    {% if product.image %}
+                    <img src="{{ product.image }}" alt="{{ product.name }}" loading="lazy" decoding="async" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="hidden h-full w-full flex items-center justify-center bg-gradient-to-br from-emerald-500/20 to-blue-500/20">
+                        <span class="text-6xl">🏋️</span>
+                    </div>
+                    {% else %}
+                    <div class="h-full w-full flex items-center justify-center bg-gradient-to-br from-emerald-500/20 to-blue-500/20">
+                        <span class="text-6xl">🏋️</span>
+                    </div>
+                    {% endif %}
+                    <!-- Category Badge -->
+                    <span class="absolute left-4 top-4 rounded-full bg-emerald-500/90 px-3 py-1 text-xs font-black uppercase tracking-widest text-white backdrop-blur-sm">
+                        {{ product.get_category_display }}
+                    </span>
+                    <!-- Discount Badge -->
+                    {% if product.discount_percentage > 0 %}
+                    <span class="absolute right-4 top-4 rounded-full bg-red-500/90 px-3 py-1 text-xs font-black uppercase tracking-widest text-white backdrop-blur-sm">
+                        -{{ product.discount_percentage }}%
+                    </span>
+                    {% endif %}
+                </div>
+
+                <!-- Product Content -->
+                <div class="flex flex-1 flex-col p-5">
+                    <!-- Brand -->
+                    {% if product.brand %}
+                    <div class="text-xs font-black uppercase tracking-widest text-emerald-400 mb-1">{{ product.brand }}</div>
+                    {% endif %}
+                    
+                    <!-- Title -->
+                    <h3 class="min-h-[56px] text-lg font-bold text-white line-clamp-2 mb-2">
+                        {{ product.name }}
+                    </h3>
+
+                    <!-- Description -->
+                    <p class="min-h-[48px] text-sm text-slate-300 line-clamp-2 mb-4">
+                        {{ product.description_short }}
+                    </p>
+
+                    <!-- Rating & Stock -->
+                    <div class="mt-auto mb-4 flex items-center justify-between text-sm">
+                        <div class="flex items-center gap-1">
+                            <span class="text-yellow-400">★</span>
+                            <span class="font-bold text-white">{{ product.rating }}/5</span>
+                        </div>
+                        <span class="text-xs font-black uppercase tracking-widest {% if product.is_in_stock %}text-emerald-400{% else %}text-red-400{% endif %}">
+                            {% if product.is_in_stock %}{% trans "En stock" %}{% else %}{% trans "Rupture" %}{% endif %}
+                        </span>
+                    </div>
+
+                    <!-- Price -->
+                    <div class="flex items-end justify-between mb-4">
+                        <div class="flex items-center gap-2">
+                            <span class="text-2xl font-black text-white">{{ product.price }}€</span>
+                            {% if product.old_price %}
+                            <span class="text-sm text-slate-400 line-through">{{ product.old_price }}€</span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="grid grid-cols-2 gap-3">
+                        <a href="{% url 'shop_detail' slug=product.slug %}" class="text-center border border-white/10 bg-white/5 py-3 px-4 rounded-xl text-xs font-black uppercase tracking-widest text-white hover:bg-white/10 transition-all">
+                            {% trans "Détails" %}
+                        </a>
+                        {% if user.is_authenticated %}
+                        <a href="{% url 'add_to_cart' product_id=product.id %}" class="text-center bg-gradient-to-r from-emerald-500 to-emerald-600 py-3 px-4 rounded-xl text-xs font-black uppercase tracking-widest text-slate-950 hover:from-emerald-400 hover:to-emerald-500 transition-all">
+                            {% trans "Ajouter" %}
+                        </a>
+                        {% else %}
+                        <a href="{% url 'login' %}" class="text-center border border-emerald-500/50 bg-emerald-500/10 py-3 px-4 rounded-xl text-xs font-black uppercase tracking-widest text-emerald-400 hover:bg-emerald-500/20 transition-all">
+                            {% trans "Connexion" %}
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </article>
+            {% empty %}
+            <div class="col-span-full py-20">
+                <div class="text-center">
+                    <div class="text-6xl mb-4">🛒</div>
+                    <h2 class="text-2xl font-black uppercase tracking-tighter italic text-white mb-4">{% trans "Aucun produit trouvé" %}</h2>
+                    <p class="text-slate-300 mb-8 max-w-md mx-auto">{% trans "Essaie de modifier tes filtres ou découvre nos équipements recommandés." %}</p>
+                    <a href="{% url 'shop_list' %}" class="inline-block bg-gradient-to-r from-emerald-500 to-emerald-600 text-white py-4 px-8 rounded-xl text-sm font-black uppercase tracking-widest hover:from-emerald-400 hover:to-emerald-500 transition-all">
+                        {% trans "Voir tous les produits" %}
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

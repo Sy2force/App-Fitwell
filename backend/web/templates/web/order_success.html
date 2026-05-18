@@ -1,0 +1,110 @@
+{% extends 'web/base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Commande Confirmée" %} | FitWell{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-50 pt-20">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 py-12">
+        <!-- Header -->
+        <div class="text-center mb-12">
+            <div class="text-8xl mb-6">🎉</div>
+            <h1 class="text-4xl md:text-5xl font-black uppercase tracking-tighter italic text-tse_text mb-4">
+                {% trans "Commande" %} <span class="text-tse_accent">{% trans "Confirmée" %}</span>
+            </h1>
+            <p class="text-lg text-tse_muted max-w-2xl mx-auto">
+                {% trans "Merci pour ta commande ! Tu recevras bientôt tes produits." %}
+            </p>
+        </div>
+
+        <!-- Order Details -->
+        <div class="max-w-3xl mx-auto">
+            <div class="bg-white rounded-tse-card p-8 shadow-soft mb-8">
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <p class="text-xs font-black uppercase tracking-widest text-tse_muted mb-1">{% trans "Numéro de commande" %}</p>
+                        <p class="text-2xl font-black text-tse_text">{{ order.order_number }}</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-xs font-black uppercase tracking-widest text-tse_muted mb-1">{% trans "Statut" %}</p>
+                        <span class="px-4 py-2 bg-green-500/10 text-green-500 text-xs font-black uppercase tracking-widest rounded-tse-pill">
+                            {{ order.get_status_display }}
+                        </span>
+                    </div>
+                </div>
+
+                <hr class="border-gray-200 mb-6">
+
+                <div class="space-y-4 mb-6">
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-tse_muted">{% trans "Date" %}</span>
+                        <span class="text-sm font-bold text-tse_text">{{ order.created_at|date:"d/m/Y H:i" }}</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-tse_muted">{% trans "Livraison" %}</span>
+                        <span class="text-sm font-bold text-tse_text">{{ order.shipping_city }}, {{ order.shipping_country }}</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-tse_muted">{% trans "Sous-total" %}</span>
+                        <span class="text-sm font-bold text-tse_text">{{ order.total_price }}€</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-tse_muted">{% trans "Livraison" %}</span>
+                        <span class="text-sm font-bold text-tse_text">{% trans "Gratuit" %}</span>
+                    </div>
+                    <hr class="border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <span class="text-base font-black uppercase tracking-widest text-tse_text">{% trans "Total" %}</span>
+                        <span class="text-3xl font-black text-tse_accent">{{ order.total_price }}€</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Items -->
+            <div class="bg-white rounded-tse-card p-8 shadow-soft mb-8">
+                <h3 class="text-lg font-black uppercase tracking-widest text-tse_text mb-6">{% trans "Articles commandés" %}</h3>
+                <div class="space-y-4">
+                    {% for item in order.items.all %}
+                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                        <div>
+                            <div class="font-bold text-tse_text">{{ item.product.name }}</div>
+                            <div class="text-sm text-tse_muted">{{ item.quantity }} × {{ item.price }}€</div>
+                        </div>
+                        <div class="text-lg font-black text-tse_accent">{{ item.total_price }}€</div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Next Steps -->
+            <div class="bg-white rounded-tse-card p-8 shadow-soft mb-8">
+                <h3 class="text-lg font-black uppercase tracking-widest text-tse_text mb-4">{% trans "Prochaines étapes" %}</h3>
+                <div class="space-y-3">
+                    <div class="flex items-start gap-3">
+                        <span class="text-tse_accent mt-1">✓</span>
+                        <p class="text-sm text-tse_text">{% trans "Tu recevras un email de confirmation avec les détails de ta commande." %}</p>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="text-tse_accent mt-1">✓</span>
+                        <p class="text-sm text-tse_text">{% trans "Nous te tiendrons informé de l'expédition de tes produits." %}</p>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="text-tse_accent mt-1">✓</span>
+                        <p class="text-sm text-tse_text">{% trans "Mode démo : Pas de vrai paiement ni de livraison réelle." %}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex gap-4">
+                <a href="{% url 'shop_list' %}" class="flex-1 text-center btn-tse py-4 px-8 text-sm">
+                    {% trans "Continuer mes achats" %}
+                </a>
+                <a href="{% url 'dashboard' %}" class="flex-1 text-center border-2 border-tse_accent text-tse_accent py-4 px-8 rounded-tse-pill text-sm font-black uppercase tracking-widest hover:bg-tse_accent hover:text-white transition-colors">
+                    {% trans "Tableau de bord" %}
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -53,8 +53,28 @@ urlpatterns = [
     path('agenda/delete/<int:event_id>/', views.delete_custom_event, name='delete_custom_event'),
     path('agenda/complete/<int:event_id>/', views.complete_custom_event, name='complete_custom_event'),
     path('exercises/', views.exercise_library, name='exercise_library'),
+    path('exercises/<slug:slug>/', views.exercise_detail, name='exercise_detail'),
     path('nutrition/', views.recipe_list, name='recipe_list'),
     path('nutrition/<int:recipe_id>/', views.recipe_detail, name='recipe_detail'),
+    
+    # Programmes
+    path('programs/', views.program_list, name='program_list'),
+    path('programs/<slug:slug>/', views.program_detail, name='program_detail'),
+    
+    # Boutique
+    path('shop/', views.shop_list, name='shop_list'),
+    path('shop/<slug:slug>/', views.shop_detail, name='shop_detail'),
+    
+    # Panier & Favoris
+    path('cart/', views.cart_view, name='cart'),
+    path('cart/add/<int:product_id>/', views.add_to_cart, name='add_to_cart'),
+    path('cart/remove/<int:item_id>/', views.remove_from_cart, name='remove_from_cart'),
+    path('cart/update/<int:item_id>/', views.update_cart_quantity, name='update_cart_quantity'),
+    path('cart/checkout/', views.fake_checkout, name='fake_checkout'),
+    path('cart/order-success/', views.order_success, name='order_success'),
+    path('favorites/', views.favorites_view, name='favorites'),
+    path('favorites/add/<str:content_type>/<int:content_id>/', views.add_favorite, name='add_favorite'),
+    path('favorites/remove/<int:favorite_id>/', views.remove_favorite, name='remove_favorite'),
     path('workout/', views.workout_session_view, name='workout_session'),
     path('workout/setup/', views.workout_setup_view, name='workout_setup'),
     path('workout/complete/', views.complete_workout, name='complete_workout'),

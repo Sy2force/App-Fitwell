@@ -1,0 +1,125 @@
+{% extends 'web/base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Programmes d'Entraînement" %} | FitWell{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-50 pt-20">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 py-12">
+        <!-- Header -->
+        <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-black uppercase tracking-tighter italic text-tse_text mb-4">
+                {% trans "Programmes" %} <span class="text-tse_accent">{% trans "d'Entraînement" %}</span>
+            </h1>
+            <p class="text-lg text-tse_muted max-w-2xl mx-auto">
+                {% trans "Des programmes structurés pour atteindre tes objectifs, que tu sois débutant ou avancé." %}
+            </p>
+        </div>
+
+        <!-- Filtres -->
+        <div class="bg-white rounded-tse-card p-6 mb-8 shadow-soft">
+            <form method="get" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div>
+                    <label class="block text-xs font-black uppercase tracking-widest text-tse_muted mb-2">{% trans "Objectif" %}</label>
+                    <select name="goal" class="w-full px-4 py-3 border border-gray-200 rounded-tse-pill focus:outline-none focus:border-tse_accent">
+                        <option value="">{% trans "Tous" %}</option>
+                        <option value="weight_loss" {% if goal_filter == 'weight_loss' %}selected{% endif %}>{% trans "Perte de poids" %}</option>
+                        <option value="muscle_gain" {% if goal_filter == 'muscle_gain' %}selected{% endif %}>{% trans "Prise de muscle" %}</option>
+                        <option value="strength" {% if goal_filter == 'strength' %}selected{% endif %}>{% trans "Force" %}</option>
+                        <option value="endurance" {% if goal_filter == 'endurance' %}selected{% endif %}>{% trans "Endurance" %}</option>
+                        <option value="mobility" {% if goal_filter == 'mobility' %}selected{% endif %}>{% trans "Mobilité" %}</option>
+                        <option value="fitness" {% if goal_filter == 'fitness' %}selected{% endif %}>{% trans "Remise en forme" %}</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-black uppercase tracking-widest text-tse_muted mb-2">{% trans "Niveau" %}</label>
+                    <select name="level" class="w-full px-4 py-3 border border-gray-200 rounded-tse-pill focus:outline-none focus:border-tse_accent">
+                        <option value="">{% trans "Tous" %}</option>
+                        <option value="beginner" {% if level_filter == 'beginner' %}selected{% endif %}>{% trans "Débutant" %}</option>
+                        <option value="intermediate" {% if level_filter == 'intermediate' %}selected{% endif %}>{% trans "Intermédiaire" %}</option>
+                        <option value="advanced" {% if level_filter == 'advanced' %}selected{% endif %}>{% trans "Avancé" %}</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-black uppercase tracking-widest text-tse_muted mb-2">{% trans "Durée" %}</label>
+                    <select name="duration" class="w-full px-4 py-3 border border-gray-200 rounded-tse-pill focus:outline-none focus:border-tse_accent">
+                        <option value="">{% trans "Toutes" %}</option>
+                        <option value="7_days" {% if duration_filter == '7_days' %}selected{% endif %}>7 {% trans "jours" %}</option>
+                        <option value="4_weeks" {% if duration_filter == '4_weeks' %}selected{% endif %}>4 {% trans "semaines" %}</option>
+                        <option value="8_weeks" {% if duration_filter == '8_weeks' %}selected{% endif %}>8 {% trans "semaines" %}</option>
+                        <option value="12_weeks" {% if duration_filter == '12_weeks' %}selected{% endif %}>12 {% trans "semaines" %}</option>
+                    </select>
+                </div>
+                <div class="flex items-end">
+                    <button type="submit" class="w-full btn-tse py-3 px-6 text-sm">
+                        {% trans "Filtrer" %}
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Programme en cours -->
+        {% if user_progress %}
+        <div class="bg-gradient-to-r from-tse_accent to-green-500 rounded-tse-card p-6 mb-8 text-white">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-black uppercase tracking-widest mb-1">{% trans "Programme en cours" %}</p>
+                    <h3 class="text-xl font-black">{{ user_progress.program.name }}</h3>
+                    <p class="text-sm opacity-90">{% trans "Jour" %} {{ user_progress.current_day }} / {{ user_progress.program.total_sessions }}</p>
+                </div>
+                <div class="text-right">
+                    <div class="text-3xl font-black">{{ user_progress.progress_percentage }}%</div>
+                    <p class="text-xs opacity-90">{% trans "Progression" %}</p>
+                </div>
+            </div>
+            <div class="mt-4 bg-white/20 rounded-full h-2">
+                <div class="bg-white rounded-full h-2 transition-all" style="width: {{ user_progress.progress_percentage }}%"></div>
+            </div>
+            <a href="{% url 'program_detail' slug=user_progress.program.slug %}" class="inline-block mt-4 bg-white text-tse_accent px-6 py-2 rounded-tse-pill text-xs font-black uppercase tracking-widest hover:bg-gray-100 transition-colors">
+                {% trans "Continuer" %}
+            </a>
+        </div>
+        {% endif %}
+
+        <!-- Liste des programmes -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for program in programs %}
+            <div class="bg-white rounded-tse-card overflow-hidden shadow-soft hover:shadow-lg transition-shadow">
+                <div class="aspect-video bg-gray-100">
+                    {% if program.image %}
+                    <img src="{{ program.image }}" alt="{{ program.name }}" class="w-full h-full object-cover">
+                    {% else %}
+                    <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-tse_accent/20 to-green-500/20">
+                        <span class="text-6xl">💪</span>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="px-3 py-1 bg-tse_accent/10 text-tse_accent text-[10px] font-black uppercase tracking-widest rounded-tse-pill">
+                            {{ program.get_goal_display }}
+                        </span>
+                        <span class="px-3 py-1 bg-gray-100 text-gray-600 text-[10px] font-black uppercase tracking-widest rounded-tse-pill">
+                            {{ program.get_level_display }}
+                        </span>
+                    </div>
+                    <h3 class="text-lg font-black text-tse_text mb-2">{{ program.name }}</h3>
+                    <p class="text-sm text-tse_muted mb-4 line-clamp-2">{{ program.description_short }}</p>
+                    <div class="flex items-center justify-between text-xs text-tse_muted mb-4">
+                        <span>{{ program.total_sessions }} {% trans "séances" %}</span>
+                        <span>{{ program.get_duration_display }}</span>
+                    </div>
+                    <a href="{% url 'program_detail' slug=program.slug %}" class="block text-center btn-tse py-3 px-4 text-sm">
+                        {% trans "Voir le programme" %}
+                    </a>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-span-full text-center py-12">
+                <p class="text-tse_muted">{% trans "Aucun programme trouvé." %}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

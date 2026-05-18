@@ -2,6 +2,7 @@ import random
 from django.core.management.base import BaseCommand
 from django.utils.text import slugify
 from api.models import User, Article, Category, Comment
+from api.services.pexels import get_article_image
 
 class Command(BaseCommand):
     help = 'Seed complete blog with 25+ quality articles'
@@ -40,7 +41,6 @@ class Command(BaseCommand):
             {
                 "title": "Les 5 Piliers de l'Hypertrophie Musculaire",
                 "category": "Entraînement Force",
-                "image": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1200",
                 "content": """
                 <h2>Construire du Muscle : La Science Derrière la Croissance</h2>
                 <p>L'hypertrophie musculaire repose sur 5 piliers fondamentaux que tout athlète sérieux doit maîtriser.</p>
@@ -69,7 +69,6 @@ class Command(BaseCommand):
             {
                 "title": "Sommeil : L'Arme Secrète des Athlètes d'Élite",
                 "category": "Récupération",
-                "image": "https://images.unsplash.com/photo-1511972844302-9c10cc32b9c4?w=1200",
                 "content": """
                 <h2>Pourquoi 8 Heures de Sommeil Valent Plus que 2 Heures d'Entraînement</h2>
                 <p>LeBron James dort 12 heures par jour. Roger Federer, 10-12 heures. Coïncidence ? Absolument pas.</p>
@@ -105,7 +104,6 @@ class Command(BaseCommand):
             {
                 "title": "Nutrition Pré-Entraînement : Le Timing Parfait",
                 "category": "Nutrition Performance",
-                "image": "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=1200",
                 "content": """
                 <h2>Quoi Manger et Quand pour une Performance Maximale</h2>
                 
@@ -150,7 +148,6 @@ class Command(BaseCommand):
             {
                 "title": "La Discipline : Votre Superpouvoir",
                 "category": "Mental & Mindset",
-                "image": "https://images.unsplash.com/photo-1552674605-46945596497c?w=1200",
                 "content": """
                 <h2>Comment Forger une Discipline de Fer</h2>
                 
@@ -185,7 +182,6 @@ class Command(BaseCommand):
             {
                 "title": "Protéines : Combien, Quand, Lesquelles ?",
                 "category": "Nutrition Performance",
-                "image": "https://images.unsplash.com/photo-1532550907401-a500c9a57435?w=1200",
                 "content": """
                 <h2>Le Guide Complet des Protéines pour la Performance</h2>
                 
@@ -251,6 +247,9 @@ class Command(BaseCommand):
         # Continuer avec 20+ autres articles...
         
         for data in articles_data:
+            # Fetch image from Pexels API
+            image_url = get_article_image(data["category"])
+            
             cat = categories.get(data["category"])
             article, created = Article.objects.get_or_create(
                 title=data["title"],
@@ -258,7 +257,7 @@ class Command(BaseCommand):
                     "author": author,
                     "category": cat,
                     "content": data["content"],
-                    "image": data["image"],
+                    "image": image_url,
                     "is_published": True
                 }
             )
@@ -266,7 +265,7 @@ class Command(BaseCommand):
                 self.stdout.write(self.style.SUCCESS(f"   ✅ {data['title']}"))
             else:
                 article.content = data["content"]
-                article.image = data["image"]
+                article.image = image_url
                 article.category = cat
                 article.save()
                 self.stdout.write(f"   🔄 Updated: {data['title']}")

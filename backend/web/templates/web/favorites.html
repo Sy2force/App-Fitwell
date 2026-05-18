@@ -1,0 +1,128 @@
+{% extends 'web/base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Favoris" %} | FitWell{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-50 pt-20">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 py-12">
+        <!-- Header -->
+        <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-black uppercase tracking-tighter italic text-tse_text mb-4">
+                {% trans "Tes" %} <span class="text-tse_accent">{% trans "Favoris" %}</span>
+            </h1>
+            <p class="text-lg text-tse_muted max-w-2xl mx-auto">
+                {% trans "Tous tes contenus préférés en un seul endroit." %}
+            </p>
+        </div>
+
+        <!-- Filtre par type -->
+        <div class="bg-white rounded-tse-card p-6 mb-8 shadow-soft">
+            <div class="flex items-center gap-4">
+                <span class="text-xs font-black uppercase tracking-widest text-tse_muted">{% trans "Filtrer par" %}:</span>
+                <a href="?type=" class="px-4 py-2 text-xs font-black uppercase tracking-widest rounded-tse-pill {% if not content_type_filter %}bg-tse_accent text-white{% else %}bg-gray-100 text-gray-600 hover:bg-gray-200{% endif %}">
+                    {% trans "Tous" %}
+                </a>
+                <a href="?type=exercise" class="px-4 py-2 text-xs font-black uppercase tracking-widest rounded-tse-pill {% if content_type_filter == 'exercise' %}bg-tse_accent text-white{% else %}bg-gray-100 text-gray-600 hover:bg-gray-200{% endif %}">
+                    {% trans "Exercices" %}
+                </a>
+                <a href="?type=recipe" class="px-4 py-2 text-xs font-black uppercase tracking-widest rounded-tse-pill {% if content_type_filter == 'recipe' %}bg-tse_accent text-white{% else %}bg-gray-100 text-gray-600 hover:bg-gray-200{% endif %}">
+                    {% trans "Recettes" %}
+                </a>
+                <a href="?type=product" class="px-4 py-2 text-xs font-black uppercase tracking-widest rounded-tse-pill {% if content_type_filter == 'product' %}bg-tse_accent text-white{% else %}bg-gray-100 text-gray-600 hover:bg-gray-200{% endif %}">
+                    {% trans "Produits" %}
+                </a>
+            </div>
+        </div>
+
+        <!-- Liste des favoris -->
+        {% if favorites %}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for favorite in favorites %}
+            <div class="bg-white rounded-tse-card overflow-hidden shadow-soft hover:shadow-lg transition-shadow">
+                <div class="aspect-video bg-gray-100 relative">
+                    {% if favorite.content_type == 'exercise' %}
+                        {% if favorite.exercise.image_url %}
+                        <img src="{{ favorite.exercise.image_url }}" alt="{{ favorite.exercise.name }}" class="w-full h-full object-cover">
+                        {% else %}
+                        <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-tse_accent/20 to-green-500/20">
+                            <span class="text-6xl">💪</span>
+                        </div>
+                        {% endif %}
+                    {% elif favorite.content_type == 'recipe' %}
+                        {% if favorite.recipe.image_url %}
+                        <img src="{{ favorite.recipe.image_url }}" alt="{{ favorite.recipe.title }}" class="w-full h-full object-cover">
+                        {% else %}
+                        <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-orange-500/20 to-red-500/20">
+                            <span class="text-6xl">🍽️</span>
+                        </div>
+                        {% endif %}
+                    {% elif favorite.content_type == 'product' %}
+                        {% if favorite.product.image %}
+                        <img src="{{ favorite.product.image }}" alt="{{ favorite.product.name }}" class="w-full h-full object-cover">
+                        {% else %}
+                        <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-500/20 to-purple-500/20">
+                            <span class="text-6xl">🏋️</span>
+                        </div>
+                        {% endif %}
+                    {% endif %}
+                    <div class="absolute top-4 right-4 bg-tse_accent text-white px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-tse-pill">
+                        {% if favorite.content_type == 'exercise' %}{% trans "Exercice" %}{% endif %}
+                        {% if favorite.content_type == 'recipe' %}{% trans "Recette" %}{% endif %}
+                        {% if favorite.content_type == 'product' %}{% trans "Produit" %}{% endif %}
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-black text-tse_text mb-2">{{ favorite.content_name }}</h3>
+                    {% if favorite.notes %}
+                    <p class="text-sm text-tse_muted mb-4 line-clamp-2">{{ favorite.notes }}</p>
+                    {% endif %}
+                    <div class="flex gap-2">
+                        {% if favorite.content_type == 'exercise' %}
+                        <a href="{% url 'exercise_detail' slug=favorite.exercise.slug %}" class="flex-1 text-center btn-tse py-3 px-4 text-xs">
+                            {% trans "Voir" %}
+                        </a>
+                        {% endif %}
+                        {% if favorite.content_type == 'recipe' %}
+                        <a href="{% url 'recipe_detail' recipe_id=favorite.recipe.id %}" class="flex-1 text-center btn-tse py-3 px-4 text-xs">
+                            {% trans "Voir" %}
+                        </a>
+                        {% endif %}
+                        {% if favorite.content_type == 'product' %}
+                        <a href="{% url 'shop_detail' slug=favorite.product.slug %}" class="flex-1 text-center btn-tse py-3 px-4 text-xs">
+                            {% trans "Voir" %}
+                        </a>
+                        {% endif %}
+                        <a href="{% url 'remove_favorite' favorite_id=favorite.id %}" class="text-red-500 hover:text-red-600 text-xs font-black uppercase tracking-widest py-3 px-4">
+                            {% trans "Supprimer" %}
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="bg-white rounded-tse-card p-12 shadow-soft text-center">
+            <div class="text-6xl mb-4">❤️</div>
+            <h2 class="text-2xl font-black uppercase tracking-tighter italic text-tse_text mb-4">
+                {% trans "Aucun favori pour le moment" %}
+            </h2>
+            <p class="text-tse_muted mb-8">
+                {% trans "Ajoute des exercices, recettes ou produits à tes favoris pour les retrouver facilement." %}
+            </p>
+            <div class="flex gap-4 justify-center">
+                <a href="{% url 'exercise_library' %}" class="btn-tse py-4 px-8 text-sm">
+                    {% trans "Exercices" %}
+                </a>
+                <a href="{% url 'recipe_list' %}" class="btn-tse py-4 px-8 text-sm">
+                    {% trans "Recettes" %}
+                </a>
+                <a href="{% url 'shop_list' %}" class="btn-tse py-4 px-8 text-sm">
+                    {% trans "Boutique" %}
+                </a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -8,19 +8,49 @@ from api.models import Article, Category, Comment, Exercise, Recipe
 def exercise_library(request):
     """
     Bibliothèque d'exercices.
-    Permet de filtrer par groupe musculaire.
+    Permet de filtrer par groupe musculaire, difficulté et recherche textuelle.
     """
     exercises = Exercise.objects.all()
     
+    # Search query
+    search_query = request.GET.get('search')
+    if search_query:
+        exercises = exercises.filter(name__icontains=search_query)
+    
+    # Muscle group filter
     muscle = request.GET.get('muscle')
     if muscle:
         exercises = exercises.filter(muscle_group=muscle)
+    
+    # Difficulty filter
+    difficulty = request.GET.get('difficulty')
+    if difficulty:
+        exercises = exercises.filter(difficulty=difficulty)
         
     return render(request, 'web/exercise_library.html', {
         'exercises': exercises,
         'current_muscle': muscle,
-        'muscle_choices': Exercise.MUSCLE_CHOICES
+        'current_difficulty': difficulty,
+        'muscle_choices': Exercise.MUSCLE_CHOICES,
+        'search_query': search_query
     })
+
+def exercise_detail(request, slug):
+    """
+    Détail d'un exercice avec instructions complètes.
+    """
+    exercise = get_object_or_404(Exercise, slug=slug)
+    
+    # Exercices similaires (même groupe musculaire)
+    similar_exercises = Exercise.objects.filter(
+        muscle_group=exercise.muscle_group
+    ).exclude(id=exercise.id)[:4]
+    
+    context = {
+        'exercise': exercise,
+        'similar_exercises': similar_exercises,
+    }
+    return render(request, 'web/exercise_detail.html', context)
 
 def recipe_list(request):
     """
