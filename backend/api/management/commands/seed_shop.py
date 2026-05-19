@@ -127,21 +127,10 @@ class Command(BaseCommand):
         created_count = 0
         updated_count = 0
         
-        # Product-specific image URLs for real product images (white background product photos)
-        product_images = {
-            'haltieres-ajustables-20kg': 'https://images.unsplash.com/photo-1638536532686-d610adfc8e5c?w=800&h=800&fit=crop&q=80',
-            'barre-musculation-150cm': 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&h=800&fit=crop&q=80',
-            'velo-elliptique-compact': 'https://images.unsplash.com/photo-1576678927379-1a9f19b5b7c8?w=800&h=800&fit=crop&q=80',
-            'tapis-yoga-premium': 'https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=800&h=800&fit=crop&q=80',
-            'tapis-sport-evolutif': 'https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?w=800&h=800&fit=crop&q=80',
-            'barre-traction-murale': 'https://images.unsplash.com/photo-1597356455628-93c3f5c7c5e4?w=800&h=800&fit=crop&q=80',
-            'kit-elastiques-resistance': 'https://images.unsplash.com/photo-1598289431512-b97b0917affc?w=800&h=800&fit=crop&q=80',
-            'whey-protein-isolate-1kg': 'https://images.unsplash.com/photo-1593095948071-474c5cc2989d?w=800&h=800&fit=crop&q=80',
-        }
-        
+        # Use Pexels API for all products to get working images
         for product_data in products_data:
-            # Use product-specific image URL
-            image_url = product_images.get(product_data['slug'], get_product_image(product_data['category'], product_data['name']))
+            # Fetch image from Pexels API with name for more specific search
+            image_url = get_product_image(product_data['category'], product_data['name'])
             product_data['image'] = image_url
             
             product, created = Product.objects.update_or_create(
