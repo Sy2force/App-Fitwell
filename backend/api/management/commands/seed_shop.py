@@ -129,10 +129,10 @@ class Command(BaseCommand):
         
         # Product-specific image URLs for real product images (white background product photos)
         product_images = {
-            'haltieres-ajustables-20kg': 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=800&h=800&fit=crop&q=80',
-            'barre-musculation-150cm': 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=800&h=800&fit=crop&q=80',
+            'haltieres-ajustables-20kg': 'https://images.unsplash.com/photo-1638536532686-d610adfc8e5c?w=800&h=800&fit=crop&q=80',
+            'barre-musculation-150cm': 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&h=800&fit=crop&q=80',
             'velo-elliptique-compact': 'https://images.unsplash.com/photo-1576678927379-1a9f19b5b7c8?w=800&h=800&fit=crop&q=80',
-            'tapis-yoga-premium': 'https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=800&h=800&fit=crop&q=80',
+            'tapis-yoga-premium': 'https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=800&h=800&fit=crop&q=80',
             'tapis-sport-evolutif': 'https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?w=800&h=800&fit=crop&q=80',
             'barre-traction-murale': 'https://images.unsplash.com/photo-1597356455628-93c3f5c7c5e4?w=800&h=800&fit=crop&q=80',
             'kit-elastiques-resistance': 'https://images.unsplash.com/photo-1598289431512-b97b0917affc?w=800&h=800&fit=crop&q=80',
