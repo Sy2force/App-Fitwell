@@ -1618,23 +1618,17 @@ msgstr "Details"
 
 #: web/templates/web/exercise_detail.html:90
 #: web/templates/web/exercise_library.html:101
-#, fuzzy
-#| msgid "Volume Musculaire"
 msgid "Groupe musculaire"
-msgstr "Muscle Volume"
+msgstr "Muscle group"
 
 #: web/templates/web/exercise_detail.html:94
 #: web/templates/web/exercise_library.html:118
-#, fuzzy
-#| msgid "Difficile"
 msgid "Difficulté"
-msgstr "Hard"
+msgstr "Difficulty"
 
 #: web/templates/web/exercise_detail.html:111
-#, fuzzy
-#| msgid "Ajouter une activité"
 msgid "Ajouter à une séance"
-msgstr "Add Activity"
+msgstr "Add to session"
 
 #: web/templates/web/exercise_library.html:63
 msgid "Bibliothèque d'exercices"
@@ -1670,15 +1664,14 @@ msgstr ""
 
 #: web/templates/web/exercise_library.html:82
 msgid "Rechercher un exercice..."
-msgstr ""
+msgstr "Search for an exercise..."
 
 #: web/templates/web/exercise_library.html:142
-#, fuzzy, python-format
-#| msgid "Aucun exercice trouvé"
+#, python-format
 msgid "%(count)s exercice trouvé"
 msgid_plural "%(count)s exercices trouvés"
-msgstr[0] "No exercises found"
-msgstr[1] "No exercises found"
+msgstr[0] "%(count)s exercise found"
+msgstr[1] "%(count)s exercises found"
 
 #: web/templates/web/exercise_library.html:187
 msgid "Aucun exercice trouvé"
@@ -1686,7 +1679,7 @@ msgstr "No exercises found"
 
 #: web/templates/web/exercise_library.html:188
 msgid "Essaie de modifier tes filtres ou ta recherche"
-msgstr ""
+msgstr "Try modifying your filters or search"
 
 #: web/templates/web/exercise_library.html:200
 msgid "Révèle ton plein potentiel"
@@ -1704,44 +1697,38 @@ msgid "Me connecter"
 msgstr "Log in"
 
 #: web/templates/web/favorites.html:12
-#, fuzzy
-#| msgid "Temps"
 msgid "Tes"
-msgstr "Time"
+msgstr "Your"
 
 #: web/templates/web/favorites.html:15
 msgid "Tous tes contenus préférés en un seul endroit."
-msgstr ""
+msgstr "All your favorite content in one place."
 
 #: web/templates/web/favorites.html:22
-#, fuzzy
-#| msgid "Filtrer"
 msgid "Filtrer par"
-msgstr "Filter"
+msgstr "Filter by"
 
 #: web/templates/web/favorites.html:30 web/templates/web/favorites.html:118
 #: web/templates/web/home.html:82
-#, fuzzy
-#| msgid "Recettes saines"
 msgid "Recettes"
-msgstr "Healthy recipes"
+msgstr "Recipes"
 
 #: web/templates/web/favorites.html:83 web/templates/web/favorites.html:88
 #: web/templates/web/favorites.html:93
 msgid "Voir"
-msgstr ""
+msgstr "View"
 
 #: web/templates/web/favorites.html:108
-#, fuzzy
-#| msgid "Aucun article pour le moment"
 msgid "Aucun favori pour le moment"
-msgstr "No articles at the moment"
+msgstr "No favorites yet"
 
 #: web/templates/web/favorites.html:111
 msgid ""
 "Ajoute des exercices, recettes ou produits à tes favoris pour les retrouver "
 "facilement."
 msgstr ""
+"Add exercises, recipes or products to your favorites to find them "
+"easily."
 
 #: web/templates/web/home.html:10
 msgid "Bienvenue sur FitWell"
