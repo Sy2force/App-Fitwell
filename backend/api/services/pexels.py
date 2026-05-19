@@ -81,58 +81,78 @@ def get_unsplash_fallback(query, orientation='portrait'):
     return f"https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w={width}&h={height}&q=80&auto=format&fit=crop&sig={hash(query) % 1000}"
 
 
-def get_exercise_image(muscle_group, difficulty):
+def get_exercise_image(muscle_group, difficulty, title=None):
     """
     Récupère une image d'exercice optimisée
     
     Args:
         muscle_group (str): Groupe musculaire
         difficulty (str): Difficulté
+        title (str): Titre de l'exercice (optionnel)
     
     Returns:
         str: URL de l'image
     """
-    query = f"{muscle_group} exercise fitness"
+    if title:
+        # Utiliser le titre pour une recherche plus spécifique
+        query = f"{title} {muscle_group} exercise fitness"
+    else:
+        query = f"{muscle_group} exercise fitness"
     return get_pexels_image(query, orientation='portrait', size='large')
 
 
-def get_product_image(category):
+def get_product_image(category, name=None):
     """
     Récupère une image de produit optimisée
     
     Args:
         category (str): Catégorie du produit
+        name (str): Nom du produit (optionnel)
     
     Returns:
         str: URL de l'image
     """
-    query = f"{category} fitness equipment"
+    if name:
+        # Utiliser le nom pour une recherche plus spécifique
+        query = f"{name} {category} fitness equipment"
+    else:
+        query = f"{category} fitness equipment"
     return get_pexels_image(query, orientation='square', size='large')
 
 
-def get_recipe_image(category):
+def get_recipe_image(category, title=None):
     """
     Récupère une image de recette optimisée
     
     Args:
         category (str): Catégorie de la recette
+        title (str): Titre de la recette (optionnel)
     
     Returns:
         str: URL de l'image
     """
-    query = f"{category} healthy food"
+    if title:
+        # Utiliser le titre pour une recherche plus spécifique
+        query = f"{title} {category} healthy food"
+    else:
+        query = f"{category} healthy food"
     return get_pexels_image(query, orientation='landscape', size='large')
 
 
-def get_article_image(category):
+def get_article_image(category, title=None):
     """
     Récupère une image d'article optimisée
     
     Args:
         category (str): Catégorie de l'article
+        title (str): Titre de l'article (optionnel)
     
     Returns:
         str: URL de l'image
     """
-    query = f"{category} fitness lifestyle"
+    if title:
+        # Utiliser le titre pour une recherche plus spécifique
+        query = f"{title} {category} fitness lifestyle"
+    else:
+        query = f"{category} fitness lifestyle"
     return get_pexels_image(query, orientation='landscape', size='large')

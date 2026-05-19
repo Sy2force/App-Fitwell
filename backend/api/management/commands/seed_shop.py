@@ -197,8 +197,8 @@ class Command(BaseCommand):
         updated_count = 0
         
         for product_data in products_data:
-            # Fetch image from Pexels API
-            image_url = get_product_image(product_data['category'])
+            # Fetch image from Pexels API with name for more specific search
+            image_url = get_product_image(product_data['category'], product_data['name'])
             product_data['image'] = image_url
             
             product, created = Product.objects.update_or_create(

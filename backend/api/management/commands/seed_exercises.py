@@ -130,8 +130,8 @@ class Command(BaseCommand):
         updated_count = 0
         
         for data in exercises:
-            # Fetch image from Pexels API
-            image_url = get_exercise_image(data["muscle_group"], data["difficulty"])
+            # Fetch image from Pexels API with title for more specific search
+            image_url = get_exercise_image(data["muscle_group"], data["difficulty"], data["name"])
             data["image_url"] = image_url
             
             ex, created = Exercise.objects.update_or_create(

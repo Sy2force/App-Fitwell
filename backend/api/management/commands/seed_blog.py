@@ -247,8 +247,8 @@ class Command(BaseCommand):
         # Continuer avec 20+ autres articles...
         
         for data in articles_data:
-            # Fetch image from Pexels API
-            image_url = get_article_image(data["category"])
+            # Fetch image from Pexels API with title for more specific search
+            image_url = get_article_image(data["category"], data["title"])
             
             cat = categories.get(data["category"])
             article, created = Article.objects.get_or_create(

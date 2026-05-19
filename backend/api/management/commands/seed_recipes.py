@@ -61,8 +61,8 @@ class Command(BaseCommand):
         updated_count = 0
         
         for data in recipes:
-            # Fetch image from Pexels API
-            image_url = get_recipe_image(data["category"])
+            # Fetch image from Pexels API with title for more specific search
+            image_url = get_recipe_image(data["category"], data["title"])
             data["image_url"] = image_url
             
             recipe, created = Recipe.objects.update_or_create(
