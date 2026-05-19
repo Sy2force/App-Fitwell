@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-27 22:35+0000\n"
+"POT-Creation-Date: 2026-05-19 11:23+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,29 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: api/models/favorite.py:17 web/templates/web/favorites.html:70
+msgid "Exercice"
+msgstr ""
+
+#: api/models/favorite.py:18 web/templates/web/favorites.html:71
+msgid "Recette"
+msgstr ""
+
+#: api/models/favorite.py:19 api/models/shop.py:58
+#: web/templates/web/favorites.html:72
+msgid "Produit"
+msgstr ""
+
+#: api/models/favorite.py:38 web/templates/web/exercise_detail.html:115
+msgid "Favori"
+msgstr ""
+
+#: api/models/favorite.py:39 web/templates/web/base.html:68
+#: web/templates/web/base.html:124 web/templates/web/favorites.html:4
+#: web/templates/web/favorites.html:12
+msgid "Favoris"
+msgstr ""
 
 #: api/models/gamification.py:88
 msgid "Entraînement"
@@ -79,7 +102,8 @@ msgid "Vie perso & loisirs"
 msgstr ""
 
 #: api/models/plan.py:16 web/templates/web/base.html:52
-#: web/templates/web/base.html:104 web/templates/web/base.html:173
+#: web/templates/web/base.html:115 web/templates/web/base.html:197
+#: web/templates/web/home.html:179 web/templates/web/shop_list.html:58
 msgid "Nutrition"
 msgstr ""
 
@@ -103,7 +127,8 @@ msgstr ""
 msgid "Femme"
 msgstr ""
 
-#: api/models/plan.py:52
+#: api/models/plan.py:52 api/models/program.py:15
+#: web/templates/web/home.html:117 web/templates/web/programs_list.html:26
 msgid "Perte de poids"
 msgstr ""
 
@@ -131,6 +156,205 @@ msgstr ""
 msgid "Élite (6-7 fois par semaine)"
 msgstr ""
 
+#: api/models/program.py:16 web/templates/web/home.html:125
+#: web/templates/web/programs_list.html:27
+msgid "Prise de muscle"
+msgstr ""
+
+#: api/models/program.py:17 web/templates/web/programs_list.html:28
+msgid "Force"
+msgstr ""
+
+#: api/models/program.py:18 web/templates/web/programs_list.html:29
+msgid "Endurance"
+msgstr ""
+
+#: api/models/program.py:19 web/templates/web/programs_list.html:30
+msgid "Mobilité"
+msgstr ""
+
+#: api/models/program.py:20 web/templates/web/programs_list.html:31
+msgid "Remise en forme"
+msgstr ""
+
+#: api/models/program.py:24 api/models/workout.py:25
+#: web/templates/web/exercise_library.html:126
+#: web/templates/web/programs_list.html:38
+msgid "Débutant"
+msgstr ""
+
+#: api/models/program.py:25 api/models/workout.py:26
+#: web/templates/web/exercise_library.html:130
+#: web/templates/web/programs_list.html:39
+msgid "Intermédiaire"
+msgstr ""
+
+#: api/models/program.py:26 api/models/workout.py:27
+#: web/templates/web/exercise_library.html:134
+#: web/templates/web/programs_list.html:40
+msgid "Avancé"
+msgstr ""
+
+#: api/models/program.py:30
+msgid "7 jours"
+msgstr ""
+
+#: api/models/program.py:31
+msgid "4 semaines"
+msgstr ""
+
+#: api/models/program.py:32
+msgid "8 semaines"
+msgstr ""
+
+#: api/models/program.py:33
+msgid "12 semaines"
+msgstr ""
+
+#: api/models/program.py:63
+msgid "Programme"
+msgstr ""
+
+#: api/models/program.py:64 web/templates/web/base.html:50
+#: web/templates/web/base.html:113 web/templates/web/base.html:195
+#: web/templates/web/home.html:86 web/templates/web/programs_list.html:12
+msgid "Programmes"
+msgstr ""
+
+#: api/models/program.py:93
+msgid "Jour de programme"
+msgstr ""
+
+#: api/models/program.py:94
+msgid "Jours de programme"
+msgstr ""
+
+#: api/models/program.py:120
+msgid "Exercice de programme"
+msgstr ""
+
+#: api/models/program.py:121
+msgid "Exercices de programme"
+msgstr ""
+
+#: api/models/program.py:135
+msgid "Non commencé"
+msgstr ""
+
+#: api/models/program.py:136 api/models/workout.py:66
+msgid "En cours"
+msgstr ""
+
+#: api/models/program.py:137
+msgid "Terminé"
+msgstr ""
+
+#: api/models/program.py:138
+msgid "Abandonné"
+msgstr ""
+
+#: api/models/program.py:159
+msgid "Progression utilisateur"
+msgstr ""
+
+#: api/models/program.py:160
+msgid "Progressions utilisateurs"
+msgstr ""
+
+#: api/models/shop.py:15 web/templates/web/home.html:158
+#: web/templates/web/shop_list.html:26 web/templates/web/shop_list.html:38
+#: web/templates/web/shop_list.html:69
+msgid "Musculation"
+msgstr ""
+
+#: api/models/shop.py:16 api/models/workout.py:21
+#: web/templates/web/home.html:165 web/templates/web/shop_list.html:27
+#: web/templates/web/shop_list.html:42 web/templates/web/shop_list.html:70
+msgid "Cardio"
+msgstr ""
+
+#: api/models/shop.py:17 web/templates/web/shop_list.html:71
+msgid "Yoga & Mobilité"
+msgstr ""
+
+#: api/models/shop.py:18 web/templates/web/shop_list.html:29
+#: web/templates/web/shop_list.html:50 web/templates/web/shop_list.html:72
+msgid "Running"
+msgstr ""
+
+#: api/models/shop.py:19 web/templates/web/shop_list.html:54
+#: web/templates/web/shop_list.html:73
+msgid "Vêtements"
+msgstr ""
+
+#: api/models/shop.py:20 web/templates/web/shop_list.html:30
+#: web/templates/web/shop_list.html:74
+msgid "Accessoires"
+msgstr ""
+
+#: api/models/shop.py:21 web/templates/web/shop_list.html:75
+msgid "Nutrition Sportive"
+msgstr ""
+
+#: api/models/shop.py:59 web/templates/web/favorites.html:33
+#: web/templates/web/home.html:90
+msgid "Produits"
+msgstr ""
+
+#: api/models/shop.py:93 web/templates/web/base.html:67
+#: web/templates/web/base.html:123 web/templates/web/cart.html:4
+#: web/templates/web/cart.html:12
+msgid "Panier"
+msgstr ""
+
+#: api/models/shop.py:94
+msgid "Paniers"
+msgstr ""
+
+#: api/models/shop.py:118
+msgid "Article du panier"
+msgstr ""
+
+#: api/models/shop.py:119
+msgid "Articles du panier"
+msgstr ""
+
+#: api/models/shop.py:138
+msgid "En attente"
+msgstr ""
+
+#: api/models/shop.py:139
+msgid "En préparation"
+msgstr ""
+
+#: api/models/shop.py:140
+msgid "Expédié"
+msgstr ""
+
+#: api/models/shop.py:141
+msgid "Livré"
+msgstr ""
+
+#: api/models/shop.py:142
+msgid "Annulé"
+msgstr ""
+
+#: api/models/shop.py:169 web/templates/web/order_success.html:13
+msgid "Commande"
+msgstr ""
+
+#: api/models/shop.py:170
+msgid "Commandes"
+msgstr ""
+
+#: api/models/shop.py:191
+msgid "Article de commande"
+msgstr ""
+
+#: api/models/shop.py:192
+msgid "Articles de commande"
+msgstr ""
+
 #: api/models/workout.py:15
 msgid "Pectoraux"
 msgstr ""
@@ -155,35 +379,15 @@ msgstr ""
 msgid "Abdominaux"
 msgstr ""
 
-#: api/models/workout.py:21
-msgid "Cardio"
-msgstr ""
-
 #: api/models/workout.py:22
 msgid "Corps complet"
 msgstr ""
 
-#: api/models/workout.py:25
-msgid "Débutant"
-msgstr ""
-
-#: api/models/workout.py:26
-msgid "Intermédiaire"
-msgstr ""
-
-#: api/models/workout.py:27
-msgid "Avancé"
-msgstr ""
-
-#: api/models/workout.py:55
-msgid "En cours"
-msgstr ""
-
-#: api/models/workout.py:56
+#: api/models/workout.py:67
 msgid "Terminée"
 msgstr ""
 
-#: api/models/workout.py:57
+#: api/models/workout.py:68
 msgid "Annulée"
 msgstr ""
 
@@ -248,12 +452,12 @@ msgstr ""
 msgid "Cardio zone 2 (2x 30min)"
 msgstr ""
 
-#: config/settings.py:248
-msgid "Français"
+#: config/settings.py:256
+msgid "English"
 msgstr ""
 
-#: config/settings.py:249
-msgid "English"
+#: config/settings.py:257
+msgid "Français"
 msgstr ""
 
 #: web/forms.py:19
@@ -321,7 +525,9 @@ msgstr ""
 msgid "Type"
 msgstr ""
 
-#: web/forms.py:60
+#: web/forms.py:60 web/templates/web/program_detail.html:56
+#: web/templates/web/program_detail.html:93
+#: web/templates/web/programs_list.html:68
 msgid "Jour"
 msgstr ""
 
@@ -372,7 +578,7 @@ msgstr ""
 
 #: web/forms.py:141 web/templates/web/onboarding/step1_goal.html:4
 #: web/templates/web/onboarding/welcome.html:21
-#: web/templates/web/planner.html:48
+#: web/templates/web/planner.html:48 web/templates/web/programs_list.html:23
 msgid "Objectif"
 msgstr ""
 
@@ -700,7 +906,8 @@ msgstr ""
 msgid "Surveillance temps réel des utilisateurs"
 msgstr ""
 
-#: web/templates/web/admin_panel.html:35
+#: web/templates/web/admin_panel.html:35 web/templates/web/cart.html:80
+#: web/templates/web/order_success.html:57
 msgid "Total"
 msgstr ""
 
@@ -733,6 +940,7 @@ msgid "Afficher masqués"
 msgstr ""
 
 #: web/templates/web/admin_panel.html:76
+#: web/templates/web/programs_list.html:55 web/templates/web/shop_list.html:92
 msgid "Filtrer"
 msgstr ""
 
@@ -741,6 +949,7 @@ msgid "Utilisateur"
 msgstr ""
 
 #: web/templates/web/admin_panel.html:87
+#: web/templates/web/order_success.html:29
 msgid "Statut"
 msgstr ""
 
@@ -761,6 +970,7 @@ msgid "Inscrit le"
 msgstr ""
 
 #: web/templates/web/admin_panel.html:92
+#: web/templates/web/exercise_detail.html:107
 msgid "Actions"
 msgstr ""
 
@@ -777,8 +987,8 @@ msgid "Supprimer définitivement cet utilisateur ?"
 msgstr ""
 
 #: web/templates/web/admin_panel.html:139
-#: web/templates/web/article_detail.html:133
-#: web/templates/web/delete_account.html:14
+#: web/templates/web/article_detail.html:133 web/templates/web/cart.html:56
+#: web/templates/web/delete_account.html:14 web/templates/web/favorites.html:97
 msgid "Supprimer"
 msgstr ""
 
@@ -812,7 +1022,7 @@ msgstr ""
 msgid "Analyse ton parcours et célèbre tes victoires quotidiennes"
 msgstr ""
 
-#: web/templates/web/analytics.html:23
+#: web/templates/web/analytics.html:23 web/templates/web/program_detail.html:38
 #: web/templates/web/workout/history.html:23
 msgid "Séances"
 msgstr ""
@@ -887,7 +1097,7 @@ msgid ""
 msgstr ""
 
 #: web/templates/web/article_detail.html:92
-#: web/templates/web/exercise_library.html:76
+#: web/templates/web/exercise_library.html:203
 msgid "Rejoindre l'élite"
 msgstr ""
 
@@ -903,8 +1113,9 @@ msgstr ""
 msgid "Connecte-toi pour participer"
 msgstr ""
 
-#: web/templates/web/article_detail.html:114 web/templates/web/base.html:71
-#: web/templates/web/base.html:119 web/templates/web/register.html:68
+#: web/templates/web/article_detail.html:114 web/templates/web/base.html:82
+#: web/templates/web/base.html:134 web/templates/web/register.html:68
+#: web/templates/web/shop_list.html:178
 msgid "Connexion"
 msgstr ""
 
@@ -916,13 +1127,8 @@ msgstr ""
 msgid "Confirmer la suppression du message ?"
 msgstr ""
 
-#: web/templates/web/base.html:50 web/templates/web/base.html:102
-#: web/templates/web/base.html:171 web/templates/web/profile.html:107
-msgid "Lifestyle"
-msgstr ""
-
-#: web/templates/web/base.html:51 web/templates/web/base.html:103
-#: web/templates/web/base.html:172 web/templates/web/workout/session.html:14
+#: web/templates/web/base.html:51 web/templates/web/base.html:114
+#: web/templates/web/base.html:196 web/templates/web/workout/session.html:14
 #: web/templates/web/workout/start.html:5
 #: web/templates/web/workout/start.html:13
 #: web/templates/web/workout_session.html:18
@@ -930,67 +1136,80 @@ msgstr ""
 msgid "Studio"
 msgstr ""
 
-#: web/templates/web/base.html:55 web/templates/web/base.html:107
-#: web/templates/web/base.html:174
+#: web/templates/web/base.html:53 web/templates/web/base.html:116
+#: web/templates/web/base.html:198 web/templates/web/favorites.html:121
+#: web/templates/web/shop_detail.html:16 web/templates/web/shop_list.html:20
+msgid "Boutique"
+msgstr ""
+
+#: web/templates/web/base.html:54 web/templates/web/base.html:117
+#: web/templates/web/base.html:199 web/templates/web/profile.html:107
+msgid "Lifestyle"
+msgstr ""
+
+#: web/templates/web/base.html:57 web/templates/web/base.html:120
 msgid "Planning"
 msgstr ""
 
-#: web/templates/web/base.html:56 web/templates/web/base.html:108
-#: web/templates/web/base.html:175
+#: web/templates/web/base.html:58 web/templates/web/base.html:121
 msgid "Communauté"
 msgstr ""
 
-#: web/templates/web/base.html:57 web/templates/web/base.html:109
+#: web/templates/web/base.html:59 web/templates/web/base.html:122
 #: web/templates/web/tools.html:15
 msgid "Outils"
 msgstr ""
 
-#: web/templates/web/base.html:65 web/templates/web/base.html:113
+#: web/templates/web/base.html:76 web/templates/web/base.html:128
 msgid "Mon Espace"
 msgstr ""
 
-#: web/templates/web/base.html:69 web/templates/web/base.html:117
+#: web/templates/web/base.html:80 web/templates/web/base.html:132
 msgid "Déconnexion"
 msgstr ""
 
-#: web/templates/web/base.html:72
+#: web/templates/web/base.html:83
 msgid "Rejoindre"
 msgstr ""
 
-#: web/templates/web/base.html:120
+#: web/templates/web/base.html:135
 msgid "Rejoindre l'aventure"
 msgstr ""
 
-#: web/templates/web/base.html:165
+#: web/templates/web/base.html:140
+msgid "Langue"
+msgstr ""
+
+#: web/templates/web/base.html:189
 msgid ""
 "Ton compagnon quotidien pour une vie plus saine, plus forte et plus sereine."
 msgstr ""
 
-#: web/templates/web/base.html:169
+#: web/templates/web/base.html:193
 msgid "Navigation"
 msgstr ""
 
-#: web/templates/web/base.html:179 web/templates/web/leaderboard.html:11
+#: web/templates/web/base.html:203 web/templates/web/leaderboard.html:11
 msgid "FitWell"
 msgstr ""
 
-#: web/templates/web/base.html:181
+#: web/templates/web/base.html:205
 msgid "À propos"
 msgstr ""
 
-#: web/templates/web/base.html:182
+#: web/templates/web/base.html:206
 msgid "Confidentialité"
 msgstr ""
 
-#: web/templates/web/base.html:183 web/templates/web/legal.html:74
+#: web/templates/web/base.html:207 web/templates/web/legal.html:74
 msgid "Cookies"
 msgstr ""
 
-#: web/templates/web/base.html:184
+#: web/templates/web/base.html:208
 msgid "Avertissement"
 msgstr ""
 
-#: web/templates/web/base.html:185
+#: web/templates/web/base.html:209
 msgid "Contact"
 msgstr ""
 
@@ -1026,13 +1245,69 @@ msgid ""
 msgstr ""
 
 #: web/templates/web/blog_list.html:28
-#: web/templates/web/exercise_library.html:25
+#: web/templates/web/exercise_library.html:105
+#: web/templates/web/exercise_library.html:122
+#: web/templates/web/favorites.html:24 web/templates/web/programs_list.html:25
+#: web/templates/web/programs_list.html:37
 #: web/templates/web/recipe_list.html:27
 msgid "Tous"
 msgstr ""
 
 #: web/templates/web/blog_list.html:65
 msgid "Aucun article pour le moment"
+msgstr ""
+
+#: web/templates/web/cart.html:12
+msgid "Ton"
+msgstr ""
+
+#: web/templates/web/cart.html:15
+msgid "Finalise tes achats et prépare-toi à performer."
+msgstr ""
+
+#: web/templates/web/cart.html:45
+msgid "Mettre à jour"
+msgstr ""
+
+#: web/templates/web/cart.html:67
+msgid "Récapitulatif"
+msgstr ""
+
+#: web/templates/web/cart.html:71 web/templates/web/order_success.html:48
+msgid "Sous-total"
+msgstr ""
+
+#: web/templates/web/cart.html:71
+msgid "articles"
+msgstr ""
+
+#: web/templates/web/cart.html:75 web/templates/web/order_success.html:44
+#: web/templates/web/order_success.html:52
+msgid "Livraison"
+msgstr ""
+
+#: web/templates/web/cart.html:76 web/templates/web/order_success.html:53
+msgid "Gratuit"
+msgstr ""
+
+#: web/templates/web/cart.html:88
+msgid "Commander"
+msgstr ""
+
+#: web/templates/web/cart.html:93
+msgid "Mode démo : Pas de vrai paiement"
+msgstr ""
+
+#: web/templates/web/cart.html:102
+msgid "Ton panier est vide"
+msgstr ""
+
+#: web/templates/web/cart.html:105
+msgid "Découvre nos produits pour préparer tes prochains entraînements."
+msgstr ""
+
+#: web/templates/web/cart.html:108
+msgid "Explorer la boutique"
 msgstr ""
 
 #: web/templates/web/change_password.html:4
@@ -1115,6 +1390,7 @@ msgstr ""
 #: web/templates/web/dashboard.html:26
 #: web/templates/web/onboarding/step2_level.html:4
 #: web/templates/web/onboarding/welcome.html:25
+#: web/templates/web/programs_list.html:35
 #: web/templates/web/recipe_detail.html:27
 msgid "Niveau"
 msgstr ""
@@ -1256,26 +1532,66 @@ msgstr ""
 msgid "Changer mon mot de passe"
 msgstr ""
 
-#: web/templates/web/exercise_library.html:9
+#: web/templates/web/exercise_detail.html:12
+#: web/templates/web/favorites.html:27 web/templates/web/favorites.html:115
+#: web/templates/web/home.html:78
+msgid "Exercices"
+msgstr ""
+
+#: web/templates/web/exercise_detail.html:51
+#: web/templates/web/exercise_detail.html:99
+msgid "Équipement"
+msgstr ""
+
+#: web/templates/web/exercise_detail.html:59
+#: web/templates/web/shop_detail.html:122
+msgid "Ajouter aux favoris"
+msgstr ""
+
+#: web/templates/web/exercise_detail.html:69
+msgid "Exercices similaires"
+msgstr ""
+
+#: web/templates/web/exercise_detail.html:86
+#: web/templates/web/shop_list.html:170
+#: web/templates/web/workout/history.html:102
+msgid "Détails"
+msgstr ""
+
+#: web/templates/web/exercise_detail.html:90
+#: web/templates/web/exercise_library.html:101
+msgid "Groupe musculaire"
+msgstr "Groupe musculaire"
+
+#: web/templates/web/exercise_detail.html:94
+#: web/templates/web/exercise_library.html:118
+msgid "Difficulté"
+msgstr "Difficulté"
+
+#: web/templates/web/exercise_detail.html:111
+msgid "Ajouter à une séance"
+msgstr ""
+
+#: web/templates/web/exercise_library.html:63
 msgid "Bibliothèque d'exercices"
 msgstr ""
 
-#: web/templates/web/exercise_library.html:12
+#: web/templates/web/exercise_library.html:66
 msgid "Apprends"
 msgstr ""
 
-#: web/templates/web/exercise_library.html:12
+#: web/templates/web/exercise_library.html:66
 msgid "à bouger"
 msgstr ""
 
-#: web/templates/web/exercise_library.html:15
+#: web/templates/web/exercise_library.html:69
 msgid ""
 "Plus de 100 exercices détaillés, classés par groupe musculaire et niveau. "
 "Que tu sois débutant complet ou pratiquant avancé, tu trouveras toujours du "
 "nouveau à apprendre."
 msgstr ""
 
-#: web/templates/web/exercise_library.html:18
+#: web/templates/web/exercise_library.html:72
 msgid ""
 "Chaque exercice est expliqué : muscles ciblés, technique correcte, erreurs "
 "courantes à éviter. Filtre par muscle pour construire tes propres séances ou "
@@ -1286,14 +1602,6 @@ msgstr ""
 msgid "Rechercher un exercice..."
 msgstr "Rechercher un exercice..."
 
-#: web/templates/web/exercise_library.html:101
-msgid "Groupe musculaire"
-msgstr "Groupe musculaire"
-
-#: web/templates/web/exercise_library.html:118
-msgid "Difficulté"
-msgstr "Difficulté"
-
 #: web/templates/web/exercise_library.html:142
 #, python-format
 msgid "%(count)s exercice trouvé"
@@ -1302,26 +1610,58 @@ msgstr[0] "%(count)s exercice trouvé"
 msgstr[1] "%(count)s exercices trouvés"
 
 #: web/templates/web/exercise_library.html:187
-msgid "Essaie de modifier tes filtres ou ta recherche"
-msgstr "Essaie de modifier tes filtres ou ta recherche"
-
-#: web/templates/web/exercise_library.html:66
 msgid "Aucun exercice trouvé"
 msgstr ""
 
-#: web/templates/web/exercise_library.html:73
+#: web/templates/web/exercise_library.html:188
+msgid "Essaie de modifier tes filtres ou ta recherche"
+msgstr "Essaie de modifier tes filtres ou ta recherche"
+
+#: web/templates/web/exercise_library.html:200
 msgid "Révèle ton plein potentiel"
 msgstr ""
 
-#: web/templates/web/exercise_library.html:74
+#: web/templates/web/exercise_library.html:201
 msgid ""
 "Accède à l'intégralité de notre Studio et commence ta transformation dès "
 "aujourd'hui."
 msgstr ""
 
-#: web/templates/web/exercise_library.html:77 web/templates/web/login.html:62
+#: web/templates/web/exercise_library.html:204 web/templates/web/login.html:62
 #: web/templates/web/password_reset_complete.html:23
 msgid "Me connecter"
+msgstr ""
+
+#: web/templates/web/favorites.html:12
+msgid "Tes"
+msgstr ""
+
+#: web/templates/web/favorites.html:15
+msgid "Tous tes contenus préférés en un seul endroit."
+msgstr ""
+
+#: web/templates/web/favorites.html:22
+msgid "Filtrer par"
+msgstr ""
+
+#: web/templates/web/favorites.html:30 web/templates/web/favorites.html:118
+#: web/templates/web/home.html:82
+msgid "Recettes"
+msgstr ""
+
+#: web/templates/web/favorites.html:83 web/templates/web/favorites.html:88
+#: web/templates/web/favorites.html:93
+msgid "Voir"
+msgstr ""
+
+#: web/templates/web/favorites.html:108
+msgid "Aucun favori pour le moment"
+msgstr ""
+
+#: web/templates/web/favorites.html:111
+msgid ""
+"Ajoute des exercices, recettes ou produits à tes favoris pour les retrouver "
+"facilement."
 msgstr ""
 
 #: web/templates/web/home.html:10
@@ -1355,7 +1695,8 @@ msgid ""
 "un petit pas à la fois."
 msgstr ""
 
-#: web/templates/web/home.html:27 web/templates/web/home.html:291
+#: web/templates/web/home.html:27 web/templates/web/home.html:382
+#: web/tests/test_flows.py:24
 msgid "Créer mon compte gratuit"
 msgstr ""
 
@@ -1400,234 +1741,269 @@ msgstr ""
 msgid "Des chiffres, mais surtout des résultats concrets"
 msgstr ""
 
-#: web/templates/web/home.html:78
-msgid "Exercices expliqués"
-msgstr ""
-
-#: web/templates/web/home.html:79
-msgid "Technique, muscles ciblés, niveau"
-msgstr ""
-
-#: web/templates/web/home.html:83 web/templates/web/recipe_list.html:11
-msgid "Recettes saines"
-msgstr ""
-
-#: web/templates/web/home.html:84
-msgid "Simples, rapides, délicieuses"
-msgstr ""
-
-#: web/templates/web/home.html:88
-msgid "Articles conseils"
-msgstr ""
-
-#: web/templates/web/home.html:89
-msgid "Nutrition, motivation, progression"
-msgstr ""
-
-#: web/templates/web/home.html:93
-msgid "Accessible partout"
-msgstr ""
-
 #: web/templates/web/home.html:94
-msgid "Sur ton téléphone, ton ordi, où tu veux"
+msgid "Accessible"
 msgstr ""
 
 #: web/templates/web/home.html:104
-msgid "Trois piliers, un équilibre"
+msgid "Programmes d'entraînement"
 msgstr ""
 
 #: web/templates/web/home.html:106
-msgid "Ce que FitWell t'apporte"
+msgid "Des programmes structurés"
 msgstr ""
 
 #: web/templates/web/home.html:109
+msgid ""
+"Que tu sois débutant ou avancé, nos programmes t'accompagnent étape par "
+"étape vers tes objectifs."
+msgstr ""
+
+#: web/templates/web/home.html:118
+msgid "Programmes cardio + nutrition pour perdre du poids sainement"
+msgstr ""
+
+#: web/templates/web/home.html:119 web/templates/web/home.html:127
+#: web/templates/web/home.html:135
+msgid "Voir les programmes →"
+msgstr ""
+
+#: web/templates/web/home.html:126
+msgid "Programmes musculation progressifs pour gagner en force"
+msgstr ""
+
+#: web/templates/web/home.html:133
+msgid "Mobilité & Yoga"
+msgstr ""
+
+#: web/templates/web/home.html:134
+msgid "Programmes souplesse pour améliorer ta mobilité"
+msgstr ""
+
+#: web/templates/web/home.html:145
+msgid "Boutique Sport"
+msgstr ""
+
+#: web/templates/web/home.html:147
+msgid "Équipe-toi comme un pro"
+msgstr ""
+
+#: web/templates/web/home.html:150
+msgid ""
+"Le meilleur équipement pour maximiser tes entraînements et atteindre tes "
+"objectifs."
+msgstr ""
+
+#: web/templates/web/home.html:159 web/templates/web/home.html:166
+#: web/templates/web/home.html:173 web/templates/web/home.html:180
+msgid "Découvrir →"
+msgstr ""
+
+#: web/templates/web/home.html:172 web/templates/web/shop_list.html:28
+#: web/templates/web/shop_list.html:46
+msgid "Yoga"
+msgstr ""
+
+#: web/templates/web/home.html:185
+msgid "Voir toute la boutique"
+msgstr ""
+
+#: web/templates/web/home.html:195
+msgid "Trois piliers, un équilibre"
+msgstr ""
+
+#: web/templates/web/home.html:197
+msgid "Ce que FitWell t'apporte"
+msgstr ""
+
+#: web/templates/web/home.html:200
 msgid ""
 "Une vie saine repose sur trois piliers indissociables. Négliger un seul "
 "déséquilibre tout le reste. C'est pourquoi nous t'accompagnons sur chacun."
 msgstr ""
 
-#: web/templates/web/home.html:121
+#: web/templates/web/home.html:212
 msgid "Pilier 1"
 msgstr ""
 
-#: web/templates/web/home.html:122
+#: web/templates/web/home.html:213
 msgid "Bouger avec intelligence"
 msgstr ""
 
-#: web/templates/web/home.html:124
+#: web/templates/web/home.html:215
 msgid ""
 "Pas besoin de 2h de salle par jour. 30 minutes ciblées, 3 fois par semaine, "
 "changent déjà ta vie. On t'apprend les bons mouvements."
 msgstr ""
 
-#: web/templates/web/home.html:126
+#: web/templates/web/home.html:217
 msgid "Voir les exercices →"
 msgstr ""
 
-#: web/templates/web/home.html:136
+#: web/templates/web/home.html:227
 msgid "Pilier 2"
 msgstr ""
 
-#: web/templates/web/home.html:137
+#: web/templates/web/home.html:228
 msgid "Manger pour se nourrir"
 msgstr ""
 
-#: web/templates/web/home.html:139
+#: web/templates/web/home.html:230
 msgid ""
 "Fini les régimes restrictifs qui ne tiennent pas. Nos recettes sont simples, "
 "complètes, et rassasiantes. Le plaisir de manger, sans la culpabilité."
 msgstr ""
 
-#: web/templates/web/home.html:141
+#: web/templates/web/home.html:232
 msgid "Voir les recettes →"
 msgstr ""
 
-#: web/templates/web/home.html:151
+#: web/templates/web/home.html:242
 msgid "Pilier 3"
 msgstr ""
 
-#: web/templates/web/home.html:152
+#: web/templates/web/home.html:243
 msgid "Comprendre son corps"
 msgstr ""
 
-#: web/templates/web/home.html:154
+#: web/templates/web/home.html:245
 msgid ""
 "Le savoir est ton meilleur entraîneur. Nos articles décryptent la science du "
 "sport, la nutrition, la récupération, et le mental."
 msgstr ""
 
-#: web/templates/web/home.html:156
+#: web/templates/web/home.html:247
 msgid "Lire les articles →"
 msgstr ""
 
-#: web/templates/web/home.html:166
+#: web/templates/web/home.html:257
 msgid "Nos conseils de base"
 msgstr ""
 
-#: web/templates/web/home.html:168
+#: web/templates/web/home.html:259
 msgid "Commence par ces"
 msgstr ""
 
-#: web/templates/web/home.html:168
+#: web/templates/web/home.html:259
 msgid "4 habitudes"
 msgstr ""
 
-#: web/templates/web/home.html:171
+#: web/templates/web/home.html:262
 msgid ""
 "Tu n'as pas besoin de tout révolutionner d'un coup. Adopte ces 4 habitudes "
 "simples et tu sentiras la différence en moins de 30 jours."
 msgstr ""
 
-#: web/templates/web/home.html:180
+#: web/templates/web/home.html:271
 msgid "Bouge 30 minutes par jour"
 msgstr ""
 
-#: web/templates/web/home.html:182
+#: web/templates/web/home.html:273
 msgid ""
 "Marche, vélo, étirements, montée d'escaliers. Peu importe la forme, "
 "l'important c'est la régularité. Ton corps est fait pour le mouvement."
 msgstr ""
 
-#: web/templates/web/home.html:192
+#: web/templates/web/home.html:283
 msgid "Bois 1,5 litre d'eau"
 msgstr ""
 
-#: web/templates/web/home.html:194
+#: web/templates/web/home.html:285
 #, python-format
 msgid ""
 "80 %% des gens sont déshydratés sans le savoir. Fatigue, faim, mal de tête : "
 "souvent c'est un simple manque d'eau. Garde une bouteille avec toi."
 msgstr ""
 
-#: web/templates/web/home.html:204
+#: web/templates/web/home.html:295
 msgid "Dors 7 à 8 heures"
 msgstr ""
 
-#: web/templates/web/home.html:206
+#: web/templates/web/home.html:297
 msgid ""
 "C'est pendant la nuit que ton corps se répare, que ton esprit consolide ce "
 "que tu as appris, que tes muscles grandissent. Le sommeil n'est pas une "
 "perte de temps."
 msgstr ""
 
-#: web/templates/web/home.html:216
+#: web/templates/web/home.html:307
 msgid "Mange des vrais aliments"
 msgstr ""
 
-#: web/templates/web/home.html:218
+#: web/templates/web/home.html:309
 msgid ""
 "Fruits, légumes, viandes, poissons, céréales complètes, légumineuses. Si ça "
 "a été transformé en usine, c'est rarement un ami. Simplifie ton assiette."
 msgstr ""
 
-#: web/templates/web/home.html:231
+#: web/templates/web/home.html:322
 msgid "Notre engagement"
 msgstr ""
 
-#: web/templates/web/home.html:233
+#: web/templates/web/home.html:324
 msgid "Pourquoi FitWell est différent"
 msgstr ""
 
-#: web/templates/web/home.html:243
+#: web/templates/web/home.html:334
 msgid "Pas de publicités déguisées"
 msgstr ""
 
-#: web/templates/web/home.html:244
+#: web/templates/web/home.html:335
 msgid ""
 "On ne te vend pas de compléments miracles ni de bruléurs de graisse. "
 "Uniquement des conseils honnêtes."
 msgstr ""
 
-#: web/templates/web/home.html:252
+#: web/templates/web/home.html:343
 msgid "Du contenu pour tous les niveaux"
 msgstr ""
 
-#: web/templates/web/home.html:253
+#: web/templates/web/home.html:344
 msgid ""
 "Débutant complet ou sportif expérimenté, tu trouveras toujours du contenu "
 "adapté à ton niveau et tes objectifs."
 msgstr ""
 
-#: web/templates/web/home.html:261
+#: web/templates/web/home.html:352
 msgid "Des méthodes basées sur la science"
 msgstr ""
 
-#: web/templates/web/home.html:262
+#: web/templates/web/home.html:353
 msgid ""
 "Chaque conseil s'appuie sur des études reconnues et l'expérience de "
 "professionnels du sport et de la santé."
 msgstr ""
 
-#: web/templates/web/home.html:270
+#: web/templates/web/home.html:361
 msgid "Gratuit pour commencer"
 msgstr ""
 
-#: web/templates/web/home.html:271
+#: web/templates/web/home.html:362
 msgid ""
 "Crée ton compte sans payer. Accède à la bibliothèque, aux recettes, au blog, "
 "à ton planning personnalisé."
 msgstr ""
 
-#: web/templates/web/home.html:281
+#: web/templates/web/home.html:372
 msgid "Commence aujourd'hui"
 msgstr ""
 
-#: web/templates/web/home.html:283
+#: web/templates/web/home.html:374
 msgid "Ton corps te dira merci"
 msgstr ""
 
-#: web/templates/web/home.html:284
+#: web/templates/web/home.html:375
 msgid "dans 30 jours."
 msgstr ""
 
-#: web/templates/web/home.html:287
+#: web/templates/web/home.html:378
 msgid ""
 "Chaque journée passée à attendre est une journée perdue. Rejoins des "
 "milliers de personnes qui ont décidé de reprendre leur santé en main avec "
 "FitWell. C'est gratuit, c'est simple, et ça peut changer ta vie."
 msgstr ""
 
-#: web/templates/web/home.html:294
+#: web/templates/web/home.html:385
 msgid "J'ai déjà un compte"
 msgstr ""
 
@@ -1644,6 +2020,7 @@ msgid "Inspire-toi de la communauté et dépasse tes limites chaque jour"
 msgstr ""
 
 #: web/templates/web/leaderboard.html:21
+#: web/templates/web/programs_list.html:72
 msgid "Progression"
 msgstr ""
 
@@ -1977,6 +2354,8 @@ msgid "Santé & Énergie"
 msgstr ""
 
 #: web/templates/web/onboarding/step1_goal.html:55
+#: web/templates/web/program_detail.html:63
+#: web/templates/web/programs_list.html:79
 msgid "Continuer"
 msgstr ""
 
@@ -2077,6 +2456,54 @@ msgid ""
 "en quelques secondes."
 msgstr ""
 
+#: web/templates/web/order_success.html:4
+msgid "Commande Confirmée"
+msgstr ""
+
+#: web/templates/web/order_success.html:13
+msgid "Confirmée"
+msgstr ""
+
+#: web/templates/web/order_success.html:16
+msgid "Merci pour ta commande ! Tu recevras bientôt tes produits."
+msgstr ""
+
+#: web/templates/web/order_success.html:25
+msgid "Numéro de commande"
+msgstr ""
+
+#: web/templates/web/order_success.html:40
+msgid "Date"
+msgstr ""
+
+#: web/templates/web/order_success.html:65
+msgid "Articles commandés"
+msgstr ""
+
+#: web/templates/web/order_success.html:81
+msgid "Prochaines étapes"
+msgstr ""
+
+#: web/templates/web/order_success.html:85
+msgid "Tu recevras un email de confirmation avec les détails de ta commande."
+msgstr ""
+
+#: web/templates/web/order_success.html:89
+msgid "Nous te tiendrons informé de l'expédition de tes produits."
+msgstr ""
+
+#: web/templates/web/order_success.html:93
+msgid "Mode démo : Pas de vrai paiement ni de livraison réelle."
+msgstr ""
+
+#: web/templates/web/order_success.html:101
+msgid "Continuer mes achats"
+msgstr ""
+
+#: web/templates/web/order_success.html:104
+msgid "Tableau de bord"
+msgstr ""
+
 #: web/templates/web/password_reset_complete.html:4
 msgid "Mot de passe réinitialisé - FitWell"
 msgstr ""
@@ -2161,7 +2588,7 @@ msgstr ""
 msgid "Planificateur - FitWell"
 msgstr ""
 
-#: web/templates/web/planner.html:15
+#: web/templates/web/planner.html:15 web/tests/test_views.py:36
 msgid "Stratégie"
 msgstr ""
 
@@ -2205,7 +2632,9 @@ msgstr ""
 msgid "Score Vitalité"
 msgstr ""
 
-#: web/templates/web/planner.html:111 web/templates/web/workout/detail.html:110
+#: web/templates/web/planner.html:111 web/templates/web/program_detail.html:97
+#: web/templates/web/program_detail.html:116
+#: web/templates/web/workout/detail.html:110
 msgid "Repos"
 msgstr ""
 
@@ -2318,6 +2747,91 @@ msgstr ""
 msgid "Mes Succès"
 msgstr ""
 
+#: web/templates/web/program_detail.html:42
+msgid "Semaines"
+msgstr ""
+
+#: web/templates/web/program_detail.html:46
+msgid "Minutes/séance"
+msgstr ""
+
+#: web/templates/web/program_detail.html:54
+msgid "Ta progression"
+msgstr ""
+
+#: web/templates/web/program_detail.html:70
+msgid "Commencer ce programme"
+msgstr ""
+
+#: web/templates/web/program_detail.html:76
+msgid "Connecte-toi pour commencer"
+msgstr ""
+
+#: web/templates/web/program_detail.html:85
+msgid "Calendrier du programme"
+msgstr ""
+
+#: web/templates/web/program_detail.html:105
+msgid "min"
+msgstr ""
+
+#: web/templates/web/program_detail.html:136
+msgid "Conseils nutritionnels"
+msgstr ""
+
+#: web/templates/web/program_detail.html:145
+msgid "Matériel nécessaire"
+msgstr ""
+
+#: web/templates/web/programs_list.html:4
+msgid "Programmes d'Entraînement"
+msgstr ""
+
+#: web/templates/web/programs_list.html:12
+msgid "d'Entraînement"
+msgstr ""
+
+#: web/templates/web/programs_list.html:15
+msgid ""
+"Des programmes structurés pour atteindre tes objectifs, que tu sois débutant "
+"ou avancé."
+msgstr ""
+
+#: web/templates/web/programs_list.html:44
+#: web/templates/web/workout/detail.html:42
+msgid "Durée"
+msgstr ""
+
+#: web/templates/web/programs_list.html:46 web/templates/web/shop_list.html:68
+msgid "Toutes"
+msgstr ""
+
+#: web/templates/web/programs_list.html:47
+msgid "jours"
+msgstr ""
+
+#: web/templates/web/programs_list.html:48
+#: web/templates/web/programs_list.html:49
+#: web/templates/web/programs_list.html:50
+msgid "semaines"
+msgstr ""
+
+#: web/templates/web/programs_list.html:66
+msgid "Programme en cours"
+msgstr ""
+
+#: web/templates/web/programs_list.html:109
+msgid "séances"
+msgstr ""
+
+#: web/templates/web/programs_list.html:113
+msgid "Voir le programme"
+msgstr ""
+
+#: web/templates/web/programs_list.html:119
+msgid "Aucun programme trouvé."
+msgstr ""
+
 #: web/templates/web/recipe_detail.html:17
 msgid "Retour à la cuisine"
 msgstr ""
@@ -2356,6 +2870,10 @@ msgstr ""
 
 #: web/templates/web/recipe_list.html:4
 msgid "Nutrition & recettes - FitWell"
+msgstr ""
+
+#: web/templates/web/recipe_list.html:11
+msgid "Recettes saines"
 msgstr ""
 
 #: web/templates/web/recipe_list.html:14
@@ -2420,6 +2938,100 @@ msgstr ""
 
 #: web/templates/web/register.html:68
 msgid "Déjà un compte ?"
+msgstr ""
+
+#: web/templates/web/shop_detail.html:52 web/templates/web/shop_detail.html:116
+msgid "Rupture de stock"
+msgstr ""
+
+#: web/templates/web/shop_detail.html:83
+msgid "Caractéristiques"
+msgstr ""
+
+#: web/templates/web/shop_detail.html:97
+msgid "Recommandé pour"
+msgstr ""
+
+#: web/templates/web/shop_detail.html:107
+msgid "Ajouter au panier"
+msgstr ""
+
+#: web/templates/web/shop_detail.html:111
+msgid "Connecte-toi pour acheter"
+msgstr ""
+
+#: web/templates/web/shop_detail.html:133
+msgid "Produits similaires"
+msgstr ""
+
+#: web/templates/web/shop_list.html:4
+msgid "Boutique Sport FitWell"
+msgstr ""
+
+#: web/templates/web/shop_list.html:17
+msgid "Équipements Premium"
+msgstr ""
+
+#: web/templates/web/shop_list.html:20
+msgid "Sport FitWell"
+msgstr ""
+
+#: web/templates/web/shop_list.html:23
+msgid ""
+"Découvre une sélection d'équipements de sport pour t'entraîner, progresser "
+"et compléter tes programmes FitWell."
+msgstr ""
+
+#: web/templates/web/shop_list.html:66
+msgid "Catégorie"
+msgstr ""
+
+#: web/templates/web/shop_list.html:79
+msgid "Prix min"
+msgstr ""
+
+#: web/templates/web/shop_list.html:83
+msgid "Prix max"
+msgstr ""
+
+#: web/templates/web/shop_list.html:87
+msgid "Recherche"
+msgstr ""
+
+#: web/templates/web/shop_list.html:88
+#, fuzzy
+#| msgid "Rechercher un exercice..."
+msgid "Rechercher..."
+msgstr "Rechercher un exercice..."
+
+#: web/templates/web/shop_list.html:95
+msgid "Réinitialiser"
+msgstr ""
+
+#: web/templates/web/shop_list.html:153
+msgid "En stock"
+msgstr ""
+
+#: web/templates/web/shop_list.html:153
+msgid "Rupture"
+msgstr ""
+
+#: web/templates/web/shop_list.html:174
+msgid "Ajouter"
+msgstr ""
+
+#: web/templates/web/shop_list.html:188
+msgid "Aucun produit trouvé"
+msgstr ""
+
+#: web/templates/web/shop_list.html:189
+#, fuzzy
+#| msgid "Essaie de modifier tes filtres ou ta recherche"
+msgid "Essaie de modifier tes filtres ou découvre nos équipements recommandés."
+msgstr "Essaie de modifier tes filtres ou ta recherche"
+
+#: web/templates/web/shop_list.html:191
+msgid "Voir tous les produits"
 msgstr ""
 
 #: web/templates/web/tools.html:4
@@ -2543,10 +3155,6 @@ msgstr ""
 msgid "Mes Notes"
 msgstr ""
 
-#: web/templates/web/workout/detail.html:42
-msgid "Durée"
-msgstr ""
-
 #: web/templates/web/workout/detail.html:46
 msgid "Total Séries"
 msgstr ""
@@ -2603,10 +3211,6 @@ msgstr ""
 
 #: web/templates/web/workout/history.html:64
 msgid "Nouvelle Ascension"
-msgstr ""
-
-#: web/templates/web/workout/history.html:102
-msgid "Détails"
 msgstr ""
 
 #: web/templates/web/workout/history.html:113
@@ -2829,6 +3433,10 @@ msgstr ""
 msgid "Lancer l'Expérience"
 msgstr ""
 
+#: web/tests/test_flows.py:142 web/views/workout.py:152
+msgid "Session Studio terminée"
+msgstr ""
+
 #: web/views/admin_panel.py:96
 msgid "Impossible de masquer un autre super-utilisateur."
 msgstr ""
@@ -2917,15 +3525,15 @@ msgstr ""
 msgid "Ton compte %(u)s a été supprimé définitivement. À bientôt peut-être."
 msgstr ""
 
-#: web/views/content.py:134
+#: web/views/content.py:164
 msgid "Ton avis a été partagé ! ✨"
 msgstr ""
 
-#: web/views/content.py:168
+#: web/views/content.py:198
 msgid "Ton commentaire a été retiré."
 msgstr ""
 
-#: web/views/content.py:171
+#: web/views/content.py:201
 msgid "Tu n'as pas l'autorisation de retirer ce commentaire."
 msgstr ""
 
@@ -2969,10 +3577,6 @@ msgstr ""
 
 #: web/views/workout.py:122
 msgid "Étirements légers et respiration."
-msgstr ""
-
-#: web/views/workout.py:152
-msgid "Session Studio terminée"
 msgstr ""
 
 #: web/views/workout.py:165
