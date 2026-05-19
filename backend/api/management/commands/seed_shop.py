@@ -127,10 +127,21 @@ class Command(BaseCommand):
         created_count = 0
         updated_count = 0
         
-        # Use Pexels API for all products (best available option for demo)
+        # Use local SVG logo designs for all products
+        product_logos = {
+            'haltieres-ajustables-20kg': '/static/products/fitnesspro.svg',
+            'barre-musculation-150cm': '/static/products/irongym.svg',
+            'velo-elliptique-compact': '/static/products/cardiomaster.svg',
+            'tapis-yoga-premium': '/static/products/zenmat.svg',
+            'tapis-sport-evolutif': '/static/products/fitfloor.svg',
+            'barre-traction-murale': '/static/products/pulluppro.svg',
+            'kit-elastiques-resistance': '/static/products/flexband.svg',
+            'whey-protein-isolate-1kg': '/static/products/nutrimax.svg',
+        }
+        
         for product_data in products_data:
-            # Fetch image from Pexels API with name for more specific search
-            image_url = get_product_image(product_data['category'], product_data['name'])
+            # Use local logo design
+            image_url = product_logos.get(product_data['slug'], get_product_image(product_data['category'], product_data['name']))
             product_data['image'] = image_url
             
             product, created = Product.objects.update_or_create(
