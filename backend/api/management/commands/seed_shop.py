@@ -127,7 +127,7 @@ class Command(BaseCommand):
         created_count = 0
         updated_count = 0
         
-        # Use Pexels API for all products to get working images
+        # Use Pexels API for all products (best available option for demo)
         for product_data in products_data:
             # Fetch image from Pexels API with name for more specific search
             image_url = get_product_image(product_data['category'], product_data['name'])
