@@ -1822,77 +1822,75 @@ msgid "Des chiffres, mais surtout des résultats concrets"
 msgstr "Numbers that translate into real results"
 
 #: web/templates/web/home.html:94
-#, fuzzy
-#| msgid "Accessible partout"
 msgid "Accessible"
-msgstr "Available everywhere"
+msgstr "Accessible"
 
 #: web/templates/web/home.html:104
-#, fuzzy
-#| msgid "Historique Entraînements"
 msgid "Programmes d'entraînement"
-msgstr "Workout History"
+msgstr "Training programs"
 
 #: web/templates/web/home.html:106
 msgid "Des programmes structurés"
-msgstr ""
+msgstr "Structured programs"
 
 #: web/templates/web/home.html:109
 msgid ""
 "Que tu sois débutant ou avancé, nos programmes t'accompagnent étape par "
 "étape vers tes objectifs."
 msgstr ""
+"Whether you're a beginner or advanced, our programs guide you step by "
+"step toward your goals."
 
 #: web/templates/web/home.html:118
 msgid "Programmes cardio + nutrition pour perdre du poids sainement"
-msgstr ""
+msgstr "Cardio + nutrition programs to lose weight healthily"
 
 #: web/templates/web/home.html:119 web/templates/web/home.html:127
 #: web/templates/web/home.html:135
-#, fuzzy
-#| msgid "Voir les recettes →"
 msgid "Voir les programmes →"
-msgstr "View recipes →"
+msgstr "View programs →"
 
 #: web/templates/web/home.html:126
 msgid "Programmes musculation progressifs pour gagner en force"
-msgstr ""
+msgstr "Progressive bodybuilding programs to gain strength"
 
 #: web/templates/web/home.html:133
 msgid "Mobilité & Yoga"
-msgstr ""
+msgstr "Mobility & Yoga"
 
 #: web/templates/web/home.html:134
 msgid "Programmes souplesse pour améliorer ta mobilité"
-msgstr ""
+msgstr "Flexibility programs to improve your mobility"
 
 #: web/templates/web/home.html:145
 msgid "Boutique Sport"
-msgstr ""
+msgstr "Sports Shop"
 
 #: web/templates/web/home.html:147
 msgid "Équipe-toi comme un pro"
-msgstr ""
+msgstr "Equip yourself like a pro"
 
 #: web/templates/web/home.html:150
 msgid ""
 "Le meilleur équipement pour maximiser tes entraînements et atteindre tes "
 "objectifs."
 msgstr ""
+"The best equipment to maximize your workouts and reach your "
+"goals."
 
 #: web/templates/web/home.html:159 web/templates/web/home.html:166
 #: web/templates/web/home.html:173 web/templates/web/home.html:180
 msgid "Découvrir →"
-msgstr ""
+msgstr "Discover →"
 
 #: web/templates/web/home.html:172 web/templates/web/shop_list.html:28
 #: web/templates/web/shop_list.html:46
 msgid "Yoga"
-msgstr ""
+msgstr "Yoga"
 
 #: web/templates/web/home.html:185
 msgid "Voir toute la boutique"
-msgstr ""
+msgstr "View the entire shop"
 
 #: web/templates/web/home.html:195
 msgid "Trois piliers, un équilibre"
@@ -2598,59 +2596,51 @@ msgstr ""
 
 #: web/templates/web/order_success.html:4
 msgid "Commande Confirmée"
-msgstr ""
+msgstr "Order Confirmed"
 
 #: web/templates/web/order_success.html:13
-#, fuzzy
-#| msgid "Confirmer"
 msgid "Confirmée"
-msgstr "Confirm"
+msgstr "Confirmed"
 
 #: web/templates/web/order_success.html:16
 msgid "Merci pour ta commande ! Tu recevras bientôt tes produits."
-msgstr ""
+msgstr "Thank you for your order! You will receive your products soon."
 
 #: web/templates/web/order_success.html:25
 msgid "Numéro de commande"
-msgstr ""
+msgstr "Order number"
 
 #: web/templates/web/order_success.html:40
 msgid "Date"
-msgstr ""
+msgstr "Date"
 
 #: web/templates/web/order_success.html:65
-#, fuzzy
-#| msgid "Articles conseils"
 msgid "Articles commandés"
-msgstr "Advice articles"
+msgstr "Ordered items"
 
 #: web/templates/web/order_success.html:81
 msgid "Prochaines étapes"
-msgstr ""
+msgstr "Next steps"
 
 #: web/templates/web/order_success.html:85
 msgid "Tu recevras un email de confirmation avec les détails de ta commande."
-msgstr ""
+msgstr "You will receive a confirmation email with your order details."
 
 #: web/templates/web/order_success.html:89
 msgid "Nous te tiendrons informé de l'expédition de tes produits."
-msgstr ""
+msgstr "We will keep you informed of your product shipment."
 
 #: web/templates/web/order_success.html:93
 msgid "Mode démo : Pas de vrai paiement ni de livraison réelle."
-msgstr ""
+msgstr "Demo mode: No real payment or actual delivery."
 
 #: web/templates/web/order_success.html:101
-#, fuzzy
-#| msgid "Continuer la lecture"
 msgid "Continuer mes achats"
-msgstr "Continue reading"
+msgstr "Continue shopping"
 
 #: web/templates/web/order_success.html:104
-#, fuzzy
-#| msgid "Journal de bord"
 msgid "Tableau de bord"
-msgstr "Logbook"
+msgstr "Dashboard"
 
 #: web/templates/web/password_reset_complete.html:4
 msgid "Mot de passe réinitialisé - FitWell"
@@ -2661,7 +2651,8 @@ msgid ""
 "Ton mot de passe est mis à jour. Reprends ton ascension vers tes objectifs "
 "dès maintenant."
 msgstr ""
-"Your password is updated. Resume your ascent toward your goals right now."
+"Your password is updated. Resume your ascent toward your goals "
+"right now."
 
 #: web/templates/web/password_reset_confirm.html:4
 msgid "Nouveau Mot de Passe - FitWell"
@@ -2903,64 +2894,46 @@ msgid "Mes Succès"
 msgstr "My Successes"
 
 #: web/templates/web/program_detail.html:42
-#, fuzzy
-#| msgid "Semaine"
 msgid "Semaines"
-msgstr "Week"
+msgstr "Weeks"
 
 #: web/templates/web/program_detail.html:46
-#, fuzzy
-#| msgid "Tes séances"
 msgid "Minutes/séance"
-msgstr "Your sessions"
+msgstr "Minutes/session"
 
 #: web/templates/web/program_detail.html:54
-#, fuzzy
-#| msgid "Progression"
 msgid "Ta progression"
-msgstr "Progression"
+msgstr "Your progress"
 
 #: web/templates/web/program_detail.html:70
-#, fuzzy
-#| msgid "Commence par ces"
 msgid "Commencer ce programme"
-msgstr "Start with these"
+msgstr "Start this program"
 
 #: web/templates/web/program_detail.html:76
-#, fuzzy
-#| msgid "Connecte-toi pour participer"
 msgid "Connecte-toi pour commencer"
-msgstr "Log in to participate"
+msgstr "Log in to start"
 
 #: web/templates/web/program_detail.html:85
 msgid "Calendrier du programme"
-msgstr ""
+msgstr "Program calendar"
 
 #: web/templates/web/program_detail.html:105
-#, fuzzy
-#| msgid "Admin"
 msgid "min"
-msgstr "Admin"
+msgstr "min"
 
 #: web/templates/web/program_detail.html:136
-#, fuzzy
-#| msgid "Analyse Nutritionnelle"
 msgid "Conseils nutritionnels"
-msgstr "Nutritional Analysis"
+msgstr "Nutritional advice"
 
 #: web/templates/web/program_detail.html:145
 msgid "Matériel nécessaire"
-msgstr ""
+msgstr "Equipment needed"
 
 #: web/templates/web/programs_list.html:4
-#, fuzzy
-#| msgid "Entraînement"
 msgid "Programmes d'Entraînement"
-msgstr "Training"
+msgstr "Training Programs"
 
 #: web/templates/web/programs_list.html:12
-#, fuzzy
-#| msgid "Entraînement"
 msgid "d'Entraînement"
 msgstr "Training"
 
@@ -2969,6 +2942,8 @@ msgid ""
 "Des programmes structurés pour atteindre tes objectifs, que tu sois débutant "
 "ou avancé."
 msgstr ""
+"Structured programs to reach your goals, whether you're a beginner "
+"or advanced."
 
 #: web/templates/web/programs_list.html:44
 #: web/templates/web/workout/detail.html:42
@@ -2977,41 +2952,33 @@ msgstr "Duration"
 
 #: web/templates/web/programs_list.html:46 web/templates/web/shop_list.html:68
 msgid "Toutes"
-msgstr ""
+msgstr "All"
 
 #: web/templates/web/programs_list.html:47
-#, fuzzy
-#| msgid "En cours"
 msgid "jours"
-msgstr "In Progress"
+msgstr "days"
 
 #: web/templates/web/programs_list.html:48
 #: web/templates/web/programs_list.html:49
 #: web/templates/web/programs_list.html:50
-#, fuzzy
-#| msgid "Semaine"
 msgid "semaines"
-msgstr "Week"
+msgstr "weeks"
 
 #: web/templates/web/programs_list.html:66
 msgid "Programme en cours"
-msgstr ""
+msgstr "Current program"
 
 #: web/templates/web/programs_list.html:109
-#, fuzzy
-#| msgid "Séances"
 msgid "séances"
-msgstr "Sessions"
+msgstr "sessions"
 
 #: web/templates/web/programs_list.html:113
 msgid "Voir le programme"
-msgstr ""
+msgstr "View program"
 
 #: web/templates/web/programs_list.html:119
-#, fuzzy
-#| msgid "Aucun exercice trouvé"
 msgid "Aucun programme trouvé."
-msgstr "No exercises found"
+msgstr "No program found."
 
 #: web/templates/web/recipe_detail.html:17
 msgid "Retour à la cuisine"
@@ -3128,105 +3095,95 @@ msgstr "Already have an account?"
 
 #: web/templates/web/shop_detail.html:52 web/templates/web/shop_detail.html:116
 msgid "Rupture de stock"
-msgstr ""
+msgstr "Out of stock"
 
 #: web/templates/web/shop_detail.html:83
 msgid "Caractéristiques"
-msgstr ""
+msgstr "Features"
 
 #: web/templates/web/shop_detail.html:97
 msgid "Recommandé pour"
-msgstr ""
+msgstr "Recommended for"
 
 #: web/templates/web/shop_detail.html:107
-#, fuzzy
-#| msgid "Ajouter une activité"
 msgid "Ajouter au panier"
-msgstr "Add Activity"
+msgstr "Add to cart"
 
 #: web/templates/web/shop_detail.html:111
-#, fuzzy
-#| msgid "Connecte-toi pour participer"
 msgid "Connecte-toi pour acheter"
-msgstr "Log in to participate"
+msgstr "Log in to buy"
 
 #: web/templates/web/shop_detail.html:133
 msgid "Produits similaires"
-msgstr ""
+msgstr "Similar products"
 
 #: web/templates/web/shop_list.html:4
-#, fuzzy
-#| msgid "Ma Routine - FitWell"
 msgid "Boutique Sport FitWell"
-msgstr "My Routine - FitWell"
+msgstr "FitWell Sports Shop"
 
 #: web/templates/web/shop_list.html:17
 msgid "Équipements Premium"
-msgstr ""
+msgstr "Premium Equipment"
 
 #: web/templates/web/shop_list.html:20
-#, fuzzy
-#| msgid "FitWell"
 msgid "Sport FitWell"
-msgstr "FitWell"
+msgstr "FitWell Sport"
 
 #: web/templates/web/shop_list.html:23
 msgid ""
 "Découvre une sélection d'équipements de sport pour t'entraîner, progresser "
 "et compléter tes programmes FitWell."
 msgstr ""
+"Discover a selection of sports equipment to train, progress "
+"and complete your FitWell programs."
 
 #: web/templates/web/shop_list.html:66
-#, fuzzy
-#| msgid "Stratégie"
 msgid "Catégorie"
-msgstr "Strategy"
+msgstr "Category"
 
 #: web/templates/web/shop_list.html:79
 msgid "Prix min"
-msgstr ""
+msgstr "Min price"
 
 #: web/templates/web/shop_list.html:83
 msgid "Prix max"
-msgstr ""
+msgstr "Max price"
 
 #: web/templates/web/shop_list.html:87
 msgid "Recherche"
-msgstr ""
+msgstr "Search"
 
 #: web/templates/web/shop_list.html:88
 msgid "Rechercher..."
-msgstr ""
+msgstr "Search..."
 
 #: web/templates/web/shop_list.html:95
 msgid "Réinitialiser"
-msgstr ""
+msgstr "Reset"
 
 #: web/templates/web/shop_list.html:153
 msgid "En stock"
-msgstr ""
+msgstr "In stock"
 
 #: web/templates/web/shop_list.html:153
 msgid "Rupture"
-msgstr ""
+msgstr "Out of stock"
 
 #: web/templates/web/shop_list.html:174
 msgid "Ajouter"
-msgstr ""
+msgstr "Add"
 
 #: web/templates/web/shop_list.html:188
-#, fuzzy
-#| msgid "Aucun exercice trouvé"
 msgid "Aucun produit trouvé"
-msgstr "No exercises found"
+msgstr "No product found"
 
 #: web/templates/web/shop_list.html:189
 msgid "Essaie de modifier tes filtres ou découvre nos équipements recommandés."
-msgstr ""
+msgstr "Try modifying your filters or discover our recommended equipment."
 
 #: web/templates/web/shop_list.html:191
 msgid "Voir tous les produits"
-msgstr ""
+msgstr "View all products"
 
 #: web/templates/web/tools.html:4
 msgid "Outils - FitWell"
