@@ -5,10 +5,11 @@ import requests
 from django.conf import settings
 import os
 from decouple import config
+import hashlib
 
 PEXELS_API_KEY = config('PEXELS_API_KEY', default='')
 
-def get_pexels_image(query, orientation='portrait', size='large'):
+def get_pexels_image(query, orientation='portrait', size='large', page=1):
     """
     Récupère une image depuis Pexels API
     
@@ -16,6 +17,7 @@ def get_pexels_image(query, orientation='portrait', size='large'):
         query (str): Terme de recherche (ex: "fitness", "yoga", "nutrition")
         orientation (str): 'portrait', 'landscape', ou 'square'
         size (str): 'large', 'medium', ou 'small'
+        page (int): Page de résultats pour éviter les doublons
     
     Returns:
         str: URL de l'image ou None si erreur
@@ -31,7 +33,8 @@ def get_pexels_image(query, orientation='portrait', size='large'):
             "query": query,
             "per_page": 1,
             "orientation": orientation,
-            "size": size
+            "size": size,
+            "page": page
         }
         
         response = requests.get(url, headers=headers, params=params, timeout=10)
@@ -77,8 +80,11 @@ def get_unsplash_fallback(query, orientation='portrait'):
     else:  # square
         width, height = 1000, 1000
     
-    # Paramètres d'optimisation Unsplash
-    return f"https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w={width}&h={height}&q=80&auto=format&fit=crop&sig={hash(query) % 1000}"
+    # Utiliser un hash plus grand pour éviter les collisions
+    sig = abs(hash(query + orientation)) % 1000000
+    
+    # Paramètres d'optimisation Unsplash avec signature unique
+    return f"https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w={width}&h={height}&q=80&auto=format&fit=crop&sig={sig}"
 
 
 def get_exercise_image(muscle_group, difficulty, title=None):
@@ -95,10 +101,13 @@ def get_exercise_image(muscle_group, difficulty, title=None):
     """
     if title:
         # Utiliser le titre pour une recherche plus spécifique
-        query = f"{title} {muscle_group} exercise fitness"
+        query = f"{title} {muscle_group} exercise fitness {difficulty}"
     else:
-        query = f"{muscle_group} exercise fitness"
-    return get_pexels_image(query, orientation='portrait', size='large')
+        query = f"{muscle_group} exercise fitness {difficulty}"
+    
+    # Utiliser le hash de la query pour déterminer la page de manière déterministe
+    page = (hash(query) % 30) + 1
+    return get_pexels_image(query, orientation='portrait', size='large', page=page)
 
 
 def get_product_image(category, name=None):
@@ -117,7 +126,10 @@ def get_product_image(category, name=None):
         query = f"{name} {category} fitness equipment"
     else:
         query = f"{category} fitness equipment"
-    return get_pexels_image(query, orientation='square', size='large')
+    
+    # Utiliser le hash de la query pour déterminer la page de manière déterministe
+    page = (hash(query) % 20) + 1
+    return get_pexels_image(query, orientation='square', size='large', page=page)
 
 
 def get_recipe_image(category, title=None):
@@ -136,7 +148,10 @@ def get_recipe_image(category, title=None):
         query = f"{title} {category} healthy food"
     else:
         query = f"{category} healthy food"
-    return get_pexels_image(query, orientation='landscape', size='large')
+    
+    # Utiliser le hash de la query pour déterminer la page de manière déterministe
+    page = (hash(query) % 20) + 1
+    return get_pexels_image(query, orientation='landscape', size='large', page=page)
 
 
 def get_article_image(category, title=None):
@@ -155,4 +170,7 @@ def get_article_image(category, title=None):
         query = f"{title} {category} fitness lifestyle"
     else:
         query = f"{category} fitness lifestyle"
-    return get_pexels_image(query, orientation='landscape', size='large')
+    
+    # Utiliser le hash de la query pour déterminer la page de manière déterministe
+    page = (hash(query) % 20) + 1
+    return get_pexels_image(query, orientation='landscape', size='large', page=page)
