@@ -80,11 +80,36 @@ def get_unsplash_fallback(query, orientation='portrait'):
     else:  # square
         width, height = 1000, 1000
     
-    # Utiliser un hash plus grand pour éviter les collisions
-    sig = abs(hash(query + orientation)) % 1000000
+    # Liste de photos Unsplash différentes pour éviter les doublons
+    unsplash_photos = [
+        "1571019613454-1cb2f99b2d8b",
+        "1517836407607-4fe7391c4b6c",
+        "1583454190589-92478f8d3d2e",
+        "1534438327276-14e5300c3a48",
+        "1552674605-469456971-97c",
+        "1518310383802-5406943e45c",
+        "1597356994534-98029738948f",
+        "1576678927379-1a9f19b5b7c8",
+        "1534438327276-14e5300c3a48",
+        "1552674605-469456971-97c",
+        "1517836407607-4fe7391c4b6c",
+        "1583454190589-92478f8d3d2e",
+        "1518310383802-5406943e45c",
+        "1597356994534-98029738948f",
+        "1576678927379-1a9f19b5b7c8",
+        "1534438327276-14e5300c3a48",
+        "1552674605-469456971-97c",
+        "1517836407607-4fe7391c4b6c",
+        "1583454190589-92478f8d3d2e",
+        "1518310383802-5406943e45c",
+    ]
     
-    # Paramètres d'optimisation Unsplash avec signature unique
-    return f"https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w={width}&h={height}&q=80&auto=format&fit=crop&sig={sig}"
+    # Utiliser le hash de la query pour sélectionner une photo différente
+    photo_index = abs(hash(query + orientation)) % len(unsplash_photos)
+    photo_id = unsplash_photos[photo_index]
+    
+    # Paramètres d'optimisation Unsplash
+    return f"https://images.unsplash.com/photo-{photo_id}?w={width}&h={height}&q=80&auto=format&fit=crop"
 
 
 def get_exercise_image(muscle_group, difficulty, title=None):
