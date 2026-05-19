@@ -22,10 +22,8 @@ msgid "Exercice"
 msgstr "Exercise"
 
 #: api/models/favorite.py:18 web/templates/web/favorites.html:71
-#, fuzzy
-#| msgid "Recettes saines"
 msgid "Recette"
-msgstr "Healthy recipes"
+msgstr "Recipe"
 
 #: api/models/favorite.py:19 api/models/shop.py:58
 #: web/templates/web/favorites.html:72
@@ -159,10 +157,8 @@ msgstr "Elite (6-7 times per week)"
 
 #: api/models/program.py:16 web/templates/web/home.html:125
 #: web/templates/web/programs_list.html:27
-#, fuzzy
-#| msgid "Prise de masse"
 msgid "Prise de muscle"
-msgstr "Muscle Gain"
+msgstr "Muscle gain"
 
 #: api/models/program.py:17 web/templates/web/programs_list.html:28
 msgid "Force"
