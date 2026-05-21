@@ -5,7 +5,7 @@ pip install --upgrade pip
 pip install -r requirements.txt
 
 python manage.py compilemessages
-python manage.py collectstatic --noinput
+python manage.py collectstatic --noinput --clear --verbosity 2
 python manage.py migrate
 
 python manage.py seed_db || true
