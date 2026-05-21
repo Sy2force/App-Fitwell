@@ -267,6 +267,9 @@ LOCALE_PATHS = [
 # -----------------------------------------------------------------------------
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [
+    BASE_DIR / 'web' / 'static',
+]
 # 236. WhiteNoise Storage
 # Utiliser le stockage standard en développement pour éviter les erreurs de manifest
 if DEBUG:
