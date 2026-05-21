@@ -265,7 +265,7 @@ LOCALE_PATHS = [
 # -----------------------------------------------------------------------------
 # FICHIERS STATIQUES & MÉDIAS
 # -----------------------------------------------------------------------------
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 # 236. WhiteNoise Storage
 # Utiliser le stockage standard en développement pour éviter les erreurs de manifest
