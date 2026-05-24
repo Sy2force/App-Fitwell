@@ -2,17 +2,17 @@ from django.utils.translation import gettext as _
 
 def calculate_bmr_tdee(age, gender, height, weight, activity_level):
     """
-    Calcule le métabolisme de base (BMR) et la dépense énergétique totale (TDEE).
+    Calculates basal metabolic rate (BMR) and total daily energy expenditure (TDEE).
     
     Args:
-        age (int): Âge en années
-        gender (str): Genre ('male' ou 'female')
-        height (int): Taille en cm
-        weight (int): Poids en kg
-        activity_level (str): Niveau d'activité ('sedentary', 'moderate', 'active', 'elite')
+        age (int): Age in years
+        gender (str): Gender ('male' or 'female')
+        height (int): Height in cm
+        weight (int): Weight in kg
+        activity_level (str): Activity level ('sedentary', 'moderate', 'active', 'elite')
     
     Returns:
-        int: TDEE (Total Daily Energy Expenditure) en calories
+        int: TDEE (Total Daily Energy Expenditure) in calories
     """
     # Mifflin-St Jeor Equation
     bmr = 10 * weight + 6.25 * height - 5 * age
@@ -31,14 +31,14 @@ def calculate_bmr_tdee(age, gender, height, weight, activity_level):
 
 def calculate_macros(weight, target_calories):
     """
-    Calcule la répartition des macronutriments (protéines, glucides, lipides).
+    Calculates macronutrient distribution (protein, carbs, fats).
     
     Args:
-        weight (int): Poids en kg
-        target_calories (int): Calories cibles journalières
+        weight (int): Weight in kg
+        target_calories (int): Target daily calories
     
     Returns:
-        dict: Répartition des macros en grammes
+        dict: Macro distribution in grams
     """
     # Protein: 2g per kg of bodyweight (Standard for active individuals)
     protein_g = int(weight * 2)
@@ -62,14 +62,14 @@ def calculate_macros(weight, target_calories):
 
 def get_meal_plan():
     """
-    Génère un plan de repas type avec recommandations.
+    Generates a sample meal plan with recommendations.
     
     Returns:
-        str: Plan de repas formaté
+        str: Formatted meal plan
     """
     return {
-        "breakfast": _("Flocons d'avoine, whey protéine & fruits rouges"),
-        "lunch": _("Blanc de poulet, quinoa, légumes rôtis"),
-        "snack": _("Yaourt grec & amandes"),
-        "dinner": _("Pavé de saumon avec patate douce")
+        "breakfast": _("Oatmeal, whey protein & berries"),
+        "lunch": _("Chicken breast, quinoa, roasted vegetables"),
+        "snack": _("Greek yogurt & almonds"),
+        "dinner": _("Salmon fillet with sweet potato")
     }

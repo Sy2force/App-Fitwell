@@ -2,8 +2,8 @@ from api.models import Badge, UserBadge, WorkoutSession, Comment
 
 def check_and_award_badges(user):
     """
-    Vérifie et attribue automatiquement les badges à un utilisateur.
-    Retourne la liste des nouveaux badges débloqués.
+    Checks and automatically awards badges to a user.
+    Returns the list of newly unlocked badges.
     """
     newly_unlocked = []
     

@@ -1,14 +1,14 @@
 """
-Signals — capture l'IP et le User-Agent à chaque connexion utilisateur,
-incrémente le compteur de connexions. Ces infos s'affichent dans le
-dashboard admin custom (/en/admin-panel/).
+Signals — captures IP and User-Agent on each user login,
+increments login counter. This info is displayed in the
+custom admin dashboard (/en/admin-panel/).
 """
 from django.contrib.auth.signals import user_logged_in
 from django.dispatch import receiver
 
 
 def get_client_ip(request) -> str:
-    """Retourne l'IP réelle du client (en tenant compte des proxies type Render/Cloudflare)."""
+    """Returns the real client IP (taking into account proxies like Render/Cloudflare)."""
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
     if x_forwarded_for:
         return x_forwarded_for.split(',')[0].strip()
@@ -17,7 +17,7 @@ def get_client_ip(request) -> str:
 
 @receiver(user_logged_in)
 def track_user_login(sender, request, user, **kwargs):
-    """À chaque login : enregistre IP, user-agent, incrémente le compteur."""
+    """On each login: records IP, user-agent, increments counter."""
     if request is None:
         return
     user.last_login_ip = get_client_ip(request) or None

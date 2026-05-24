@@ -3,13 +3,13 @@ from django.urls import resolve, Resolver404
 
 class OnboardingMiddleware:
     """
-    Middleware pour rediriger les utilisateurs non-onboardés vers le flow d'onboarding.
-    Utilise les noms d'URL pour être robuste face à l'i18n.
+    Middleware to redirect non-onboarded users to the onboarding flow.
+    Uses URL names to be robust to i18n.
     """
     def __init__(self, get_response):
         self.get_response = get_response
         
-        # Noms d'URL qui ne nécessitent pas l'onboarding
+        # URL names that don't require onboarding
         self.exempt_url_names = [
             'home',
             'login',
@@ -27,7 +27,7 @@ class OnboardingMiddleware:
             'set_language', # For i18n switcher
         ]
         
-        # Préfixes de chemin toujours exemptés (Admin, API, Static)
+        # Path prefixes always exempt (Admin, API, Static)
         self.exempt_prefixes = [
             '/admin/',
             '/api/',
@@ -37,9 +37,9 @@ class OnboardingMiddleware:
         ]
     
     def __call__(self, request):
-        # Vérifier si l'utilisateur est authentifié
+        # Check if user is authenticated
         if request.user.is_authenticated:
-            # Vérifier si l'utilisateur n'est pas onboardé
+            # Check if user is not onboarded
             if not request.user.is_onboarded:
                 path = request.path_info
                 
@@ -58,7 +58,7 @@ class OnboardingMiddleware:
                 except Resolver404:
                     pass # 404s will be handled by Django later
                 
-                # Si on est ici, c'est que l'URL est protégée et l'user non onboardé
+                # If we're here, the URL is protected and user is not onboarded
                 return redirect('onboarding_welcome')
         
         response = self.get_response(request)

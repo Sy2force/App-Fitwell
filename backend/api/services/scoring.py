@@ -2,7 +2,7 @@ from django.utils.translation import gettext as _
 
 def calculate_health_score(height, weight, activity_level):
     """
-    Calcule le score de santé global et fournit une analyse.
+    Calculates overall health score and provides analysis.
     """
     height_m = height / 100
     bmi = weight / (height_m ** 2)
@@ -12,16 +12,16 @@ def calculate_health_score(height, weight, activity_level):
     # BMI Scoring
     if 18.5 <= bmi <= 24.9:
         bmi_score = 90
-        message = _("Votre profil biométrique est excellent. Maintenez cette fondation.")
+        message = _("Your biometric profile is excellent. Maintain this foundation.")
     elif 25 <= bmi <= 29.9:
         bmi_score = 75
-        message = _("Légère surcharge pondérale détectée. Le plan inclut un déficit calorique modéré.")
+        message = _("Slight overweight detected. The plan includes a moderate calorie deficit.")
     elif bmi < 18.5:
         bmi_score = 70
-        message = _("Indice de masse corporelle bas. Focus sur l'hypertrophie et le surplus calorique.")
+        message = _("Low body mass index. Focus on hypertrophy and calorie surplus.")
     else:
         bmi_score = 60
-        message = _("Optimisation métabolique requise. Priorité à l'activité non-sportive (NEAT).")
+        message = _("Metabolic optimization required. Priority to non-sport activity (NEAT).")
 
     # Activity Adjustment
     activity_bonus = {

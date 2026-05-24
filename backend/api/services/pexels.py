@@ -1,5 +1,5 @@
 """
-Service Pexels pour récupérer des images optimisées
+Pexels service for retrieving optimized images
 """
 import requests
 from django.conf import settings
@@ -11,19 +11,19 @@ PEXELS_API_KEY = config('PEXELS_API_KEY', default='')
 
 def get_pexels_image(query, orientation='portrait', size='large', page=1):
     """
-    Récupère une image depuis Pexels API
+    Retrieves an image from Pexels API
     
     Args:
-        query (str): Terme de recherche (ex: "fitness", "yoga", "nutrition")
-        orientation (str): 'portrait', 'landscape', ou 'square'
-        size (str): 'large', 'medium', ou 'small'
-        page (int): Page de résultats pour éviter les doublons
+        query (str): Search term (e.g., "fitness", "yoga", "nutrition")
+        orientation (str): 'portrait', 'landscape', or 'square'
+        size (str): 'large', 'medium', or 'small'
+        page (int): Results page to avoid duplicates
     
     Returns:
-        str: URL de l'image ou None si erreur
+        str: Image URL or None if error
     """
     if not PEXELS_API_KEY:
-        # Fallback vers Unsplash si pas de clé API
+        # Fallback to Unsplash if no API key
         return get_unsplash_fallback(query, orientation)
     
     try:
@@ -42,10 +42,10 @@ def get_pexels_image(query, orientation='portrait', size='large', page=1):
         if response.status_code == 200:
             data = response.json()
             if data.get('photos'):
-                # Récupérer l'image optimisée
+                # Retrieve optimized image
                 photo = data['photos'][0]
                 
-                # Choisir la taille appropriée
+                # Choose appropriate size
                 if size == 'large':
                     return photo['src']['large']
                 elif size == 'medium':
@@ -53,26 +53,26 @@ def get_pexels_image(query, orientation='portrait', size='large', page=1):
                 else:
                     return photo['src']['small']
         
-        # Fallback si pas de résultat
+        # Fallback if no result
         return get_unsplash_fallback(query, orientation)
         
     except Exception as e:
-        print(f"Erreur Pexels API: {e}")
+        print(f"Pexels API error: {e}")
         return get_unsplash_fallback(query, orientation)
 
 
 def get_unsplash_fallback(query, orientation='portrait'):
     """
-    Fallback vers Unsplash si Pexels échoue
+    Fallback to Unsplash if Pexels fails
     
     Args:
-        query (str): Terme de recherche
-        orientation (str): 'portrait' ou 'landscape'
+        query (str): Search term
+        orientation (str): 'portrait' or 'landscape'
     
     Returns:
-        str: URL Unsplash optimisée
+        str: Optimized Unsplash URL
     """
-    # Dimensions optimisées
+    # Optimized dimensions
     if orientation == 'portrait':
         width, height = 800, 1000
     elif orientation == 'landscape':
@@ -80,7 +80,7 @@ def get_unsplash_fallback(query, orientation='portrait'):
     else:  # square
         width, height = 1000, 1000
     
-    # Liste de photos Unsplash différentes pour éviter les doublons
+    # List of different Unsplash photos to avoid duplicates
     unsplash_photos = [
         "1571019613454-1cb2f99b2d8b",
         "1517836407607-4fe7391c4b6c",
@@ -104,98 +104,98 @@ def get_unsplash_fallback(query, orientation='portrait'):
         "1518310383802-5406943e45c",
     ]
     
-    # Utiliser le hash de la query pour sélectionner une photo différente
+    # Use query hash to select a different photo
     photo_index = abs(hash(query + orientation)) % len(unsplash_photos)
     photo_id = unsplash_photos[photo_index]
     
-    # Paramètres d'optimisation Unsplash
+    # Unsplash optimization parameters
     return f"https://images.unsplash.com/photo-{photo_id}?w={width}&h={height}&q=80&auto=format&fit=crop"
 
 
 def get_exercise_image(muscle_group, difficulty, title=None):
     """
-    Récupère une image d'exercice optimisée
+    Retrieves an optimized exercise image
     
     Args:
-        muscle_group (str): Groupe musculaire
-        difficulty (str): Difficulté
-        title (str): Titre de l'exercice (optionnel)
+        muscle_group (str): Muscle group
+        difficulty (str): Difficulty
+        title (str): Exercise title (optional)
     
     Returns:
-        str: URL de l'image
+        str: Image URL
     """
     if title:
-        # Utiliser le titre pour une recherche plus spécifique
+        # Use title for more specific search
         query = f"{title} {muscle_group} exercise fitness {difficulty}"
     else:
         query = f"{muscle_group} exercise fitness {difficulty}"
     
-    # Utiliser le hash de la query pour déterminer la page de manière déterministe
+    # Use query hash to deterministically determine page
     page = (hash(query) % 30) + 1
     return get_pexels_image(query, orientation='portrait', size='large', page=page)
 
 
 def get_product_image(category, name=None):
     """
-    Récupère une image de produit optimisée
+    Retrieves an optimized product image
     
     Args:
-        category (str): Catégorie du produit
-        name (str): Nom du produit (optionnel)
+        category (str): Product category
+        name (str): Product name (optional)
     
     Returns:
-        str: URL de l'image
+        str: Image URL
     """
     if name:
-        # Utiliser le nom pour une recherche plus spécifique
+        # Use name for more specific search
         query = f"{name} {category} fitness equipment"
     else:
         query = f"{category} fitness equipment"
     
-    # Utiliser le hash de la query pour déterminer la page de manière déterministe
+    # Use query hash to deterministically determine page
     page = (hash(query) % 20) + 1
     return get_pexels_image(query, orientation='square', size='large', page=page)
 
 
 def get_recipe_image(category, title=None):
     """
-    Récupère une image de recette optimisée
+    Retrieves an optimized recipe image
     
     Args:
-        category (str): Catégorie de la recette
-        title (str): Titre de la recette (optionnel)
+        category (str): Recipe category
+        title (str): Recipe title (optional)
     
     Returns:
-        str: URL de l'image
+        str: Image URL
     """
     if title:
-        # Utiliser le titre pour une recherche plus spécifique
+        # Use title for more specific search
         query = f"{title} {category} healthy food"
     else:
         query = f"{category} healthy food"
     
-    # Utiliser le hash de la query pour déterminer la page de manière déterministe
+    # Use query hash to deterministically determine page
     page = (hash(query) % 20) + 1
     return get_pexels_image(query, orientation='landscape', size='large', page=page)
 
 
 def get_article_image(category, title=None):
     """
-    Récupère une image d'article optimisée
+    Retrieves an optimized article image
     
     Args:
-        category (str): Catégorie de l'article
-        title (str): Titre de l'article (optionnel)
+        category (str): Article category
+        title (str): Article title (optional)
     
     Returns:
-        str: URL de l'image
+        str: Image URL
     """
     if title:
-        # Utiliser le titre pour une recherche plus spécifique
+        # Use title for more specific search
         query = f"{title} {category} fitness lifestyle"
     else:
         query = f"{category} fitness lifestyle"
     
-    # Utiliser le hash de la query pour déterminer la page de manière déterministe
+    # Use query hash to deterministically determine page
     page = (hash(query) % 20) + 1
     return get_pexels_image(query, orientation='landscape', size='large', page=page)

@@ -50,7 +50,7 @@ class Command(BaseCommand):
                 user=demo_user,
                 content_type='exercise',
                 exercise=exercise,
-                defaults={'notes': 'Excellent exercice pour le haut du corps'}
+                defaults={'notes': 'Excellent exercise for upper body'}
             )
         
         for recipe in recipes:
@@ -58,7 +58,7 @@ class Command(BaseCommand):
                 user=demo_user,
                 content_type='recipe',
                 recipe=recipe,
-                defaults={'notes': 'Délicieuse et facile à préparer'}
+                defaults={'notes': 'Delicious and easy to prepare'}
             )
         
         for product in products:
@@ -66,7 +66,7 @@ class Command(BaseCommand):
                 user=demo_user,
                 content_type='product',
                 product=product,
-                defaults={'notes': 'Ajouté à ma liste de souhaits'}
+                defaults={'notes': 'Added to my wishlist'}
             )
         
         self.stdout.write(self.style.SUCCESS(f"Added {len(exercises) + len(recipes) + len(products)} favorites"))

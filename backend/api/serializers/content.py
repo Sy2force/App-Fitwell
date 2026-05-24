@@ -3,7 +3,7 @@ from api.models import Article, Comment, Category, Tag, Recipe
 
 
 class RecipeSerializer(serializers.ModelSerializer):
-    """Sérializer pour les recettes nutrition."""
+    """Serializer for nutrition recipes."""
 
     class Meta:
         model = Recipe
@@ -12,7 +12,7 @@ class RecipeSerializer(serializers.ModelSerializer):
 
 
 class TagSerializer(serializers.ModelSerializer):
-    """Sérializer simple pour exposer les tags."""
+    """Simple serializer to expose tags."""
 
     class Meta:
         model = Tag
@@ -28,10 +28,10 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class TagsRelatedField(serializers.Field):
     """
-    Champ M2M custom pour Tags :
-    - lecture : liste de noms ['python', 'fitness']
-    - écriture : accepte une liste de noms (création auto si inexistants)
-    Cela évite à l'utilisateur de devoir manipuler des IDs.
+    Custom M2M field for Tags:
+    - read: list of names ['python', 'fitness']
+    - write: accepts a list of names (auto-creation if non-existent)
+    This avoids the user having to manipulate IDs.
     """
 
     def to_representation(self, value):
@@ -39,7 +39,7 @@ class TagsRelatedField(serializers.Field):
 
     def to_internal_value(self, data):
         if not isinstance(data, list):
-            raise serializers.ValidationError("`tags` doit être une liste de noms.")
+            raise serializers.ValidationError("`tags` must be a list of names.")
         tags = []
         for raw in data:
             name = str(raw).strip().lower()

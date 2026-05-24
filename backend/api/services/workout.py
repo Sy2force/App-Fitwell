@@ -2,77 +2,77 @@ from django.utils.translation import gettext as _
 
 def generate_split_training(goal, activity_level):
     """
-    Génère un programme d'entraînement adapté au niveau et à l'objectif.
+    Generates a training program adapted to level and goal.
     
     Args:
-        goal (str): Objectif ('weight_loss', 'muscle_gain', 'maintenance')
-        activity_level (str): Niveau d'activité
+        goal (str): Goal ('weight_loss', 'muscle_gain', 'maintenance')
+        activity_level (str): Activity level
     
     Returns:
-        str: Programme d'entraînement formaté
+        str: Formatted training program
     """
     if activity_level in ['elite', 'active']:
-        # PPL Split pour utilisateurs actifs
+        # PPL Split for active users
         return {
             'type': 'PPL',
-            'frequency': '6x/semaine' if activity_level == 'elite' else '3x/semaine',
+            'frequency': '6x/week' if activity_level == 'elite' else '3x/week',
             'split': {
                 'push': {
-                    'focus': 'Pectoraux, Épaules, Triceps',
-                    'exercises': ['Développé Couché', 'Développé Incliné', 'Développé Militaire', 'Élévations Latérales', 'Dips Triceps'],
+                    'focus': 'Chest, Shoulders, Triceps',
+                    'exercises': ['Bench Press', 'Incline Press', 'Military Press', 'Lateral Raises', 'Tricep Dips'],
                     'sets': '15-20 sets total',
                     'reps': '8-12 reps' if goal == 'muscle_gain' else '12-15 reps'
                 },
                 'pull': {
-                    'focus': 'Dos, Biceps',
-                    'exercises': ['Tractions', 'Rowing Barre', 'Tirage Vertical', 'Rowing Haltère', 'Curls Biceps'],
+                    'focus': 'Back, Biceps',
+                    'exercises': ['Pull-ups', 'Barbell Row', 'Lat Pulldown', 'Dumbbell Row', 'Bicep Curls'],
                     'sets': '15-20 sets total',
                     'reps': '8-12 reps' if goal == 'muscle_gain' else '12-15 reps'
                 },
                 'legs': {
-                    'focus': 'Jambes, Abdominaux',
-                    'exercises': ['Squats', 'Soulevé de Terre', 'Leg Press', 'Fentes', 'Planche'],
+                    'focus': 'Legs, Abs',
+                    'exercises': ['Squats', 'Deadlift', 'Leg Press', 'Lunges', 'Plank'],
                     'sets': '15-20 sets total',
                     'reps': '8-12 reps' if goal == 'muscle_gain' else '12-15 reps'
                 }
             }
         }
     else:
-        # Full Body pour débutants/modérés
+        # Full Body for beginners/moderate
         return {
             'type': 'Full Body',
-            'frequency': '3x/semaine',
-            'exercises': ['Squats', 'Développé Couché', 'Rowing Barre', 'Développé Militaire', 'Tractions', 'Planche'],
-            'sets': '3-4 sets par exercice',
+            'frequency': '3x/week',
+            'exercises': ['Squats', 'Bench Press', 'Barbell Row', 'Military Press', 'Pull-ups', 'Plank'],
+            'sets': '3-4 sets per exercise',
             'reps': '10-12 reps' if goal == 'muscle_gain' else '12-15 reps',
-            'rest': '90-120 secondes'
+            'rest': '90-120 seconds'
         }
 
 def get_workout_schedule(activity_level):
     """
-    Détermine la fréquence d'entraînement recommandée.
+    Determines recommended training frequency.
     
     Args:
-        activity_level (str): Niveau d'activité
+        activity_level (str): Activity level
     
     Returns:
-        str: Planning d'entraînement hebdomadaire
+        str: Weekly training schedule
     """
-    schedule = _("4 jours/semaine - split haut/bas")
+    schedule = _("4 days/week - upper/lower split")
     if activity_level in ['active', 'elite']:
-        schedule = _("6 jours/semaine - Split PPL (Push/Pull/Legs)")
+        schedule = _("6 days/week - PPL Split (Push/Pull/Legs)")
     return schedule
 
 def get_base_exercises():
     """
-    Retourne la liste des exercices de base recommandés.
+    Returns the list of recommended base exercises.
     
     Returns:
-        str: Liste des exercices fondamentaux
+        str: List of fundamental exercises
     """
     return [
-        _("Mouvements composés (squat, soulevé de terre, développé couché)"),
-        _("Travail d'accessoires (haltères, poulies)"),
-        _("Mobilité (10 min avant séance)"),
-        _("Cardio zone 2 (2x 30min)")
+        _("Compound movements (squat, deadlift, bench press)"),
+        _("Accessory work (dumbbells, pulleys)"),
+        _("Mobility (10 min before session)"),
+        _("Zone 2 cardio (2x 30min)")
     ]

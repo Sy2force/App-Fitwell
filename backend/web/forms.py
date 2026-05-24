@@ -5,8 +5,8 @@ from api.models import User, WellnessPlan, Comment, CustomEvent, DailyLog, Exerc
 
 class DailyLogForm(forms.ModelForm):
     """
-    Formulaire pour le journal quotidien.
-    Champs : Eau, Sommeil, Humeur, Poids, Notes.
+    Form for daily journal.
+    Fields: Water, Sleep, Mood, Weight, Notes.
     """
     class Meta:
         model = DailyLog
@@ -16,14 +16,14 @@ class DailyLogForm(forms.ModelForm):
             'sleep_hours': forms.NumberInput(attrs={'step': '0.5', 'placeholder': '7.5'}),
             'mood': forms.NumberInput(attrs={'type': 'range', 'min': '1', 'max': '10', 'class': 'w-full'}),
             'weight': forms.NumberInput(attrs={'step': '0.1', 'placeholder': 'kg'}),
-            'notes': forms.Textarea(attrs={'rows': 3, 'placeholder': _('Notes sur la journée...')}),
+            'notes': forms.Textarea(attrs={'rows': 3, 'placeholder': _('Notes about your day...')}),
         }
         labels = {
-            'water_liters': _('Eau (L)'),
-            'sleep_hours': _('Sommeil (h)'),
-            'mood': _('Humeur (1-10)'),
-            'weight': _('Poids (kg)'),
-            'notes': _('Journal de bord'),
+            'water_liters': _('Water (L)'),
+            'sleep_hours': _('Sleep (h)'),
+            'mood': _('Mood (1-10)'),
+            'weight': _('Weight (kg)'),
+            'notes': _('Daily journal'),
         }
 
     def __init__(self, *args, **kwargs):
@@ -35,32 +35,32 @@ class DailyLogForm(forms.ModelForm):
 
 class CustomEventForm(forms.ModelForm):
     """
-    Formulaire pour ajouter un événement personnalisé à l'agenda.
+    Form to add a custom event to the calendar.
     """
     class Meta:
         model = CustomEvent
         fields = ['title', 'event_type', 'day_of_week', 'start_time', 'end_time', 'priority']
         widgets = {
-            'title': forms.TextInput(attrs={'placeholder': _('Ex: Séance Fitness, Routine Matinale')}),
+            'title': forms.TextInput(attrs={'placeholder': _('Ex: Fitness Session, Morning Routine')}),
             'day_of_week': forms.Select(choices=[
-                ('monday', _('Lundi')),
-                ('tuesday', _('Mardi')),
-                ('wednesday', _('Mercredi')),
-                ('thursday', _('Jeudi')),
-                ('friday', _('Vendredi')),
-                ('saturday', _('Samedi')),
-                ('sunday', _('Dimanche')),
+                ('monday', _('Monday')),
+                ('tuesday', _('Tuesday')),
+                ('wednesday', _('Wednesday')),
+                ('thursday', _('Thursday')),
+                ('friday', _('Friday')),
+                ('saturday', _('Saturday')),
+                ('sunday', _('Sunday')),
             ]),
             'start_time': forms.TimeInput(attrs={'type': 'time'}),
             'end_time': forms.TimeInput(attrs={'type': 'time'}),
         }
         labels = {
-            'title': _('Titre de l\'activité'),
+            'title': _('Activity title'),
             'event_type': _('Type'),
-            'day_of_week': _('Jour'),
-            'start_time': _('Début'),
-            'end_time': _('Fin'),
-            'priority': _('Priorité'),
+            'day_of_week': _('Day'),
+            'start_time': _('Start'),
+            'end_time': _('End'),
+            'priority': _('Priority'),
         }
 
     def __init__(self, *args, **kwargs):
@@ -71,8 +71,8 @@ class CustomEventForm(forms.ModelForm):
 
 class CustomUserCreationForm(UserCreationForm):
     """
-    Formulaire d'inscription personnalisé.
-    Utilise l'email et le username.
+    Custom registration form.
+    Uses email and username.
     """
     class Meta:
         model = User
@@ -85,13 +85,13 @@ class CustomUserCreationForm(UserCreationForm):
                 'class': 'w-full bg-white border border-gray-100 p-4 rounded-2xl text-tse_text placeholder-gray-300 focus:border-tse_accent focus:ring-0 transition-all font-medium',
             })
             if field_name == 'username':
-                field.widget.attrs['placeholder'] = _("Ton nom")
+                field.widget.attrs['placeholder'] = _("Your name")
             elif field_name == 'email':
-                field.widget.attrs['placeholder'] = _("ton@email.com")
+                field.widget.attrs['placeholder'] = _("your@email.com")
 
 class CustomAuthenticationForm(AuthenticationForm):
     """
-    Formulaire de connexion stylisé.
+    Styled login form.
     """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -99,24 +99,24 @@ class CustomAuthenticationForm(AuthenticationForm):
             field.widget.attrs.update({
                 'class': 'w-full bg-white border border-gray-100 p-4 rounded-2xl text-tse_text placeholder-gray-300 focus:border-tse_accent focus:ring-0 transition-all font-medium',
             })
-        self.fields['username'].widget.attrs['placeholder'] = _("Nom ou Email")
-        self.fields['password'].widget.attrs['placeholder'] = _("Ton mot de passe")
+        self.fields['username'].widget.attrs['placeholder'] = _("Name or Email")
+        self.fields['password'].widget.attrs['placeholder'] = _("Your password")
 
 class CustomPasswordResetForm(PasswordResetForm):
     """
-    Formulaire de demande de réinitialisation de mot de passe.
+    Password reset request form.
     """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
             field.widget.attrs.update({
                 'class': 'w-full bg-white border border-gray-100 p-4 rounded-2xl text-tse_text placeholder-gray-300 focus:border-tse_accent focus:ring-0 transition-all font-medium',
-                'placeholder': _('ton@email.com')
+                'placeholder': _('your@email.com')
             })
 
 class CustomSetPasswordForm(SetPasswordForm):
     """
-    Formulaire de définition du nouveau mot de passe.
+    New password setting form.
     """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -127,54 +127,54 @@ class CustomSetPasswordForm(SetPasswordForm):
 
 class WellnessPlanForm(forms.ModelForm):
     """
-    Formulaire pour générer un plan bien-être (IA).
-    Recueille les données biométriques.
+    Form to generate a wellness plan (AI).
+    Collects biometric data.
     """
     class Meta:
         model = WellnessPlan
         fields = ['age', 'gender', 'height', 'weight', 'goal', 'activity_level']
         labels = {
-            'age': _('Âge'),
-            'gender': _('Genre'),
-            'height': _('Taille'),
-            'weight': _('Poids'),
-            'goal': _('Objectif'),
-            'activity_level': _("Niveau d'activité"),
+            'age': _('Age'),
+            'gender': _('Gender'),
+            'height': _('Height'),
+            'weight': _('Weight'),
+            'goal': _('Goal'),
+            'activity_level': _("Activity level"),
         }
         
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Definition des classes communes
+        # Definition of common classes
         common_classes = 'w-full bg-white border border-gray-100 p-4 rounded-2xl text-tse_text placeholder-gray-300 focus:border-tse_accent focus:ring-0 transition-all font-bold appearance-none'
         
         for field_name, field in self.fields.items():
             field.widget.attrs.update({'class': common_classes})
             
-        # Placeholders specifiques
+        # Specific placeholders
         self.fields['height'].widget.attrs['placeholder'] = 'cm'
         self.fields['weight'].widget.attrs['placeholder'] = 'kg'
 
     def clean_height(self):
         height = self.cleaned_data.get('height')
         if height is not None and height <= 0:
-            raise forms.ValidationError(_("La taille doit être supérieure à 0."))
+            raise forms.ValidationError(_("Height must be greater than 0."))
         return height
 
     def clean_weight(self):
         weight = self.cleaned_data.get('weight')
         if weight is not None and weight <= 0:
-            raise forms.ValidationError(_("Le poids doit être supérieur à 0."))
+            raise forms.ValidationError(_("Weight must be greater than 0."))
         return weight
     
     def clean_age(self):
         age = self.cleaned_data.get('age')
         if age is not None and age <= 0:
-            raise forms.ValidationError(_("L'âge doit être supérieur à 0."))
+            raise forms.ValidationError(_("Age must be greater than 0."))
         return age
 
 class CommentForm(forms.ModelForm):
     """
-    Formulaire pour ajouter un commentaire sur un article.
+    Form to add a comment on an article.
     """
     class Meta:
         model = Comment
@@ -183,16 +183,16 @@ class CommentForm(forms.ModelForm):
             'content': forms.Textarea(attrs={
                 'class': 'w-full bg-white border border-gray-100 p-6 rounded-2xl text-tse_text placeholder-gray-300 focus:border-tse_accent focus:ring-0 transition-all font-medium',
                 'rows': 4,
-                'placeholder': _('Partage ton avis...')
+                'placeholder': _('Share your opinion...')
             })
         }
         labels = {
-            'content': _('Votre commentaire')
+            'content': _('Your comment')
         }
 
 class UserUpdateForm(forms.ModelForm):
     """
-    Formulaire de mise à jour du profil utilisateur (Email, Bio, Avatar).
+    User profile update form (Email, Bio, Avatar).
     """
     class Meta:
         model = User
@@ -200,27 +200,27 @@ class UserUpdateForm(forms.ModelForm):
         widgets = {
             'email': forms.EmailInput(attrs={
                 'class': 'w-full bg-white border border-gray-100 p-4 rounded-2xl text-tse_text placeholder-gray-300 focus:border-tse_accent focus:ring-0 transition-all font-medium',
-                'placeholder': _('ton@email.com')
+                'placeholder': _('your@email.com')
             }),
             'bio': forms.Textarea(attrs={
                 'class': 'w-full bg-white border border-gray-100 p-4 rounded-2xl text-tse_text placeholder-gray-300 focus:border-tse_accent focus:ring-0 transition-all font-medium',
                 'rows': 3,
-                'placeholder': _('Parle-nous de tes objectifs...')
+                'placeholder': _('Tell us about your goals...')
             }),
             'avatar': forms.TextInput(attrs={
                 'class': 'w-full bg-white border border-gray-100 p-4 rounded-2xl text-tse_text placeholder-gray-300 focus:border-tse_accent focus:ring-0 transition-all font-medium',
-                'placeholder': _('URL de ton image')
+                'placeholder': _('Your image URL')
             })
         }
         labels = {
             'email': _('Email'),
-            'bio': _('Biographie'),
+            'bio': _('Biography'),
             'avatar': _('Avatar (URL)'),
         }
 
 class CustomPasswordChangeForm(PasswordChangeForm):
     """
-    Formulaire de changement de mot de passe.
+    Password change form.
     """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -231,26 +231,26 @@ class CustomPasswordChangeForm(PasswordChangeForm):
 
 class CustomWorkoutForm(forms.Form):
     """
-    Formulaire pour configurer une séance d'entraînement.
-    Permet de sélectionner les exercices et les temps de travail/repos.
+    Form to configure a training session.
+    Allows selecting exercises and work/rest times.
     """
     exercises = forms.ModelMultipleChoiceField(
         queryset=Exercise.objects.all(),
         widget=forms.CheckboxSelectMultiple,
-        label=_('Choisis tes mouvements')
+        label=_('Choose your movements')
     )
     work_duration = forms.IntegerField(
         initial=45,
         min_value=10,
         max_value=300,
-        label=_('Durée effort (sec)'),
+        label=_('Work duration (sec)'),
         widget=forms.NumberInput(attrs={'class': 'w-full bg-white border border-gray-100 p-4 rounded-2xl text-tse_text focus:border-tse_accent focus:ring-0 transition-all font-bold'})
     )
     rest_duration = forms.IntegerField(
         initial=15,
         min_value=5,
         max_value=300,
-        label=_('Durée repos (sec)'),
+        label=_('Rest duration (sec)'),
         widget=forms.NumberInput(attrs={'class': 'w-full bg-white border border-gray-100 p-4 rounded-2xl text-tse_text focus:border-tse_accent focus:ring-0 transition-all font-bold'})
     )
 

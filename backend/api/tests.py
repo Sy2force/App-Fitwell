@@ -17,16 +17,16 @@ class AccountTests(APITestCase):
         self.assertEqual(User.objects.get().username, 'testuser')
 
 class ArticleTests(APITestCase):
-    """Tests conformes au cahier des charges Django Final Project."""
+    """Tests compliant with Django Final Project specification."""
 
     def setUp(self):
-        # Cahier des charges : utilisateur authentifié (pas nécessairement admin) peut créer.
+        # Specification: authenticated user (not necessarily admin) can create.
         self.user = User.objects.create_user(username='alice', email='alice@test.com', password='alicepass')
         self.other = User.objects.create_user(username='bob', email='bob@test.com', password='bobpass')
         self.category = Category.objects.create(name='Health')
 
     def test_create_article_authenticated(self):
-        """Un utilisateur authentifié (non-admin) peut créer un article."""
+        """An authenticated user (non-admin) can create an article."""
         self.client.force_authenticate(user=self.user)
         url = reverse('api:article-list')
         data = {'title': 'Test Article', 'content': 'Content here', 'category': self.category.id}
@@ -35,21 +35,21 @@ class ArticleTests(APITestCase):
         self.assertEqual(Article.objects.get().author, self.user)
 
     def test_create_article_anonymous_forbidden(self):
-        """Un utilisateur anonyme ne peut PAS créer un article."""
+        """An anonymous user CANNOT create an article."""
         url = reverse('api:article-list')
         data = {'title': 'Should Fail', 'content': 'No auth'}
         response = self.client.post(url, data, format='json')
         self.assertIn(response.status_code, (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN))
 
     def test_anonymous_can_list_articles(self):
-        """Anonyme peut lire la liste des articles."""
+        """Anonymous can read the list of articles."""
         Article.objects.create(title='Public Article', content='c', author=self.user, category=self.category)
         response = self.client.get(reverse('api:article-list'))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data['results']), 1)
 
     def test_only_author_can_update(self):
-        """Seul l'auteur peut modifier son propre article."""
+        """Only the author can modify their own article."""
         article = Article.objects.create(title='Mine', content='c', author=self.user, category=self.category)
         self.client.force_authenticate(user=self.other)
         response = self.client.patch(
@@ -60,7 +60,7 @@ class ArticleTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_only_author_can_delete(self):
-        """Seul l'auteur peut supprimer son propre article."""
+        """Only the author can delete their own article."""
         article = Article.objects.create(title='Mine', content='c', author=self.user, category=self.category)
         self.client.force_authenticate(user=self.other)
         response = self.client.delete(reverse('api:article-detail', args=[article.id]))
@@ -68,7 +68,7 @@ class ArticleTests(APITestCase):
         self.assertTrue(Article.objects.filter(id=article.id).exists())
 
     def test_search_articles(self):
-        """GET /api/articles/?search=<query> filtre par titre/contenu."""
+        """GET /api/articles/?search=<query> filters by title/content."""
         Article.objects.create(title='Django REST', content='cool', author=self.user, category=self.category)
         Article.objects.create(title='Other Topic', content='nope', author=self.user, category=self.category)
         response = self.client.get(reverse('api:article-list') + '?search=Django')
@@ -77,7 +77,7 @@ class ArticleTests(APITestCase):
         self.assertEqual(response.data['results'][0]['title'], 'Django REST')
 
     def test_create_article_with_tags(self):
-        """Création d'article avec liste de tags (créés automatiquement)."""
+        """Article creation with tag list (automatically created)."""
         self.client.force_authenticate(user=self.user)
         response = self.client.post(
             reverse('api:article-list'),
@@ -95,7 +95,7 @@ class ArticleTests(APITestCase):
         self.assertEqual(Tag.objects.count(), 2)
 
     def test_filter_articles_by_tag(self):
-        """GET /api/articles/?tags__name=python filtre par tag."""
+        """GET /api/articles/?tags__name=python filters by tag."""
         a1 = Article.objects.create(title='A', content='c', author=self.user, category=self.category)
         a2 = Article.objects.create(title='B', content='c', author=self.user, category=self.category)
         tag = Tag.objects.create(name='python')
@@ -107,7 +107,7 @@ class ArticleTests(APITestCase):
 
 
 class CommentTests(APITestCase):
-    """Tests pour le route imbriqué /api/articles/<id>/comments/."""
+    """Tests for the nested route /api/articles/<id>/comments/."""
 
     def setUp(self):
         self.user = User.objects.create_user(username='alice', email='a@x.com', password='pw')
@@ -115,13 +115,13 @@ class CommentTests(APITestCase):
         self.article = Article.objects.create(title='T', content='c', author=self.user, category=self.cat)
 
     def test_anonymous_cannot_post_comment(self):
-        """Un anonyme ne peut pas poster de commentaire."""
+        """An anonymous user cannot post a comment."""
         url = reverse('api:article-comments', args=[self.article.id])
         response = self.client.post(url, {'content': 'hi'}, format='json')
         self.assertIn(response.status_code, (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN))
 
     def test_authenticated_can_post_comment(self):
-        """Un user authentifié peut poster un commentaire via la route imbriquée."""
+        """An authenticated user can post a comment via the nested route."""
         self.client.force_authenticate(user=self.user)
         url = reverse('api:article-comments', args=[self.article.id])
         response = self.client.post(url, {'content': 'great post'}, format='json')
@@ -129,7 +129,7 @@ class CommentTests(APITestCase):
         self.assertEqual(Comment.objects.count(), 1)
 
     def test_anonymous_can_list_comments(self):
-        """Anonyme peut lire les commentaires."""
+        """Anonymous can read comments."""
         Comment.objects.create(article=self.article, author=self.user, content='c')
         url = reverse('api:article-comments', args=[self.article.id])
         response = self.client.get(url)
