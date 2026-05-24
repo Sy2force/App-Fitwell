@@ -3,6 +3,6 @@ from api.serializers import EmailTokenObtainPairSerializer
 
 class EmailTokenObtainPairView(TokenObtainPairView):
     """
-    Vue de login qui utilise l'email au lieu du username.
+    Login view that uses email instead of username.
     """
     serializer_class = EmailTokenObtainPairSerializer

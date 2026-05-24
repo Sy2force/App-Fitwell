@@ -5,54 +5,54 @@ from datetime import timedelta
 import dj_database_url
 
 # -----------------------------------------------------------------------------
-# CONFIGURATION DE BASE
+# BASIC CONFIGURATION
 # -----------------------------------------------------------------------------
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Clé secrète (à garder secrète en production !)
+# Secret key (keep secret in production!)
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-fitwell-dev-key-change-in-production-2026-very-long-secret-key-for-security')
 
-# Mode Debug : True pour le dév, False pour la prod
-# Force DEBUG=False sur Render quoi qu'il arrive (sécurité : jamais de traceback en prod)
+# Debug mode: True for dev, False for prod
+# Force DEBUG=False on Render no matter what (security: never show traceback in prod)
 _FORCE_PRODUCTION = bool(os.environ.get('RENDER'))
 DEBUG = False if _FORCE_PRODUCTION else config('DEBUG', default=True, cast=bool)
 
 # -----------------------------------------------------------------------------
-# SÉCURITÉ, CORS & CSRF
+# SECURITY, CORS & CSRF
 # -----------------------------------------------------------------------------
 
 # 1. ALLOWED_HOSTS
-ALLOWED_HOSTS = ['*']  # Accepte tous les domaines
+ALLOWED_HOSTS = ['*']  # Accept all domains
 
-# Support automatique pour Render
+# Automatic support for Render
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 # 2. CSRF & CORS Base Configuration
-# Liste de base via variable d'environnement ou défauts complets (Local + Render)
+# Base list via environment variable or complete defaults (Local + Render)
 CSRF_TRUSTED_ORIGINS = config(
     'CSRF_TRUSTED_ORIGINS', 
     default='http://localhost:8000,http://127.0.0.1:8000,https://*.onrender.com'
 ).split(',')
 
-# Ajout explicite du hostname Render s'il existe
+# Explicit addition of Render hostname if it exists
 if RENDER_EXTERNAL_HOSTNAME:
     CSRF_TRUSTED_ORIGINS.append(f'https://{RENDER_EXTERNAL_HOSTNAME}')
 
-# 3. Mode Debug : Ports dynamiques
+# 3. Debug mode: Dynamic ports
 if DEBUG:
-    # En développement, on ajoute les ports locaux dynamiques (ex: VS Code ports)
+    # In development, add dynamic local ports (e.g., VS Code ports)
     for port in range(64800, 65000):
         CSRF_TRUSTED_ORIGINS.append(f'http://127.0.0.1:{port}')
         CSRF_TRUSTED_ORIGINS.append(f'http://localhost:{port}')
 
-# 4. Application aux réglages CORS
+# 4. Apply to CORS settings
 CORS_ALLOWED_ORIGINS = CSRF_TRUSTED_ORIGINS
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_ALL_ORIGINS = config('CORS_ALLOW_ALL_ORIGINS', default=DEBUG, cast=bool)
 
-# 5. Sécurité Production (HTTPS, HSTS, Cookies)
+# 5. Production Security (HTTPS, HSTS, Cookies)
 import sys
 if not DEBUG and 'test' not in sys.argv:
     # SSL / HTTPS
@@ -60,7 +60,7 @@ if not DEBUG and 'test' not in sys.argv:
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     
     # HSTS (HTTP Strict Transport Security)
-    SECURE_HSTS_SECONDS = 31536000  # 1 an
+    SECURE_HSTS_SECONDS = 31536000  # 1 year
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
     
@@ -106,7 +106,7 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': False,
         },
-        'api': {  # Logger custom pour notre app
+        'api': {  # Custom logger for our app
             'handlers': ['console'],
             'level': 'INFO',
             'propagate': True,
@@ -115,7 +115,7 @@ LOGGING = {
 }
 
 # -----------------------------------------------------------------------------
-# APPLICATIONS INSTALLÉES
+# INSTALLED APPLICATIONS
 # -----------------------------------------------------------------------------
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -125,15 +125,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
-    # Outils tiers
-    'rest_framework',           # Pour créer l'API
-    'rest_framework_simplejwt', # Pour l'authentification sécurisée
-    'corsheaders',              # Pour autoriser le Frontend à nous parler
-    'django_filters',           # Pour filtrer les résultats
-    'drf_yasg',                 # Pour la documentation Swagger
-    'whitenoise',               # Pour gérer les fichiers statiques
+    # Third-party tools
+    'rest_framework',           # To create the API
+    'rest_framework_simplejwt', # For secure authentication
+    'corsheaders',              # To allow the Frontend to talk to us
+    'django_filters',           # To filter results
+    'drf_yasg',                 # For Swagger documentation
+    'whitenoise',               # To manage static files
 
-    # Notre application
+    # Our application
     'api',
     'web',
 ]
@@ -173,18 +173,18 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 # -----------------------------------------------------------------------------
-# BASE DE DONNÉES
+# DATABASE
 # -----------------------------------------------------------------------------
-# Règle : SQLite uniquement en local (DEBUG=True ET pas sur Render).
-# En production (DEBUG=False OU variable RENDER présente), DATABASE_URL est
-# OBLIGATOIRE et doit pointer vers une base PostgreSQL valide.
+# Rule: SQLite only locally (DEBUG=True AND not on Render).
+# In production (DEBUG=False OR RENDER variable present), DATABASE_URL is
+# MANDATORY and must point to a valid PostgreSQL database.
 DATABASE_URL = os.environ.get('DATABASE_URL', '')
-_IS_RENDER = bool(os.environ.get('RENDER'))  # Render set cette var automatiquement
+_IS_RENDER = bool(os.environ.get('RENDER'))  # Render sets this var automatically
 _IS_PRODUCTION = (not DEBUG) or _IS_RENDER
 _VALID_DB_SCHEMES = ('postgres://', 'postgresql://', 'sqlite://', 'mysql://')
 
 if DATABASE_URL and DATABASE_URL.startswith(_VALID_DB_SCHEMES):
-    # Support pour Render (convertit postgres:// en postgresql:// si nécessaire)
+    # Support for Render (converts postgres:// to postgresql:// if needed)
     if DATABASE_URL.startswith('postgres://'):
         DATABASE_URL = DATABASE_URL.replace('postgres://', 'postgresql://', 1)
 
@@ -197,24 +197,24 @@ if DATABASE_URL and DATABASE_URL.startswith(_VALID_DB_SCHEMES):
         )
     }
 elif DATABASE_URL:
-    # DATABASE_URL est défini mais malformé (ex: 'https://...') -> erreur explicite
+    # DATABASE_URL is set but malformed (e.g., 'https://...') -> explicit error
     raise ValueError(
-        f"DATABASE_URL invalide: scheme '{DATABASE_URL.split('://')[0] if '://' in DATABASE_URL else DATABASE_URL}'. "
-        f"Attendu: postgresql://, postgres://, sqlite:// ou mysql://. "
-        f"Sur Render, utilisez le bouton 'Connect' pour lier l'Internal Connection String de la database PostgreSQL."
+        f"Invalid DATABASE_URL: scheme '{DATABASE_URL.split('://')[0] if '://' in DATABASE_URL else DATABASE_URL}'. "
+        f"Expected: postgresql://, postgres://, sqlite:// or mysql://. "
+        f"On Render, use the 'Connect' button to link the Internal Connection String of the PostgreSQL database."
     )
 elif _IS_PRODUCTION and DATABASE_URL:
-    # Production sans DATABASE_URL valide -> on refuse de démarrer
+    # Production without valid DATABASE_URL -> we refuse to start
     raise ValueError(
-        "DATABASE_URL invalide en production. "
-        "Sur Render : créez une database PostgreSQL puis ajoutez la variable "
-        "d'environnement DATABASE_URL (Internal Database URL) dans les settings du service. "
-        "Ou utilisez le Blueprint (render.yaml) qui lie la DB automatiquement. "
-        "Pour développer en local, mettre DEBUG=True dans .env (SQLite sera utilisée)."
+        "Invalid DATABASE_URL in production. "
+        "On Render: create a PostgreSQL database then add the environment "
+        "variable DATABASE_URL (Internal Database URL) in the service settings. "
+        "Or use the Blueprint (render.yaml) which links the DB automatically. "
+        "To develop locally, set DEBUG=True in .env (SQLite will be used)."
     )
 elif _IS_PRODUCTION:
-    # Production sans DATABASE_URL -> on utilise SQLite temporairement pour éviter le crash
-    # Render liera DATABASE_URL via Blueprint, mais settings.py peut être chargé avant
+    # Production without DATABASE_URL -> we use SQLite temporarily to avoid crash
+    # Render will link DATABASE_URL via Blueprint, but settings.py may be loaded before
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -222,7 +222,7 @@ elif _IS_PRODUCTION:
         }
     }
 else:
-    # Développement local uniquement (DEBUG=True et pas sur Render) -> SQLite
+    # Local development only (DEBUG=True and not on Render) -> SQLite
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -231,7 +231,7 @@ else:
     }
 
 # -----------------------------------------------------------------------------
-# MOTS DE PASSE & SÉCURITÉ
+# PASSWORDS & SECURITY
 # -----------------------------------------------------------------------------
 AUTHENTICATION_BACKENDS = [
     'api.backends.EmailOrUsernameModelBackend',
@@ -263,7 +263,7 @@ LOCALE_PATHS = [
 
 
 # -----------------------------------------------------------------------------
-# FICHIERS STATIQUES & MÉDIAS
+# STATIC FILES & MEDIA
 # -----------------------------------------------------------------------------
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
@@ -328,8 +328,8 @@ REST_FRAMEWORK = {
 # CONFIGURATION JWT (Tokens)
 # -----------------------------------------------------------------------------
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60), # Le token dure 1h
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),    # Le refresh dure 24h
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60), # Token lasts 1h
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),    # Refresh lasts 24h
     'AUTH_HEADER_TYPES': ('Bearer',),
 }
 
@@ -339,7 +339,7 @@ SIMPLE_JWT = {
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 else:
-    # En production, utiliser un vrai service (SendGrid, Mailgun, etc.)
+    # In production, use a real service (SendGrid, Mailgun, etc.)
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
     EMAIL_HOST = config('EMAIL_HOST', default='smtp.sendgrid.net')
     EMAIL_PORT = config('EMAIL_PORT', default=587, cast=int)

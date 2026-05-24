@@ -83,7 +83,7 @@ def onboarding_step3(request):
         request.session.pop('onboarding_activity', None)
         
         return render(request, 'web/onboarding/complete.html', {
-            'message': _("Félicitations ! Ton équilibre est prêt. +%(xp)s") % {'xp': 100},
+            'message': _("Congratulations! Your balance is ready. +%(xp)s") % {'xp': 100},
             'plan': plan,
             'new_badges': new_badges
         })

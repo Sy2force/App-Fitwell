@@ -7,13 +7,13 @@ from api.models import Favorite, Exercise, Recipe, Product
 @login_required
 def favorites_view(request):
     """
-    Liste de tous les favoris de l'utilisateur (exercices, recettes, produits).
+    List of all user favorites (exercises, recipes, products).
     """
     favorites = Favorite.objects.filter(user=request.user).select_related(
         'exercise', 'recipe', 'product'
     )
     
-    # Filtre par type de contenu
+    # Filter by content type
     content_type_filter = request.GET.get('type')
     if content_type_filter:
         favorites = favorites.filter(content_type=content_type_filter)
@@ -28,7 +28,7 @@ def favorites_view(request):
 @login_required
 def add_favorite(request, content_type, content_id):
     """
-    Ajouter un contenu aux favoris.
+    Add content to favorites.
     content_type: 'exercise', 'recipe', 'product'
     """
     if content_type == 'exercise':
@@ -66,7 +66,7 @@ def add_favorite(request, content_type, content_id):
 @login_required
 def remove_favorite(request, favorite_id):
     """
-    Supprimer un favori.
+    Remove a favorite.
     """
     favorite = get_object_or_404(Favorite, id=favorite_id, user=request.user)
     favorite.delete()

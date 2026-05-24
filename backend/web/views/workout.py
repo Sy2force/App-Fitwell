@@ -13,8 +13,8 @@ from django.utils import timezone
 @login_required(login_url='login')
 def workout_setup_view(request):
     """
-    Page de configuration avant de lancer une séance.
-    Permet de choisir les exercices et la durée.
+    Configuration page before starting a session.
+    Allows choosing exercises and duration.
     """
     form = CustomWorkoutForm()
     return render(request, 'web/workout_setup.html', {'form': form})
@@ -22,9 +22,9 @@ def workout_setup_view(request):
 @login_required(login_url='login')
 def workout_session_view(request):
     """
-    Studio Live (Session d'entraînement).
-    Génère une séquence d'exercices (Échauffement -> Exos -> Repos -> Retour au calme).
-    Si aucun exercice n'est sélectionné, l'IA en choisit selon le profil.
+    Live Studio (Workout session).
+    Generates an exercise sequence (Warm-up -> Exercises -> Rest -> Cool-down).
+    If no exercise is selected, AI chooses according to profile.
     """
     # Logic to build a session
     
@@ -50,11 +50,11 @@ def workout_session_view(request):
         if hasattr(request.user, 'stats') and request.user.stats.level > 15:
             user_level = 'advanced'
             
-        # 2. Select Exercises & Sequence Strategy (optimisé)
+        # 2. Select Exercises & Sequence Strategy (optimized)
         latest_plan = request.user.plans.only('goal').order_by('-created_at').first()
         goal = latest_plan.goal if latest_plan else 'maintenance'
         
-        # Filter exercises by level first (optimisé avec only)
+        # Filter exercises by level first (optimized with only)
         base_exercises = Exercise.objects.filter(difficulty=user_level).only('name', 'muscle_group', 'difficulty', 'description', 'image_url')
         if not base_exercises.exists():
             base_exercises = Exercise.objects.all()
@@ -92,9 +92,9 @@ def workout_session_view(request):
     # Warmup
     sequence.append({
         'type': 'warmup',
-        'name': _("Échauffement articulaire"),
+        'name': _("Joint warm-up"),
         'duration': 60,
-        'description': _("Rotations des bras, poignets, chevilles et hanches.")
+        'description': _("Arm, wrist, ankle and hip rotations.")
     })
     
     for ex in selected_exercises_objs:
@@ -109,17 +109,17 @@ def workout_session_view(request):
         # Rest
         sequence.append({
             'type': 'rest',
-            'name': _("Récupération"),
+            'name': _("Recovery"),
             'duration': rest_duration,
-            'description': _("Respirez profondément. Préparez-vous pour la suite.")
+            'description': _("Breathe deeply. Prepare for the next exercise.")
         })
         
     # Cooldown
     sequence.append({
         'type': 'cooldown',
-        'name': _("Retour au calme"),
+        'name': _("Cool-down"),
         'duration': 60,
-        'description': _("Étirements légers et respiration.")
+        'description': _("Light stretching and breathing.")
     })
     
     # Post-Workout Nutrition Recommendation
@@ -149,7 +149,7 @@ def complete_workout(request):
     # 2. Add entry to Daily Log
     today_log, created = DailyLog.objects.get_or_create(user=request.user, date=timezone.now().date())
     timestamp = timezone.now().strftime("%H:%M")
-    log_entry = f"[{timestamp}] { _('Session Studio terminée') } (+{energy_gain})"
+    log_entry = f"[{timestamp}] { _('Studio session completed') } (+{energy_gain})"
     
     if today_log.notes:
         today_log.notes += f"\n{log_entry}"
@@ -162,25 +162,25 @@ def complete_workout(request):
         'energy_gain': energy_gain,
         'new_energy': request.user.stats.xp,
         'new_level': request.user.stats.level,
-        'message': _("Bien joué ! +%(xp)s d'énergie") % {'xp': energy_gain}
+        'message': _("Well done! +%(xp)s energy") % {'xp': energy_gain}
     })
 
 @login_required(login_url='login')
 def start_workout(request):
     """
-    Page pour démarrer une nouvelle séance d'entraînement.
-    Vérifie qu'il n'y a pas de session active avant de créer une nouvelle.
+    Page to start a new workout session.
+    Checks there is no active session before creating a new one.
     """
     active_session = WorkoutSession.objects.filter(user=request.user, status='active').first()
     
     if active_session:
-        messages.warning(request, _("Vous avez déjà une séance en cours. Terminez-la d'abord."))
+        messages.warning(request, _("You already have a session in progress. Finish it first."))
         return redirect('workout_session_detail', session_id=active_session.id)
     
     if request.method == 'POST':
         notes = request.POST.get('notes', '')
         session = WorkoutSession.objects.create(user=request.user, notes=notes)
-        messages.success(request, _("C'est parti ! Profite de ton mouvement ! ✨"))
+        messages.success(request, _("Let's go! Enjoy your movement! ✨"))
         return redirect('workout_session_detail', session_id=session.id)
     
     latest_plan = request.user.plans.order_by('-created_at').first()
@@ -194,19 +194,19 @@ def start_workout(request):
 @login_required(login_url='login')
 def workout_session(request, session_id):
     """
-    Page de la séance en cours.
-    Affiche le timer, les exercices effectués et permet d'ajouter des sets.
+    Current session page.
+    Displays timer, performed exercises and allows adding sets.
     """
     session = get_object_or_404(WorkoutSession, id=session_id, user=request.user)
     
     if session.status != 'active':
-        messages.warning(request, _("Cette séance est déjà terminée."))
+        messages.warning(request, _("This session is already completed."))
         return redirect('workout_history')
     
-    # Optimisé: only pour charger uniquement les champs nécessaires
+    # Optimized: only to load only necessary fields
     exercises = Exercise.objects.only('id', 'name', 'muscle_group').order_by('muscle_group', 'name')
     
-    # Optimisé: prefetch sets avec exercises
+    # Optimized: prefetch sets with exercises
     sets_by_exercise = {}
     for exercise_set in session.sets.select_related('exercise').only(
         'id', 'set_number', 'reps', 'weight', 'rest_seconds', 'created_at', 'exercise__name'
@@ -227,12 +227,12 @@ def workout_session(request, session_id):
 @require_POST
 def add_set_to_session(request, session_id):
     """
-    API endpoint pour ajouter un set à une session active (Ajax).
+    API endpoint to add a set to an active session (Ajax).
     """
     session = get_object_or_404(WorkoutSession, id=session_id, user=request.user)
     
     if session.status != 'active':
-        return JsonResponse({'error': 'Session non active'}, status=400)
+        return JsonResponse({'error': 'Session not active'}, status=400)
     
     try:
         exercise_id = int(request.POST.get('exercise_id'))
@@ -276,13 +276,13 @@ def add_set_to_session(request, session_id):
 @require_POST
 def complete_workout_session(request, session_id):
     """
-    Terminer une séance d'entraînement.
-    Calcule les stats et attribue l'énergie.
+    End a workout session.
+    Calculates stats and awards energy.
     """
     session = get_object_or_404(WorkoutSession, id=session_id, user=request.user)
     
     if session.status != 'active':
-        return JsonResponse({'error': 'Session déjà terminée'}, status=400)
+        return JsonResponse({'error': 'Session already completed'}, status=400)
     
     session.complete_session()
     
@@ -292,7 +292,7 @@ def complete_workout_session(request, session_id):
     
     return JsonResponse({
         'status': 'success',
-        'message': _("Séance terminée avec succès ! 🎉"),
+        'message': _("Session completed successfully! 🎉"),
         'energy_earned': energy_earned,
         'duration_minutes': session.duration_minutes,
         'total_volume': round(session.total_volume, 2),
@@ -303,10 +303,10 @@ def complete_workout_session(request, session_id):
 @login_required(login_url='login')
 def workout_history(request):
     """
-    Historique des séances d'entraînement.
-    Affiche toutes les sessions complétées avec statistiques.
+    Workout session history.
+    Displays all completed sessions with statistics.
     """
-    # Optimisé: only pour charger uniquement les champs nécessaires
+    # Optimized: only to load only necessary fields
     sessions = WorkoutSession.objects.filter(
         user=request.user,
         status='completed'
@@ -340,11 +340,11 @@ def workout_history(request):
 @login_required(login_url='login')
 def workout_detail(request, session_id):
     """
-    Détails d'une séance spécifique.
+    Details of a specific session.
     """
     session = get_object_or_404(WorkoutSession, id=session_id, user=request.user)
     
-    # Group sets by exercise (optimisé)
+    # Group sets by exercise (optimized)
     sets_by_exercise = {}
     for exercise_set in session.sets.select_related('exercise').only(
         'id', 'set_number', 'reps', 'weight', 'rest_seconds', 'created_at', 'exercise__name', 'exercise__muscle_group'

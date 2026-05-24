@@ -7,8 +7,8 @@ from api.models import Article, Category, Comment, Exercise, Recipe
 
 def exercise_library(request):
     """
-    Bibliothèque d'exercices.
-    Permet de filtrer par groupe musculaire, difficulté et recherche textuelle.
+    Exercise library.
+    Allows filtering by muscle group, difficulty and text search.
     """
     exercises = Exercise.objects.all()
     
@@ -37,11 +37,11 @@ def exercise_library(request):
 
 def exercise_detail(request, slug):
     """
-    Détail d'un exercice avec instructions complètes.
+    Exercise detail with full instructions.
     """
     exercise = get_object_or_404(Exercise, slug=slug)
     
-    # Exercices similaires (même groupe musculaire)
+    # Similar exercises (same muscle group)
     similar_exercises = Exercise.objects.filter(
         muscle_group=exercise.muscle_group
     ).exclude(id=exercise.id)[:4]
@@ -54,8 +54,8 @@ def exercise_detail(request, slug):
 
 def recipe_list(request):
     """
-    Liste des recettes de nutrition.
-    Filtrage par catégorie (petit-déj, dîner...) et difficulté.
+    Nutrition recipe list.
+    Filtering by category (breakfast, dinner...) and difficulty.
     """
     recipes = Recipe.objects.all()
     
@@ -76,7 +76,7 @@ def recipe_list(request):
 
 def recipe_detail(request, recipe_id):
     """
-    Détail d'une recette avec calcul des pourcentages de macros.
+    Recipe detail with macro percentage calculations.
     """
     recipe = get_object_or_404(Recipe, id=recipe_id)
     
@@ -103,14 +103,14 @@ def recipe_detail(request, recipe_id):
 
 def blog_list(request):
     """
-    Liste des articles de blog.
-    Supporte la recherche textuelle et le filtrage par catégorie.
+    Blog article list.
+    Supports text search and category filtering.
     """
     # Update Streak if reading blog
     if request.user.is_authenticated and hasattr(request.user, 'stats'):
         request.user.stats.update_streak()
         
-    # Optimisé: select_related pour author et category
+    # Optimized: select_related for author and category
     articles = Article.objects.filter(is_published=True).select_related('author', 'category')
     categories = Category.objects.all()
     
@@ -135,15 +135,15 @@ def blog_list(request):
 
 def article_detail(request, slug):
     """
-    Lecture d'un article complet.
-    Permet de liker et de commenter.
-    Affiche des articles similaires en bas de page.
+    Reading a full article.
+    Allows liking and commenting.
+    Shows similar articles at the bottom of the page.
     """
     # Update Streak if reading article
     if request.user.is_authenticated and hasattr(request.user, 'stats'):
         request.user.stats.update_streak()
         
-    # Optimisé: select_related pour author et category, prefetch comments avec authors
+    # Optimized: select_related for author and category, prefetch comments with authors
     article = get_object_or_404(
         Article.objects.select_related('author', 'category').prefetch_related('comments__author'),
         slug=slug,
@@ -161,7 +161,7 @@ def article_detail(request, slug):
             comment.article = article
             comment.author = request.user
             comment.save()
-            messages.success(request, _("Ton avis a été partagé ! ✨"))
+            messages.success(request, _("Your opinion has been shared! ✨"))
             return redirect('article_detail', slug=slug)
     else:
         form = CommentForm()
@@ -170,7 +170,7 @@ def article_detail(request, slug):
     if request.user.is_authenticated:
         is_liked = article.likes.filter(id=request.user.id).exists()
         
-    # Related Articles (optimisé)
+    # Related Articles (optimized)
     related_articles = []
     if article.category:
         related_articles = Article.objects.filter(
@@ -195,10 +195,10 @@ def delete_comment(request, comment_id):
     if request.user == comment.author:
         article_slug = comment.article.slug
         comment.delete()
-        messages.success(request, _("Ton commentaire a été retiré."))
+        messages.success(request, _("Your comment has been removed."))
         return redirect('article_detail', slug=article_slug)
     else:
-        messages.error(request, _("Tu n'as pas l'autorisation de retirer ce commentaire."))
+        messages.error(request, _("You are not authorized to remove this comment."))
         return redirect('article_detail', slug=comment.article.slug)
 
 @login_required(login_url='login')

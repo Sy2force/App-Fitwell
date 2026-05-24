@@ -12,10 +12,10 @@ class Command(BaseCommand):
 
         # Categories
         categories_data = [
-            "Entraînement Force",
-            "Nutrition Performance", 
+            "Strength Training",
+            "Performance Nutrition", 
             "Mental & Mindset",
-            "Récupération",
+            "Recovery",
             "Bio-Hacking",
             "Cardio & Endurance"
         ]
@@ -39,27 +39,27 @@ class Command(BaseCommand):
         # 3 Articles
         articles_data = [
             {
-                "title": "Les 5 Piliers de l'Hypertrophie Musculaire",
-                "category": "Entraînement Force",
+                "title": "The 5 Pillars of Muscle Hypertrophy",
+                "category": "Strength Training",
                 "content": """
-                <h2>Construire du Muscle : La Science Derrière la Croissance</h2>
-                <p>L'hypertrophie musculaire repose sur 5 piliers fondamentaux que tout athlète sérieux doit maîtriser.</p>
+                <h2>Building Muscle: The Science Behind Growth</h2>
+                <p>Muscle hypertrophy is based on 5 fundamental pillars that every serious athlete must master.</p>
                 """
             },
             {
-                "title": "Sommeil : L'Arme Secrète des Athlètes d'Élite",
-                "category": "Récupération",
+                "title": "Sleep: The Secret Weapon of Elite Athletes",
+                "category": "Recovery",
                 "content": """
-                <h2>Pourquoi 8 Heures de Sommeil Valent Plus que 2 Heures d'Entraînement</h2>
-                <p>LeBron James dort 12 heures par jour. Roger Federer, 10-12 heures. Coïncidence ? Absolument pas.</p>
+                <h2>Why 8 Hours of Sleep Are Worth More Than 2 Hours of Training</h2>
+                <p>LeBron James sleeps 12 hours a day. Roger Federer, 10-12 hours. Coincidence? Absolutely not.</p>
                 """
             },
             {
-                "title": "Nutrition Pré-Entraînement : Le Timing Parfait",
-                "category": "Nutrition Performance",
+                "title": "Pre-Workout Nutrition: The Perfect Timing",
+                "category": "Performance Nutrition",
                 "content": """
-                <h2>Quoi Manger et Quand pour une Performance Maximale</h2>
-                <p>La "fenêtre de 30 minutes post-workout" est largement exagérée. Ce qui compte vraiment : l'apport total sur 24h.</p>
+                <h2>What to Eat and When for Maximum Performance</h2>
+                <p>The "30-minute post-workout window" is largely exaggerated. What really matters: total intake over 24h.</p>
                 """
             }
         ]

@@ -5,9 +5,9 @@ from api.services import generate_wellness_plan
 
 class WellnessPlanViewSet(viewsets.ModelViewSet):
     """
-    API pour le Planner.
-    - POST: Génère un plan basé sur les biometrics.
-    - GET: Récupère l'historique des plans.
+    API for the Planner.
+    - POST: Generates a plan based on biometrics.
+    - GET: Retrieves plan history.
     """
     serializer_class = WellnessPlanSerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -16,10 +16,10 @@ class WellnessPlanViewSet(viewsets.ModelViewSet):
         return WellnessPlan.objects.filter(user=self.request.user).order_by('-created_at')
 
     def perform_create(self, serializer):
-        # 1. Récupération des données d'entrée
+        # 1. Get input data
         data = serializer.validated_data
         
-        # 2. Génération du plan via le service centralisé (Source Unique de Vérité)
+        # 2. Generate plan via centralized service (Single Source of Truth)
         workout_plan, nutrition_plan, health_score = generate_wellness_plan(
             age=data.get('age'),
             gender=data.get('gender'),
@@ -29,19 +29,19 @@ class WellnessPlanViewSet(viewsets.ModelViewSet):
             activity_level=data.get('activity_level')
         )
 
-        # 3. Sauvegarde
+        # 3. Save
         serializer.save(
             user=self.request.user, 
             workout_plan=workout_plan, 
             nutrition_plan=nutrition_plan
         )
         
-        # 4. Mise à jour des stats User
+        # 4. Update User stats
         if hasattr(self.request.user, 'stats'):
             stats = self.request.user.stats
             stats.health_score = health_score
             
-            # Mise à jour des sous-scores depuis l'analyse
+            # Update sub-scores from analysis
             if 'analysis' in workout_plan and 'breakdown' in workout_plan['analysis']:
                 breakdown = workout_plan['analysis']['breakdown']
                 stats.fitness_score = breakdown.get('fitness', 0)

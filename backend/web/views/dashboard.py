@@ -11,12 +11,12 @@ from api.models import DailyLog, WorkoutSession, User, ExerciseSet, Exercise
 @login_required(login_url='login')
 def dashboard_view(request):
     """
-    Tableau de bord principal de l'utilisateur.
-    Gère :
-    - Le journal quotidien (Daily Log)
-    - Les statistiques rapides (Sommeil, Eau)
-    - Les graphiques de progression (Poids, Humeur, Sommeil)
-    - L'agenda du jour
+    User main dashboard.
+    Manages:
+    - Daily log
+    - Quick statistics (Sleep, Water)
+    - Progression charts (Weight, Mood, Sleep)
+    - Today's agenda
     """
     # Update Streak
     if hasattr(request.user, 'stats'):
@@ -30,17 +30,17 @@ def dashboard_view(request):
             form.save()
             # Reward for logging (once per day fully)
             request.user.stats.add_xp(20)
-            messages.success(request, _("Bien joué ! Ta journée est enregistrée. +20 d'énergie"))
+            messages.success(request, _("Well done! Your day is recorded. +20 energy"))
             return redirect('dashboard')
     else:
         form = DailyLogForm(instance=today_log)
         
-    # Recent Activity / Stats (optimisé)
+    # Recent Activity / Stats (optimized)
     week_logs = request.user.daily_logs.only('sleep_hours', 'water_liters', 'date').order_by('-date')[:7]
     avg_sleep = week_logs.aggregate(Avg('sleep_hours'))['sleep_hours__avg'] or 0
     avg_water = week_logs.aggregate(Avg('water_liters'))['water_liters__avg'] or 0
     
-    # Chart Data (Last 30 days) - optimisé
+    # Chart Data (Last 30 days) - optimized
     recent_logs = request.user.daily_logs.only('date', 'weight', 'sleep_hours', 'mood').order_by('-date')[:30]
     chart_logs = sorted(recent_logs, key=lambda x: x.date)
     
@@ -69,8 +69,8 @@ def dashboard_view(request):
 @login_required(login_url='login')
 def analytics_view(request):
     """
-    Page analytics avancées avec tous les graphiques de progression.
-    Calcule et prépare les données pour Chart.js.
+    Advanced analytics page with all progression charts.
+    Calculates and prepares data for Chart.js.
     """
     user = request.user
     today = timezone.now().date()
@@ -159,7 +159,7 @@ def analytics_view(request):
     ).count()
     
     rest_days = 7 - workouts_this_week
-    frequency_labels = ['Entraînement', 'Repos']
+    frequency_labels = ['Training', 'Rest']
     frequency_values = [workouts_this_week, rest_days]
 
     # 6. ENERGY PROGRESSION
@@ -198,12 +198,12 @@ def analytics_view(request):
 @login_required(login_url='login')
 def leaderboard_view(request):
     """
-    Page de classement global des utilisateurs.
+    Global user ranking page.
     """
-    # Top 10 XP (optimisé avec only)
+    # Top 10 XP (optimized with only)
     top_xp = User.objects.select_related('stats').only('username', 'stats__xp', 'stats__level').order_by('-stats__xp')[:10]
     
-    # Top 10 Streaks (optimisé avec only)
+    # Top 10 Streaks (optimized with only)
     top_streak = User.objects.select_related('stats').only('username', 'stats__current_streak', 'stats__level').order_by('-stats__current_streak')[:10]
     
     # Top 10 Workouts
@@ -212,7 +212,7 @@ def leaderboard_view(request):
         total_volume=Sum('workout_sessions__total_volume', filter=Q(workout_sessions__status='completed'))
     ).filter(workout_count__gt=0).order_by('-workout_count')[:10]
     
-    # User ranks (optimisé - seulement IDs)
+    # User ranks (optimized - only IDs)
     all_users_xp = list(User.objects.order_by('-stats__xp').values_list('id', flat=True))
     all_users_streak = list(User.objects.order_by('-stats__current_streak').values_list('id', flat=True))
     

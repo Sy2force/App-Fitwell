@@ -7,8 +7,8 @@ from .user import User
 # -----------------------------------------------------------------------------
 class Tag(models.Model):
     """
-    Étiquettes libres attachées à un Article ou un Comment.
-    Permet de filtrer/chercher des contenus par sujet (ex: 'python', 'fitness').
+    Free tags attached to an Article or Comment.
+    Allows filtering/searching content by topic (e.g. 'python', 'fitness').
     """
     name = models.CharField(max_length=50, unique=True)
     slug = models.SlugField(max_length=60, unique=True, blank=True)
@@ -26,12 +26,12 @@ class Tag(models.Model):
         return self.name
 
 # -----------------------------------------------------------------------------
-# CATÉGORIES
+# CATEGORIES
 # -----------------------------------------------------------------------------
 class Category(models.Model):
     """
-    Les thèmes du blog (ex: Nutrition, Force, Mental).
-    Le slug est généré automatiquement si on ne le remplit pas.
+    Blog themes (e.g. Nutrition, Strength, Mental).
+    Slug is auto-generated if not filled.
     """
     name = models.CharField(max_length=100)
     slug = models.SlugField(unique=True, blank=True)
@@ -52,8 +52,8 @@ class Category(models.Model):
 # -----------------------------------------------------------------------------
 class Article(models.Model):
     """
-    Le cœur du contenu.
-    Chaque article a un auteur, une catégorie et une image.
+    The core of the content.
+    Each article has an author, a category and an image.
     """
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True, blank=True)
@@ -65,12 +65,12 @@ class Article(models.Model):
     likes = models.ManyToManyField(User, related_name='liked_articles', blank=True)
     tags = models.ManyToManyField(Tag, related_name='articles', blank=True)
     
-    # Dates auto-gérées
+    # Auto-managed dates
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def save(self, *args, **kwargs):
-        # Génération auto du slug (URL friendly) depuis le titre
+        # Auto generation of slug (URL friendly) from title
         if not self.slug:
             self.slug = slugify(self.title)
         super().save(*args, **kwargs)
@@ -79,11 +79,11 @@ class Article(models.Model):
         return self.title
 
 # -----------------------------------------------------------------------------
-# COMMENTAIRES
+# COMMENTS
 # -----------------------------------------------------------------------------
 class Comment(models.Model):
     """
-    Les réactions des utilisateurs sous un article.
+    User reactions under an article.
     """
     article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='comments')
     author = models.ForeignKey(User, on_delete=models.CASCADE)

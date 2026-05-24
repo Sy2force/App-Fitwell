@@ -1,15 +1,15 @@
 """
-Dashboard Admin custom (séparé de Django admin /admin/).
+Custom Admin Dashboard (separate from Django admin /admin/).
 
-Accessible aux super-utilisateurs uniquement (is_superuser=True).
+Accessible to super-users only (is_superuser=True).
 URL: /en/admin-panel/
 
 Features:
-- Liste tous les utilisateurs avec : last_login, last_login_ip, user_agent, login_count, sessions actives
-- Toggle masquage (is_hidden)
-- Suppression définitive
-- Recherche + tri
-- Stats temps réel (total users, actifs aujourd'hui, sessions ouvertes)
+- Lists all users with: last_login, last_login_ip, user_agent, login_count, active sessions
+- Toggle hiding (is_hidden)
+- Permanent deletion
+- Search + sorting
+- Real-time stats (total users, active today, open sessions)
 """
 from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import render, redirect, get_object_or_404
@@ -27,7 +27,7 @@ def is_superuser(user):
 
 
 def _active_sessions_for_user(user_id: int) -> int:
-    """Compte les sessions actives (non expirées) d'un utilisateur."""
+    """Counts active (non-expired) sessions for a user."""
     now = timezone.now()
     count = 0
     for s in Session.objects.filter(expire_date__gte=now):
@@ -39,7 +39,7 @@ def _active_sessions_for_user(user_id: int) -> int:
 
 @user_passes_test(is_superuser, login_url='login')
 def admin_panel(request):
-    """Vue principale du dashboard admin custom."""
+    """Main view of the custom admin dashboard."""
     q = request.GET.get('q', '').strip()
     show_hidden = request.GET.get('show_hidden') == '1'
 
@@ -53,8 +53,8 @@ def admin_panel(request):
             Q(username__icontains=q) | Q(email__icontains=q) | Q(last_login_ip__icontains=q)
         )
 
-    # Annoter chaque user avec ses sessions actives (calcul Python car Session est dans une autre DB logique)
-    users = list(users_qs[:200])  # limite raisonnable
+    # Annotate each user with their active sessions (Python calculation because Session is in a separate logical DB)
+    users = list(users_qs[:200])  # reasonable limit
     now = timezone.now()
     today_start = now.replace(hour=0, minute=0, second=0, microsecond=0)
     sessions_active = Session.objects.filter(expire_date__gte=now)
@@ -68,7 +68,7 @@ def admin_panel(request):
         u.is_online = u.id in active_user_ids
         u.active_sessions = _active_sessions_for_user(u.id) if u.is_online else 0
 
-    # Stats globales
+    # Global stats
     stats = {
         'total': User.objects.count(),
         'active_today': User.objects.filter(last_login__gte=today_start).count(),
@@ -88,33 +88,33 @@ def admin_panel(request):
 
 @user_passes_test(is_superuser, login_url='login')
 def admin_toggle_hide(request, user_id: int):
-    """Toggle is_hidden — masque ou réaffiche un utilisateur."""
+    """Toggle is_hidden — hides or shows a user."""
     if request.method != 'POST':
         return redirect('admin_panel')
     target = get_object_or_404(User, id=user_id)
     if target.is_superuser and target != request.user:
-        messages.error(request, _("Impossible de masquer un autre super-utilisateur."))
+        messages.error(request, _("Cannot hide another super-user."))
         return redirect('admin_panel')
     target.is_hidden = not target.is_hidden
     target.save(update_fields=['is_hidden'])
-    state = _("masqué") if target.is_hidden else _("réaffiché")
-    messages.success(request, _("L'utilisateur %(u)s a été %(s)s.") % {'u': target.username, 's': state})
+    state = _("hidden") if target.is_hidden else _("shown")
+    messages.success(request, _("User %(u)s has been %(s)s.") % {'u': target.username, 's': state})
     return redirect('admin_panel')
 
 
 @user_passes_test(is_superuser, login_url='login')
 def admin_delete_user(request, user_id: int):
-    """Supprime définitivement un utilisateur (sauf super-users autres que soi-même)."""
+    """Permanently deletes a user (except super-users other than yourself)."""
     if request.method != 'POST':
         return redirect('admin_panel')
     target = get_object_or_404(User, id=user_id)
     if target.is_superuser and target != request.user:
-        messages.error(request, _("Impossible de supprimer un autre super-utilisateur."))
+        messages.error(request, _("Cannot delete another super-user."))
         return redirect('admin_panel')
     if target == request.user:
-        messages.error(request, _("Tu ne peux pas te supprimer toi-même via le dashboard admin. Utilise la page profil."))
+        messages.error(request, _("You cannot delete yourself via the admin dashboard. Use the profile page."))
         return redirect('admin_panel')
     username = target.username
     target.delete()
-    messages.success(request, _("L'utilisateur %(u)s a été supprimé définitivement.") % {'u': username})
+    messages.success(request, _("User %(u)s has been permanently deleted.") % {'u': username})
     return redirect('admin_panel')

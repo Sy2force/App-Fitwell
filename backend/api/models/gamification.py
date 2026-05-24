@@ -10,8 +10,8 @@ from .user import User
 # -----------------------------------------------------------------------------
 class UserStats(models.Model):
     """
-    Statistiques et progression de l'utilisateur.
-    Lié en OneToOne avec User.
+    User statistics and progression.
+    Linked in OneToOne with User.
     """
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='stats')
     xp = models.IntegerField(default=0)
@@ -20,7 +20,7 @@ class UserStats(models.Model):
     last_activity_date = models.DateField(null=True, blank=True)
     health_score = models.IntegerField(default=0)
     
-    # Scores détaillés (Radar Chart)
+    # Detailed scores (Radar Chart)
     fitness_score = models.IntegerField(default=0)
     recovery_score = models.IntegerField(default=0)
     lifestyle_score = models.IntegerField(default=0)
@@ -82,13 +82,13 @@ class UserStats(models.Model):
 # -----------------------------------------------------------------------------
 class Badge(models.Model):
     """
-    Badges débloquables par les utilisateurs.
+    Badges unlockable by users.
     """
     CATEGORY_CHOICES = [
-        ('workout', _('Entraînement')),
-        ('streak', _('Constance')),
+        ('workout', _('Workout')),
+        ('streak', _('Consistency')),
         ('social', _('Social')),
-        ('milestone', _('Jalon')),
+        ('milestone', _('Milestone')),
     ]
     
     name = models.CharField(max_length=100)
@@ -110,7 +110,7 @@ class Badge(models.Model):
 
 class UserBadge(models.Model):
     """
-    Badges débloqués par un utilisateur.
+    Badges unlocked by a user.
     """
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='badges')
     badge = models.ForeignKey(Badge, on_delete=models.CASCADE)
@@ -123,7 +123,7 @@ class UserBadge(models.Model):
     def __str__(self):
         return f"{self.user.username} - {self.badge.name}"
 
-# Signal pour créer UserStats automatiquement
+# Signal to create UserStats automatically
 @receiver(post_save, sender=User)
 def create_user_stats(sender, instance, created, **kwargs):
     if created:

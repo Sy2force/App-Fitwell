@@ -9,11 +9,11 @@ from api.permissions import IsAdminOrReadOnly, IsAuthorOrReadOnly
 
 class RecipeViewSet(viewsets.ReadOnlyModelViewSet):
     """
-    Liste les recettes de la base de données nutrition.
-    Lecture seule (les recettes sont gérées par les seeds).
+    Lists recipes from the nutrition database.
+    Read only (recipes are managed by seeds).
     URL: /api/recipes/
-    Filtres: ?category=lunch&difficulty=easy
-    Recherche: ?search=protein
+    Filters: ?category=lunch&difficulty=easy
+    Search: ?search=protein
     """
     queryset = Recipe.objects.all()
     serializer_class = RecipeSerializer
@@ -27,8 +27,8 @@ class RecipeViewSet(viewsets.ReadOnlyModelViewSet):
 
 class TagViewSet(viewsets.ReadOnlyModelViewSet):
     """
-    Liste les tags disponibles. Lecture seule (les tags sont créés
-    automatiquement à la création d'articles/commentaires).
+    Lists available tags. Read only (tags are created
+    automatically when creating articles/comments).
     URL: /api/tags/
     """
     queryset = Tag.objects.all()
@@ -41,8 +41,8 @@ class TagViewSet(viewsets.ReadOnlyModelViewSet):
 
 class CategoryViewSet(viewsets.ModelViewSet):
     """
-    Simple liste des catégories.
-    On peut les trier ou chercher par nom.
+    Simple list of categories.
+    Can sort or search by name.
     """
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
@@ -55,7 +55,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['get'])
     def articles(self, request, slug=None):
         """
-        Récupère les articles d'une catégorie spécifique.
+        Retrieves articles from a specific category.
         URL: /api/categories/{slug}/articles/
         """
         category = self.get_object()
@@ -65,35 +65,35 @@ class CategoryViewSet(viewsets.ModelViewSet):
 
 class ArticleViewSet(viewsets.ModelViewSet):
     """
-    API principale pour les articles.
-    - Lecture : tout le monde (anonyme inclus).
-    - Création : tout utilisateur authentifié.
-    - Modification / Suppression : seul l'auteur (ou admin).
+    Main API for articles.
+    - Read: everyone (including anonymous).
+    - Create: any authenticated user.
+    - Modify / Delete: only the author (or admin).
     """
-    # On charge l'auteur et la catégorie direct pour éviter de faire 50 requêtes SQL
+    # Load author and category directly to avoid 50 SQL queries
     queryset = (Article.objects
                 .select_related('author', 'category')
                 .prefetch_related('comments', 'tags')
                 .order_by('-created_at'))
     serializer_class = ArticleSerializer
-    # Cahier des charges : utilisateur authentifié peut créer,
-    # seul l'auteur (ou admin) peut modifier/supprimer.
+    # Requirements: authenticated user can create,
+    # only the author (or admin) can modify/delete.
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsAuthorOrReadOnly]
 
-    # Filtres : par catégorie, auteur, tag, recherche texte
+    # Filters: by category, author, tag, text search
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     filterset_fields = ['category', 'author', 'category__slug', 'tags__name', 'tags__slug']
     search_fields = ['title', 'content', 'tags__name']
     ordering_fields = ['created_at', 'title', 'author__username']
 
     def perform_create(self, serializer):
-        # On assigne automatiquement l'auteur à l'utilisateur connecté
+        # Automatically assign the author to the connected user
         serializer.save(author=self.request.user)
 
     @action(detail=True, methods=['post'], permission_classes=[permissions.IsAuthenticated])
     def like(self, request, pk=None):
         """
-        Action pour liker/unliker un article.
+        Action to like/unlike an article.
         URL: /api/articles/{id}/like/
         """
         article = self.get_object()
@@ -109,7 +109,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['get'], permission_classes=[permissions.IsAuthenticated])
     def me(self, request):
         """
-        Récupère les articles de l'utilisateur connecté.
+        Retrieves articles from the connected user.
         URL: /api/blog/articles/me/
         """
         articles = Article.objects.filter(author=request.user).order_by('-created_at')
@@ -119,7 +119,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['get', 'post'], permission_classes=[permissions.IsAuthenticatedOrReadOnly])
     def comments(self, request, pk=None):
         """
-        Gère les commentaires d'un article spécifique (List / Create).
+        Manages comments of a specific article (List / Create).
         URL: /api/articles/{id}/comments/
         """
         article = self.get_object()
@@ -130,7 +130,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
             return Response(serializer.data)
         
         elif request.method == 'POST':
-            # Injection de l'article via l'URL (route imbriquée)
+            # Inject the article via the URL (nested route)
             data = {**request.data, 'article': article.id}
             serializer = CommentSerializer(data=data)
             if serializer.is_valid():
@@ -140,8 +140,8 @@ class ArticleViewSet(viewsets.ModelViewSet):
 
 class CommentViewSet(viewsets.ModelViewSet):
     """
-    Gestion des commentaires sur les articles.
-    Même logique : tu ne peux modifier que TES commentaires.
+    Comment management on articles.
+    Same logic: you can only modify YOUR comments.
     """
     queryset = (Comment.objects
                 .select_related('author', 'article')

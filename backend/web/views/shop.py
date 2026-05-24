@@ -6,12 +6,12 @@ from api.models import Product, Cart, CartItem, Order, OrderItem
 
 def shop_list(request):
     """
-    Liste de tous les produits de la boutique.
-    Filtres par catégorie, prix, note.
+    List of all shop products.
+    Filters by category, price, rating.
     """
     products = Product.objects.all()
     
-    # Filtres
+    # Filters
     category_filter = request.GET.get('category')
     min_price = request.GET.get('min_price')
     max_price = request.GET.get('max_price')
@@ -42,11 +42,11 @@ def shop_list(request):
 
 def shop_detail(request, slug):
     """
-    Détail d'un produit avec informations complètes.
+    Product detail with complete information.
     """
     product = get_object_or_404(Product, slug=slug)
     
-    # Produits liés (même catégorie)
+    # Related products (same category)
     related_products = Product.objects.filter(
         category=product.category
     ).exclude(id=product.id)[:4]
@@ -61,7 +61,7 @@ def shop_detail(request, slug):
 @login_required
 def cart_view(request):
     """
-    Panier d'achat de l'utilisateur.
+    User shopping cart.
     """
     cart, created = Cart.objects.get_or_create(user=request.user)
     items = cart.items.all()
@@ -76,12 +76,12 @@ def cart_view(request):
 @login_required
 def add_to_cart(request, product_id):
     """
-    Ajouter un produit au panier.
+    Add a product to the cart.
     """
     product = get_object_or_404(Product, id=product_id)
     cart, created = Cart.objects.get_or_create(user=request.user)
     
-    # Vérifier si le produit est déjà dans le panier
+    # Check if product is already in cart
     cart_item, created = CartItem.objects.get_or_create(
         cart=cart,
         product=product,
@@ -98,7 +98,7 @@ def add_to_cart(request, product_id):
 @login_required
 def remove_from_cart(request, item_id):
     """
-    Supprimer un article du panier.
+    Remove an item from the cart.
     """
     cart_item = get_object_or_404(CartItem, id=item_id, cart__user=request.user)
     cart_item.delete()
@@ -108,7 +108,7 @@ def remove_from_cart(request, item_id):
 @login_required
 def update_cart_quantity(request, item_id):
     """
-    Mettre à jour la quantité d'un article dans le panier.
+    Update the quantity of an item in the cart.
     """
     if request.method == 'POST':
         cart_item = get_object_or_404(CartItem, id=item_id, cart__user=request.user)
@@ -130,26 +130,26 @@ def update_cart_quantity(request, item_id):
 @login_required
 def fake_checkout(request):
     """
-    Processus de paiement fictif (mode démo).
+    Fake payment process (demo mode).
     """
     cart = get_object_or_404(Cart, user=request.user)
     
     if cart.items.count() == 0:
         return redirect('cart')
     
-    # Créer une commande fictive
+    # Create a fake order
     order = Order.objects.create(
         user=request.user,
         total_price=cart.total_price,
         shipping_cost=0,
-        shipping_address="Adresse de démonstration",
+        shipping_address="Demo address",
         shipping_city="Paris",
         shipping_postal_code="75001",
         shipping_country="France",
         status='processing'
     )
     
-    # Ajouter les articles à la commande
+    # Add items to the order
     for cart_item in cart.items.all():
         OrderItem.objects.create(
             order=order,
@@ -158,7 +158,7 @@ def fake_checkout(request):
             price=cart_item.product.price
         )
     
-    # Vider le panier
+    # Clear the cart
     cart.items.all().delete()
     
     return redirect('order_success', order_id=order.id)
@@ -167,7 +167,7 @@ def fake_checkout(request):
 @login_required
 def order_success(request, order_id):
     """
-    Page de confirmation de commande.
+    Order confirmation page.
     """
     order = get_object_or_404(Order, id=order_id, user=request.user)
     context = {

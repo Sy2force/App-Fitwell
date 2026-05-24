@@ -7,12 +7,12 @@ from django.utils import timezone
 
 def program_list(request):
     """
-    Liste de tous les programmes d'entraînement.
-    Filtres par objectif, niveau, durée.
+    List of all training programs.
+    Filters by goal, level, duration.
     """
     programs = Program.objects.all()
     
-    # Filtres
+    # Filters
     goal_filter = request.GET.get('goal')
     level_filter = request.GET.get('level')
     duration_filter = request.GET.get('duration')
@@ -24,7 +24,7 @@ def program_list(request):
     if duration_filter:
         programs = programs.filter(duration=duration_filter)
     
-    # Vérifier si l'utilisateur a commencé un programme
+    # Check if user has started a program
     user_progress = None
     if request.user.is_authenticated:
         user_progress = UserProgramProgress.objects.filter(
@@ -44,12 +44,12 @@ def program_list(request):
 
 def program_detail(request, slug):
     """
-    Détail d'un programme avec ses jours et exercices.
+    Detail of a program with its days and exercises.
     """
     program = get_object_or_404(Program, slug=slug)
     days = program.days.all().prefetch_related('exercises__exercise')
     
-    # Vérifier la progression de l'utilisateur
+    # Check user progress
     user_progress = None
     if request.user.is_authenticated:
         user_progress, created = UserProgramProgress.objects.get_or_create(
@@ -69,7 +69,7 @@ def program_detail(request, slug):
 @login_required
 def start_program(request, program_id):
     """
-    Démarrer un programme pour l'utilisateur.
+    Start a program for the user.
     """
     program = get_object_or_404(Program, id=program_id)
     user_progress, created = UserProgramProgress.objects.get_or_create(
@@ -90,7 +90,7 @@ def start_program(request, program_id):
 @login_required
 def complete_program_day(request, program_id, day_number):
     """
-    Marquer un jour de programme comme complété.
+    Mark a program day as completed.
     """
     program = get_object_or_404(Program, id=program_id)
     user_progress = get_object_or_404(
@@ -99,12 +99,12 @@ def complete_program_day(request, program_id, day_number):
         program=program
     )
     
-    # Ajouter le jour aux jours complétés
+    # Add day to completed days
     if str(day_number) not in user_progress.days_completed:
         user_progress.days_completed.append(str(day_number))
         user_progress.current_day = min(day_number + 1, program.total_sessions)
         
-        # Vérifier si le programme est terminé
+        # Check if program is completed
         if len(user_progress.days_completed) >= program.total_sessions:
             user_progress.status = 'completed'
             user_progress.completed_at = timezone.now()

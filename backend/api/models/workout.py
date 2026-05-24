@@ -4,27 +4,27 @@ from django.utils.text import slugify
 from .user import User
 
 # -----------------------------------------------------------------------------
-# BIBLIOTHÈQUE D'EXERCICES
+# EXERCISE LIBRARY
 # -----------------------------------------------------------------------------
 class Exercise(models.Model):
     """
-    Représente un exercice physique dans la bibliothèque.
-    Contient les détails techniques (groupe musculaire, difficulté, équipement).
+    Represents a physical exercise in the library.
+    Contains technical details (muscle group, difficulty, equipment).
     """
     MUSCLE_CHOICES = [
-        ('chest', _('Pectoraux')),
-        ('back', _('Dos')),
-        ('legs', _('Jambes')),
-        ('shoulders', _('Épaules')),
-        ('arms', _('Bras')),
-        ('abs', _('Abdominaux')),
+        ('chest', _('Chest')),
+        ('back', _('Back')),
+        ('legs', _('Legs')),
+        ('shoulders', _('Shoulders')),
+        ('arms', _('Arms')),
+        ('abs', _('Abs')),
         ('cardio', _('Cardio')),
-        ('full', _('Corps complet')),
+        ('full', _('Full Body')),
     ]
     DIFFICULTY_CHOICES = [
-        ('beginner', _('Débutant')),
-        ('intermediate', _('Intermédiaire')),
-        ('advanced', _('Avancé')),
+        ('beginner', _('Beginner')),
+        ('intermediate', _('Intermediate')),
+        ('advanced', _('Advanced')),
     ]
     
     name = models.CharField(max_length=200)
@@ -35,12 +35,12 @@ class Exercise(models.Model):
     equipment = models.CharField(max_length=100, blank=True)
     image_url = models.CharField(max_length=500, blank=True, null=True)
     
-    # Champs supplémentaires pour plus de détails
-    instructions = models.TextField(blank=True, help_text="Instructions étape par étape")
-    video_url = models.CharField(max_length=500, blank=True, null=True, help_text="URL de la vidéo tutoriel")
-    calories_per_minute = models.IntegerField(null=True, blank=True, help_text="Calories brûlées par minute (estimation)")
-    is_compound = models.BooleanField(default=False, help_text="Exercice polyarticulaire vs isolation")
-    secondary_muscles = models.JSONField(default=list, blank=True, help_text="Groupes musculaires secondaires sollicités")
+    # Additional fields for more details
+    instructions = models.TextField(blank=True, help_text="Step by step instructions")
+    video_url = models.CharField(max_length=500, blank=True, null=True, help_text="Tutorial video URL")
+    calories_per_minute = models.IntegerField(null=True, blank=True, help_text="Calories burned per minute (estimate)")
+    is_compound = models.BooleanField(default=False, help_text="Compound exercise vs isolation")
+    secondary_muscles = models.JSONField(default=list, blank=True, help_text="Secondary muscle groups targeted")
     
     # Timestamps
     created_at = models.DateTimeField(auto_now_add=True)
@@ -59,13 +59,13 @@ class Exercise(models.Model):
 # -----------------------------------------------------------------------------
 class WorkoutSession(models.Model):
     """
-    Représente une séance d'entraînement complète.
-    Contient tous les sets effectués pendant la session.
+    Represents a complete workout session.
+    Contains all sets performed during the session.
     """
     STATUS_CHOICES = [
-        ('active', _('En cours')),
-        ('completed', _('Terminée')),
-        ('cancelled', _('Annulée')),
+        ('active', _('Active')),
+        ('completed', _('Completed')),
+        ('cancelled', _('Cancelled')),
     ]
     
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='workout_sessions')
@@ -112,15 +112,15 @@ class WorkoutSession(models.Model):
 
 class ExerciseSet(models.Model):
     """
-    Représente une série d'un exercice dans une séance.
-    Contient le nombre de répétitions et le poids utilisé.
+    Represents a set of an exercise in a session.
+    Contains the number of repetitions and the weight used.
     """
     session = models.ForeignKey(WorkoutSession, on_delete=models.CASCADE, related_name='sets')
     exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE, related_name='performed_sets')
     set_number = models.IntegerField(default=1)
     reps = models.IntegerField()
-    weight = models.FloatField(help_text="Poids en kg")
-    rest_seconds = models.IntegerField(default=60, help_text="Temps de repos après la série")
+    weight = models.FloatField(help_text="Weight in kg")
+    rest_seconds = models.IntegerField(default=60, help_text="Rest time after set")
     notes = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     

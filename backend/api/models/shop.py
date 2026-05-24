@@ -4,21 +4,21 @@ from django.utils.text import slugify
 from .user import User
 
 # -----------------------------------------------------------------------------
-# BOUTIQUE SPORT (E-COMMERCE DÉMO)
+# SPORTS SHOP (DEMO E-COMMERCE)
 # -----------------------------------------------------------------------------
 class Product(models.Model):
     """
-    Produits de la boutique sport fictive.
-    Mode démo : pas de vrai paiement, mais logique e-commerce crédible.
+    Products from the fictional sports shop.
+    Demo mode: no real payment, but credible e-commerce logic.
     """
     CATEGORY_CHOICES = [
-        ('strength', _('Musculation')),
+        ('strength', _('Bodybuilding')),
         ('cardio', _('Cardio')),
-        ('yoga', _('Yoga & Mobilité')),
+        ('yoga', _('Yoga & Mobility')),
         ('running', _('Running')),
-        ('clothing', _('Vêtements')),
-        ('accessories', _('Accessoires')),
-        ('nutrition', _('Nutrition Sportive')),
+        ('clothing', _('Clothing')),
+        ('accessories', _('Accessories')),
+        ('nutrition', _('Sports Nutrition')),
     ]
 
     name = models.CharField(max_length=200)
@@ -26,27 +26,27 @@ class Product(models.Model):
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES)
     
     # Descriptions
-    description_short = models.CharField(max_length=200, help_text="Description courte pour les cartes")
-    description_long = models.TextField(help_text="Description détaillée du produit")
+    description_short = models.CharField(max_length=200, help_text="Short description for cards")
+    description_long = models.TextField(help_text="Detailed product description")
     
-    # Prix
-    price = models.DecimalField(max_digits=10, decimal_places=2, help_text="Prix en EUR")
-    old_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, help_text="Prix barré si promo")
+    # Price
+    price = models.DecimalField(max_digits=10, decimal_places=2, help_text="Price in EUR")
+    old_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, help_text="Strikethrough price if on sale")
     
     # Images
-    image = models.CharField(max_length=500, blank=True, null=True, help_text="URL de l'image principale")
-    gallery = models.JSONField(default=list, blank=True, help_text="Liste d'URLs d'images additionnelles")
+    image = models.CharField(max_length=500, blank=True, null=True, help_text="Main image URL")
+    gallery = models.JSONField(default=list, blank=True, help_text="List of additional image URLs")
     
-    # Évaluation & Stock
-    rating = models.DecimalField(max_digits=3, decimal_places=1, default=4.5, help_text="Note moyenne sur 5")
-    stock = models.IntegerField(default=10, help_text="Stock disponible")
+    # Rating & Stock
+    rating = models.DecimalField(max_digits=3, decimal_places=1, default=4.5, help_text="Average rating out of 5")
+    stock = models.IntegerField(default=10, help_text="Available stock")
     
-    # Marque & Caractéristiques
-    brand = models.CharField(max_length=100, blank=True, help_text="Marque du produit")
-    features = models.JSONField(default=list, blank=True, help_text="Liste des caractéristiques")
+    # Brand & Features
+    brand = models.CharField(max_length=100, blank=True, help_text="Product brand")
+    features = models.JSONField(default=list, blank=True, help_text="List of features")
     
-    # Recommandations
-    recommended_for = models.TextField(blank=True, help_text="Pour qui ce produit est recommandé")
+    # Recommendations
+    recommended_for = models.TextField(blank=True, help_text="Who this product is recommended for")
     related_exercises = models.ManyToManyField('Exercise', blank=True, related_name='recommended_products')
     
     # Timestamps
@@ -55,8 +55,8 @@ class Product(models.Model):
 
     class Meta:
         ordering = ['-created_at']
-        verbose_name = _("Produit")
-        verbose_name_plural = _("Produits")
+        verbose_name = _("Product")
+        verbose_name_plural = _("Products")
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -78,20 +78,20 @@ class Product(models.Model):
 
 
 # -----------------------------------------------------------------------------
-# PANIER (CART)
+# CART
 # -----------------------------------------------------------------------------
 class Cart(models.Model):
     """
-    Panier d'achat de l'utilisateur.
-    Mode démo : pas de persistance réelle sur le long terme.
+    User shopping cart.
+    Demo mode: no real long-term persistence.
     """
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='cart')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        verbose_name = _("Panier")
-        verbose_name_plural = _("Paniers")
+        verbose_name = _("Cart")
+        verbose_name_plural = _("Carts")
 
     def __str__(self):
         return f"Cart of {self.user.username}"
@@ -107,7 +107,7 @@ class Cart(models.Model):
 
 class CartItem(models.Model):
     """
-    Article dans le panier.
+    Item in the cart.
     """
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name='items')
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
@@ -115,8 +115,8 @@ class CartItem(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        verbose_name = _("Article du panier")
-        verbose_name_plural = _("Articles du panier")
+        verbose_name = _("Cart item")
+        verbose_name_plural = _("Cart items")
         unique_together = ('cart', 'product')
 
     def __str__(self):
@@ -128,34 +128,34 @@ class CartItem(models.Model):
 
 
 # -----------------------------------------------------------------------------
-# COMMANDES (ORDERS)
+# ORDERS
 # -----------------------------------------------------------------------------
 class Order(models.Model):
     """
-    Commande de l'utilisateur (mode démo).
+    User order (demo mode).
     """
     STATUS_CHOICES = [
-        ('pending', _('En attente')),
-        ('processing', _('En préparation')),
-        ('shipped', _('Expédié')),
-        ('delivered', _('Livré')),
-        ('cancelled', _('Annulé')),
+        ('pending', _('Pending')),
+        ('processing', _('Processing')),
+        ('shipped', _('Shipped')),
+        ('delivered', _('Delivered')),
+        ('cancelled', _('Cancelled')),
     ]
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders')
     order_number = models.CharField(max_length=50, unique=True, blank=True)
     
-    # Adresse de livraison (mode démo)
-    shipping_address = models.TextField(help_text="Adresse de livraison")
+    # Shipping address (demo mode)
+    shipping_address = models.TextField(help_text="Shipping address")
     shipping_city = models.CharField(max_length=100)
     shipping_postal_code = models.CharField(max_length=20)
     shipping_country = models.CharField(max_length=100, default='France')
     
-    # Montants
+    # Amounts
     total_price = models.DecimalField(max_digits=10, decimal_places=2)
     shipping_cost = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     
-    # Statut
+    # Status
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
     
     # Timestamps
@@ -166,8 +166,8 @@ class Order(models.Model):
 
     class Meta:
         ordering = ['-created_at']
-        verbose_name = _("Commande")
-        verbose_name_plural = _("Commandes")
+        verbose_name = _("Order")
+        verbose_name_plural = _("Orders")
 
     def __str__(self):
         return f"Order {self.order_number} - {self.user.username}"
@@ -180,16 +180,16 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
     """
-    Article dans une commande.
+    Item in an order.
     """
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
     quantity = models.IntegerField(default=1)
-    price = models.DecimalField(max_digits=10, decimal_places=2, help_text="Prix au moment de la commande")
+    price = models.DecimalField(max_digits=10, decimal_places=2, help_text="Price at time of order")
 
     class Meta:
-        verbose_name = _("Article de commande")
-        verbose_name_plural = _("Articles de commande")
+        verbose_name = _("Order item")
+        verbose_name_plural = _("Order items")
 
     def __str__(self):
         return f"{self.quantity}x {self.product.name}"

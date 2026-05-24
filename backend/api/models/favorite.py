@@ -6,37 +6,37 @@ from .nutrition import Recipe
 from .shop import Product
 
 # -----------------------------------------------------------------------------
-# FAVORIS UTILISATEUR
+# USER FAVORITES
 # -----------------------------------------------------------------------------
 class Favorite(models.Model):
     """
-    Favoris de l'utilisateur (exercices, recettes, produits).
-    Permet à l'utilisateur de sauvegarder du contenu pour y accéder facilement.
+    User favorites (exercises, recipes, products).
+    Allows the user to save content for easy access.
     """
     CONTENT_TYPE_CHOICES = [
-        ('exercise', _('Exercice')),
-        ('recipe', _('Recette')),
-        ('product', _('Produit')),
+        ('exercise', _('Exercise')),
+        ('recipe', _('Recipe')),
+        ('product', _('Product')),
     ]
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='favorites')
     content_type = models.CharField(max_length=20, choices=CONTENT_TYPE_CHOICES)
     
-    # Relations polymorphiques (stockées comme IDs)
+    # Polymorphic relations (stored as IDs)
     exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE, null=True, blank=True, related_name='favorited_by')
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, null=True, blank=True, related_name='favorited_by')
     product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True, blank=True, related_name='favorited_by')
     
-    # Notes personnelles
-    notes = models.TextField(blank=True, help_text="Notes personnelles sur ce favori")
+    # Personal notes
+    notes = models.TextField(blank=True, help_text="Personal notes on this favorite")
     
     # Timestamps
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         ordering = ['-created_at']
-        verbose_name = _("Favori")
-        verbose_name_plural = _("Favoris")
+        verbose_name = _("Favorite")
+        verbose_name_plural = _("Favorites")
         unique_together = ('user', 'content_type', 'exercise', 'recipe', 'product')
 
     def __str__(self):
@@ -50,7 +50,7 @@ class Favorite(models.Model):
 
     @property
     def content(self):
-        """Retourne l'objet de contenu (exercice, recette ou produit)"""
+        """Returns the content object (exercise, recipe or product)"""
         if self.content_type == 'exercise':
             return self.exercise
         elif self.content_type == 'recipe':
@@ -61,7 +61,7 @@ class Favorite(models.Model):
 
     @property
     def content_name(self):
-        """Retourne le nom du contenu"""
+        """Returns the content name"""
         content = self.content
         if content:
             return content.name if hasattr(content, 'name') else content.title

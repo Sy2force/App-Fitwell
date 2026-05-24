@@ -25,7 +25,7 @@ def planner_view(request):
             plan = form.save(commit=False)
             plan.user = request.user
             
-            # Génération du plan via le service
+            # Generate plan via service
             workout, nutrition, score = generate_wellness_plan(
                 plan.age, plan.gender, plan.height, plan.weight, plan.goal, plan.activity_level
             )
@@ -34,7 +34,7 @@ def planner_view(request):
             plan.nutrition_plan = nutrition
             plan.save()
             
-            # Mise à jour des stats utilisateur
+            # Update user stats
             if hasattr(request.user, 'stats'):
                 request.user.stats.health_score = score
                 
@@ -55,7 +55,7 @@ def planner_view(request):
                 # Badge Trigger
                 check_and_award_badges(request.user)
                 
-            messages.success(request, _("Ton programme est prêt ! +100 d'énergie"))
+            messages.success(request, _("Your program is ready! +100 energy"))
             return redirect('planner')
     else:
         if latest_plan:
@@ -111,7 +111,7 @@ def custom_planner_view(request):
 def delete_custom_event(request, event_id):
     event = get_object_or_404(CustomEvent, id=event_id, user=request.user)
     event.delete()
-    messages.success(request, _("Activité supprimée."))
+    messages.success(request, _("Activity deleted."))
     return redirect('custom_planner')
 
 @login_required(login_url='login')
@@ -137,7 +137,7 @@ def complete_custom_event(request, event_id):
             'xp_gain': xp_gain,
             'new_xp': request.user.stats.xp,
             'new_level': request.user.stats.level,
-            'message': _("C'est fait ! +%(xp)s") % {'xp': xp_gain}
+            'message': _("Done! +%(xp)s") % {'xp': xp_gain}
         })
         
     return JsonResponse({'status': 'already_completed'})

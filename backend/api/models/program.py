@@ -5,32 +5,32 @@ from .user import User
 from .workout import Exercise
 
 # -----------------------------------------------------------------------------
-# PROGRAMMES D'ENTRAÎNEMENT
+# TRAINING PROGRAMS
 # -----------------------------------------------------------------------------
 class Program(models.Model):
     """
-    Programme d'entraînement structuré sur plusieurs jours ou semaines.
+    Structured training program over multiple days or weeks.
     """
     GOAL_CHOICES = [
-        ('weight_loss', _('Perte de poids')),
-        ('muscle_gain', _('Prise de muscle')),
-        ('strength', _('Force')),
+        ('weight_loss', _('Weight loss')),
+        ('muscle_gain', _('Muscle gain')),
+        ('strength', _('Strength')),
         ('endurance', _('Endurance')),
-        ('mobility', _('Mobilité')),
-        ('fitness', _('Remise en forme')),
+        ('mobility', _('Mobility')),
+        ('fitness', _('Fitness')),
     ]
 
     LEVEL_CHOICES = [
-        ('beginner', _('Débutant')),
-        ('intermediate', _('Intermédiaire')),
-        ('advanced', _('Avancé')),
+        ('beginner', _('Beginner')),
+        ('intermediate', _('Intermediate')),
+        ('advanced', _('Advanced')),
     ]
 
     DURATION_CHOICES = [
-        ('7_days', _('7 jours')),
-        ('4_weeks', _('4 semaines')),
-        ('8_weeks', _('8 semaines')),
-        ('12_weeks', _('12 semaines')),
+        ('7_days', _('7 days')),
+        ('4_weeks', _('4 weeks')),
+        ('8_weeks', _('8 weeks')),
+        ('12_weeks', _('12 weeks')),
     ]
 
     name = models.CharField(max_length=200)
@@ -46,13 +46,13 @@ class Program(models.Model):
     # Image
     image = models.CharField(max_length=500, blank=True, null=True)
     
-    # Statistiques
-    total_sessions = models.IntegerField(default=0, help_text="Nombre total de séances")
-    duration_weeks = models.IntegerField(default=0, help_text="Durée en semaines")
+    # Statistics
+    total_sessions = models.IntegerField(default=0, help_text="Total number of sessions")
+    duration_weeks = models.IntegerField(default=0, help_text="Duration in weeks")
     
-    # Conseils
-    nutrition_tips = models.TextField(blank=True, help_text="Conseils nutritionnels")
-    equipment_needed = models.TextField(blank=True, help_text="Matériel nécessaire")
+    # Tips
+    nutrition_tips = models.TextField(blank=True, help_text="Nutritional tips")
+    equipment_needed = models.TextField(blank=True, help_text="Required equipment")
     
     # Timestamps
     created_at = models.DateTimeField(auto_now_add=True)
@@ -60,8 +60,8 @@ class Program(models.Model):
 
     class Meta:
         ordering = ['-created_at']
-        verbose_name = _("Programme")
-        verbose_name_plural = _("Programmes")
+        verbose_name = _("Program")
+        verbose_name_plural = _("Programs")
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -74,24 +74,24 @@ class Program(models.Model):
 
 class ProgramDay(models.Model):
     """
-    Jour d'un programme d'entraînement.
-    Peut être un jour de repos ou un jour d'entraînement.
+    Day of a training program.
+    Can be a rest day or a training day.
     """
     program = models.ForeignKey(Program, on_delete=models.CASCADE, related_name='days')
-    day_number = models.IntegerField(help_text="Numéro du jour dans le programme")
+    day_number = models.IntegerField(help_text="Day number in the program")
     
-    # Description du jour
-    name = models.CharField(max_length=200, help_text="Ex: Jour 1 - Pectoraux & Triceps")
-    description = models.TextField(blank=True, help_text="Description du jour")
-    is_rest_day = models.BooleanField(default=False, help_text="Vrai si jour de repos")
+    # Day description
+    name = models.CharField(max_length=200, help_text="Ex: Day 1 - Chest & Triceps")
+    description = models.TextField(blank=True, help_text="Day description")
+    is_rest_day = models.BooleanField(default=False, help_text="True if rest day")
     
-    # Durée estimée
-    estimated_duration_minutes = models.IntegerField(default=45, help_text="Durée estimée en minutes")
+    # Estimated duration
+    estimated_duration_minutes = models.IntegerField(default=45, help_text="Estimated duration in minutes")
 
     class Meta:
         ordering = ['day_number']
-        verbose_name = _("Jour de programme")
-        verbose_name_plural = _("Jours de programme")
+        verbose_name = _("Program day")
+        verbose_name_plural = _("Program days")
         unique_together = ('program', 'day_number')
 
     def __str__(self):
@@ -100,53 +100,53 @@ class ProgramDay(models.Model):
 
 class ProgramExercise(models.Model):
     """
-    Exercice dans un jour de programme.
+    Exercise in a program day.
     """
     program_day = models.ForeignKey(ProgramDay, on_delete=models.CASCADE, related_name='exercises')
     exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE)
     
-    # Détails de l'exercice dans le programme
-    order = models.IntegerField(default=1, help_text="Ordre de l'exercice dans le jour")
-    sets = models.IntegerField(default=3, help_text="Nombre de séries")
+    # Exercise details in the program
+    order = models.IntegerField(default=1, help_text="Exercise order in the day")
+    sets = models.IntegerField(default=3, help_text="Number of sets")
     reps = models.CharField(max_length=50, help_text="Ex: 8-12, 15, AMRAP")
-    rest_seconds = models.IntegerField(default=60, help_text="Temps de repos en secondes")
-    weight_note = models.CharField(max_length=100, blank=True, help_text="Note sur le poids (ex: 60% 1RM)")
+    rest_seconds = models.IntegerField(default=60, help_text="Rest time in seconds")
+    weight_note = models.CharField(max_length=100, blank=True, help_text="Weight note (ex: 60% 1RM)")
     
     # Notes
-    notes = models.TextField(blank=True, help_text="Notes spécifiques pour cet exercice")
+    notes = models.TextField(blank=True, help_text="Specific notes for this exercise")
 
     class Meta:
         ordering = ['order']
-        verbose_name = _("Exercice de programme")
-        verbose_name_plural = _("Exercices de programme")
+        verbose_name = _("Program exercise")
+        verbose_name_plural = _("Program exercises")
 
     def __str__(self):
         return f"{self.program_day.name} - {self.order}. {self.exercise.name}"
 
 
 # -----------------------------------------------------------------------------
-# PROGRESSION UTILISATEUR DANS PROGRAMME
+# USER PROGRAM PROGRESSION
 # -----------------------------------------------------------------------------
 class UserProgramProgress(models.Model):
     """
-    Suivi de la progression d'un utilisateur dans un programme.
+    Track user progress in a program.
     """
     STATUS_CHOICES = [
-        ('not_started', _('Non commencé')),
-        ('in_progress', _('En cours')),
-        ('completed', _('Terminé')),
-        ('abandoned', _('Abandonné')),
+        ('not_started', _('Not started')),
+        ('in_progress', _('In progress')),
+        ('completed', _('Completed')),
+        ('abandoned', _('Abandoned')),
     ]
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='program_progress')
     program = models.ForeignKey(Program, on_delete=models.CASCADE, related_name='user_progress')
     
-    # Statut
+    # Status
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='not_started')
     
     # Progression
-    current_day = models.IntegerField(default=1, help_text="Jour actuel dans le programme")
-    days_completed = models.JSONField(default=list, blank=True, help_text="Liste des jours complétés")
+    current_day = models.IntegerField(default=1, help_text="Current day in the program")
+    days_completed = models.JSONField(default=list, blank=True, help_text="List of completed days")
     
     # Timestamps
     started_at = models.DateTimeField(null=True, blank=True)
@@ -156,8 +156,8 @@ class UserProgramProgress(models.Model):
 
     class Meta:
         unique_together = ('user', 'program')
-        verbose_name = _("Progression utilisateur")
-        verbose_name_plural = _("Progressions utilisateurs")
+        verbose_name = _("User progression")
+        verbose_name_plural = _("User progressions")
 
     def __str__(self):
         return f"{self.user.username} - {self.program.name}"

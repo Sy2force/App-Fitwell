@@ -8,9 +8,9 @@ from api.serializers import UserSerializer
 
 class UserViewSet(viewsets.ModelViewSet):
     """
-    API pour gérer les utilisateurs.
-    Permet de voir la liste, chercher par nom/email.
-    L'inscription (register) est ouverte à tous.
+    API to manage users.
+    Allows viewing the list, searching by name/email.
+    Registration (register) is open to everyone.
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -19,14 +19,14 @@ class UserViewSet(viewsets.ModelViewSet):
     search_fields = ['username', 'email']
 
     def get_permissions(self):
-        # N'importe qui peut s'inscrire, pas besoin d'être connecté.
+        # Anyone can register, no need to be connected.
         if self.action == 'register':
             return [permissions.AllowAny()]
         return super().get_permissions()
 
     @action(detail=False, methods=['post'])
     def register(self, request):
-        # Action personnalisée pour créer un compte facilement
+        # Custom action to create an account easily
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -36,7 +36,7 @@ class UserViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['get', 'patch'], permission_classes=[permissions.IsAuthenticated])
     def me(self, request):
         """
-        Endpoint pour récupérer ou mettre à jour son propre profil.
+        Endpoint to retrieve or update own profile.
         URL: /api/users/me/
         """
         user = request.user
@@ -53,14 +53,14 @@ class UserViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['get'], permission_classes=[permissions.IsAdminUser])
     def export(self, request):
         """
-        Export des utilisateurs en CSV (Admin seulement).
+        Export users to CSV (Admin only).
         URL: /api/users/export/
         """
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="users_export.csv"'
 
         writer = csv.writer(response)
-        writer.writerow(['ID', 'Nom d\'utilisateur', 'Email', 'Staff', 'Date d\'inscription'])
+        writer.writerow(['ID', 'Username', 'Email', 'Staff', 'Registration date'])
 
         users = User.objects.all().values_list('id', 'username', 'email', 'is_staff', 'date_joined')
         for user in users:

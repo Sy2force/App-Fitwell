@@ -12,8 +12,8 @@ from api.services.gamification import check_and_award_badges
 
 def login_view(request):
     """
-    Connexion utilisateur.
-    Met à jour le streak à la connexion.
+    User login.
+    Updates streak on login.
     """
     if request.method == 'POST':
         form = CustomAuthenticationForm(request, data=request.POST)
@@ -25,29 +25,29 @@ def login_view(request):
                 user.stats.update_streak()
             return redirect('home')
         else:
-            messages.error(request, _("Identifiants invalides."))
+            messages.error(request, _("Invalid credentials."))
     else:
         form = CustomAuthenticationForm()
     return render(request, 'web/login.html', {'form': form})
 
 def logout_view(request):
     """
-    Déconnexion utilisateur.
+    User logout.
     """
     logout(request)
     return redirect('home')
 
 def register_view(request):
     """
-    Inscription nouvel utilisateur.
-    Initialise les stats et le streak.
-    Envoie un email de bienvenue.
+    New user registration.
+    Initializes stats and streak.
+    Sends welcome email.
     """
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            # Spécifier le backend d'authentification pour éviter l'erreur "multiple authentication backends"
+            # Specify authentication backend to avoid "multiple authentication backends" error
             user.backend = 'django.contrib.auth.backends.ModelBackend'
             login(request, user)
             # Init Streak
@@ -57,8 +57,8 @@ def register_view(request):
             # Send Welcome Email
             try:
                 send_mail(
-                    subject=_("Bienvenue chez FitWell ! ✨"),
-                    message=_("Salut %(username)s,\n\nHeureux de te compter parmi nous. Ton voyage vers un meilleur quotidien commence maintenant.\n\nAccède à ton espace : %(url)s\n\nÀ très vite,\nL'équipe FitWell") % {
+                    subject=_("Welcome to FitWell! ✨"),
+                    message=_("Hi %(username)s,\n\nGlad to have you with us. Your journey to a better daily life starts now.\n\nAccess your space: %(url)s\n\nSee you soon,\nThe FitWell Team") % {
                         'username': user.username,
                         'url': request.build_absolute_uri(reverse('dashboard'))
                     },
@@ -69,7 +69,7 @@ def register_view(request):
             except Exception:
                 pass # Don't block registration if email fails
 
-            messages.success(request, _("Heureux de te rencontrer ! Ton compte est prêt."))
+            messages.success(request, _("Glad to meet you! Your account is ready."))
             return redirect('home')
         else:
             for field, errors in form.errors.items():
@@ -94,7 +94,7 @@ def edit_profile(request):
         form = UserUpdateForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-            messages.success(request, _("Tes réglages ont été enregistrés ! ✨"))
+            messages.success(request, _("Your settings have been saved! ✨"))
             return redirect('profile')
     else:
         form = UserUpdateForm(instance=request.user)
@@ -107,10 +107,10 @@ def change_password(request):
         if form.is_valid():
             user = form.save()
             update_session_auth_hash(request, user)  # Important!
-            messages.success(request, _('Ton nouveau mot de passe est actif. Ta sécurité est assurée. 🔒'))
+            messages.success(request, _('Your new password is active. Your security is ensured. 🔒'))
             return redirect('profile')
         else:
-            messages.error(request, _('Oups, vérifie les informations saisies.'))
+            messages.error(request, _('Oops, check the entered information.'))
     else:
         form = CustomPasswordChangeForm(request.user)
     return render(request, 'web/change_password.html', {
@@ -121,9 +121,9 @@ def change_password(request):
 @login_required(login_url='login')
 def delete_account(request):
     """
-    Permet à l'utilisateur de supprimer définitivement son propre compte.
-    Sécurité : exige confirmation par mot de passe + checkbox.
-    Le super-utilisateur ne peut pas se supprimer ainsi (sécurité plateforme).
+    Allows the user to permanently delete their own account.
+    Security: requires password confirmation + checkbox.
+    Super-user cannot delete themselves this way (platform security).
     """
     if request.method != 'POST':
         return render(request, 'web/delete_account.html')
@@ -133,20 +133,20 @@ def delete_account(request):
     confirm = request.POST.get('confirm', '')
 
     if request.user.is_superuser:
-        messages.error(request, _("Le super-utilisateur ne peut pas se supprimer via cette page (sécurité)."))
+        messages.error(request, _("The super-user cannot delete themselves via this page (security)."))
         return redirect('profile')
 
-    if confirm != 'SUPPRIMER':
-        messages.error(request, _("Tape exactement SUPPRIMER pour confirmer."))
+    if confirm != 'DELETE':
+        messages.error(request, _("Type exactly DELETE to confirm."))
         return redirect('delete_account')
 
     if not request.user.check_password(password):
-        messages.error(request, _("Mot de passe incorrect."))
+        messages.error(request, _("Incorrect password."))
         return redirect('delete_account')
 
-    # Suppression
+    # Deletion
     username = request.user.username
     logout(request)
     User.objects.filter(username=username).delete()
-    messages.success(request, _("Ton compte %(u)s a été supprimé définitivement. À bientôt peut-être.") % {'u': username})
+    messages.success(request, _("Your account %(u)s has been permanently deleted. See you maybe later.") % {'u': username})
     return redirect('home')

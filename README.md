@@ -1,69 +1,69 @@
-# FitWell - Plateforme de Fitness et Wellness
+# FitWell - Fitness and Wellness Platform
 
-FitWell est une application web complète pour le fitness et le wellness. Elle permet aux utilisateurs de suivre leurs entrainements, planifier leur nutrition, et progresser avec un systeme de gamification.
+FitWell is a complete web application for fitness and wellness. It allows users to track their workouts, plan their nutrition, and progress with a gamification system.
 
-## Table des matieres
+## Table of Contents
 
-- Fonctionnalites
+- Features
 - Installation
-- Structure du projet
-- Base de donnees
+- Project Structure
+- Database
 - API
-- Deploiement
+- Deployment
 
-## Fonctionnalites
+## Features
 
 ### Onboarding
-Les nouveaux utilisateurs passent par un processus d'integration en 4 etapes qui genere automatiquement leur premier plan personnalise. Ils selectionnent leur objectif (perte de poids, prise de masse, maintien), leur niveau d'activite, et leurs donnees biometriques.
+New users go through a 4-step integration process that automatically generates their first personalized plan. They select their goal (weight loss, muscle gain, maintenance), their activity level, and their biometric data.
 
 ### AI Planner
-Le planificateur genere des programmes d'entrainement et de nutrition bases sur les donnees de l'utilisateur. Il calcule le BMR (taux metabolique de base), le TDEE (depense energetique totale), et les macros (proteines, glucides, lipides) en utilisant la formule Mifflin-St Jeor.
+The planner generates workout and nutrition programs based on user data. It calculates BMR (basal metabolic rate), TDEE (total daily energy expenditure), and macros (proteins, carbs, fats) using the Mifflin-St Jeor formula.
 
 ### Workout Tracking
-Les utilisateurs peuvent enregistrer leurs sessions d'entrainement en temps reel. Ils ajoutent des series avec le nombre de repetitions et la charge. Le systeme calcule automatiquement le volume total et la duree de la session. Chaque session complete donne de l'experience (XP).
+Users can record their workout sessions in real time. They add sets with the number of repetitions and the load. The system automatically calculates the total volume and duration of the session. Each completed session gives experience points (XP).
 
 ### Gamification
-Le systeme de gamification inclut:
-- XP et niveaux (chaque niveau necessite 500 XP de plus que le precedent)
-- 20 badges a debloquer (entrainements, series, jalons, social)
-- Series quotidiennes pour encourager la constance
-- Classement global pour comparer les utilisateurs
+The gamification system includes:
+- XP and levels (each level requires 500 more XP than the previous)
+- 20 badges to unlock (workouts, streaks, milestones, social)
+- Daily streaks to encourage consistency
+- Global leaderboard to compare users
 
 ### Analytics
-Six graphiques interactifs montrent la progression de l'utilisateur: evolution du poids, volume par groupe musculaire, records personnels, frequence d'entrainement, score de constance, et progression XP.
+Six interactive charts show user progression: weight evolution, volume by muscle group, personal records, training frequency, consistency score, and XP progression.
 
 ### Dashboard
-Le tableau de bord affiche le journal quotidien (eau, sommeil, humeur, poids), les statistiques hebdomadaires, l'agenda du jour, et les graphiques de progression.
+The dashboard displays the daily log (water, sleep, mood, weight), weekly statistics, daily agenda, and progression charts.
 
 ### Nutrition
-39 recettes avec macros detaillees sont disponibles. Les utilisateurs peuvent filtrer par categorie et niveau. Un calculateur BMI et macros est inclus.
+39 recipes with detailed macros are available. Users can filter by category and level. A BMI and macros calculator is included.
 
 ### Blog
-5 articles de qualite avec systeme de commentaires, likes, et categories.
+5 quality articles with comment system, likes, and categories.
 
-### Programmes d'entrainement
-3 programmes pre-configures (perte de poids, prise de masse, mobilite et yoga) avec structure detaillee.
+### Training Programs
+3 pre-configured programs (weight loss, muscle gain, mobility and yoga) with detailed structure.
 
-### Boutique
-13 produits (musculation, cardio, yoga, vetements, nutrition, accessoires) avec filtres par categorie.
+### Shop
+13 products (bodybuilding, cardio, yoga, clothing, nutrition, accessories) with category filters.
 
-### Panier et commandes
-Systeme de panier fonctionnel avec gestion des quantites et processus de commande.
+### Cart and Orders
+Functional cart system with quantity management and order process.
 
-### Favoris
-Les utilisateurs peuvent ajouter des exercices, recettes, et produits a leurs favoris avec des notes personnelles.
+### Favorites
+Users can add exercises, recipes, and products to their favorites with personal notes.
 
-### Internationalisation
-Support complet francais et anglais avec selecteur de langue dans la barre de navigation.
+### Internationalization
+Complete French and English support with language selector in the navigation bar.
 
 ## Installation
 
-### Prerequis
-- Python 3.9 ou superieur
+### Prerequisites
+- Python 3.9 or higher
 - pip
 - Git
 
-### 1. Cloner et installer
+### 1. Clone and install
 
 ```bash
 git clone https://github.com/Sy2force/App-Fitwell.git
@@ -76,78 +76,78 @@ source venv/bin/activate  # Mac/Linux
 pip install -r backend/requirements.txt
 ```
 
-### 2. Configuration de la base de donnees
+### 2. Database configuration
 
 ```bash
 cd backend
 
 python3 manage.py migrate
 
-python3 manage.py seed_db          # Admin et categories
-python3 manage.py seed_exercises   # 101 exercices
+python3 manage.py seed_db          # Admin and categories
+python3 manage.py seed_exercises   # 101 exercises
 python3 manage.py seed_blog        # 5 articles
 python3 manage.py seed_badges      # 20 badges
-python3 manage.py seed_recipes     # 39 recettes
-python3 manage.py seed_programs    # 3 programmes
-python3 manage.py seed_shop        # 13 produits
-python3 manage.py seed_demo_user   # Utilisateur demo
+python3 manage.py seed_recipes     # 39 recipes
+python3 manage.py seed_programs    # 3 programs
+python3 manage.py seed_shop        # 13 products
+python3 manage.py seed_demo_user   # Demo user
 
 python3 manage.py compilemessages
 ```
 
-### 3. Lancer le serveur
+### 3. Start the server
 
 ```bash
 python3 manage.py runserver
 ```
 
-Acces:
+Access:
 - Application: http://127.0.0.1:8000
 - Admin: http://127.0.0.1:8000/en/admin/
 - API: http://127.0.0.1:8000/api/
 - Swagger: http://127.0.0.1:8000/swagger/
 
-Compte admin (apres seed_db):
+Admin account (after seed_db):
 - Username: admin
 - Password: adminpassword
 
-## Structure du projet
+## Project Structure
 
 ```
 fitwell/
-├── backend/                    # Application Django
-│   ├── api/                    # API REST et modeles
-│   │   ├── models/             # Modeles de donnees
-│   │   ├── views/              # ViewSets API
+├── backend/                    # Django application
+│   ├── api/                    # REST API and models
+│   │   ├── models/             # Data models
+│   │   ├── views/              # API ViewSets
 │   │   ├── serializers/        # Serializers
-│   │   ├── services/           # Services metier
-│   │   ├── management/         # Commandes seed
-│   │   └── tests/              # Tests unitaires
-│   ├── web/                    # Frontend Django
-│   │   ├── views/              # Vues
-│   │   ├── templates/          # Templates HTML
-│   │   ├── static/             # CSS et JavaScript
-│   │   └── forms.py            # Formulaires Django
+│   │   ├── services/           # Business services
+│   │   ├── management/         # Seed commands
+│   │   └── tests/              # Unit tests
+│   ├── web/                    # Django frontend
+│   │   ├── views/              # Views
+│   │   ├── templates/          # HTML templates
+│   │   ├── static/             # CSS and JavaScript
+│   │   └── forms.py            # Django forms
 │   ├── config/                 # Configuration
-│   │   ├── settings.py         # Settings Django
-│   │   └── urls.py             # URLs racine
-│   ├── locale/                 # Traductions FR/EN
-│   ├── manage.py               # CLI Django
-│   ├── requirements.txt        # Dependances Python
-│   └── build.sh                # Script build Render
-└── README.md                   # Ce fichier
+│   │   ├── settings.py         # Django settings
+│   │   └── urls.py             # Root URLs
+│   ├── locale/                 # FR/EN translations
+│   ├── manage.py               # Django CLI
+│   ├── requirements.txt        # Python dependencies
+│   └── build.sh                # Render build script
+└── README.md                   # This file
 ```
 
-## Modeles de donnees
+## Data Models
 
-### User et Stats
-- User (utilisateur custom avec AbstractUser)
-- UserStats (XP, niveaux, series, scores)
+### User and Stats
+- User (custom user with AbstractUser)
+- UserStats (XP, levels, streaks, scores)
 
-### Contenu
+### Content
 - Category, Article, Comment
 
-### Entrainement
+### Training
 - Exercise, WorkoutSession, ExerciseSet
 
 ### Nutrition
@@ -156,27 +156,27 @@ fitwell/
 ### Planning
 - WellnessPlan, DailyLog, CustomEvent
 
-### Programmes
+### Programs
 - Program, ProgramDay, ProgramExercise, UserProgramProgress
 
-### Boutique
+### Shop
 - Product, Cart, CartItem, Order, OrderItem
 
-### Favoris
-- Favorite (polymorphique: exercise, recipe, product)
+### Favorites
+- Favorite (polymorphic: exercise, recipe, product)
 
 ### Gamification
 - Badge, UserBadge
 
-## Base de donnees peuplee
+## Database Seeded
 
-- 101 exercices (tous les groupes musculaires)
-- 39 recettes (avec macros detaillees)
-- 20 badges (systeme de recompenses)
-- 5 articles (contenu blog)
-- 3 programmes (perte de poids, prise de masse, mobilite et yoga)
-- 13 produits (boutique sport)
-- 9 utilisateurs (dont admin et demo)
+- 101 exercises (all muscle groups)
+- 39 recipes (with detailed macros)
+- 20 badges (reward system)
+- 5 articles (blog content)
+- 3 programs (weight loss, muscle gain, mobility and yoga)
+- 13 products (fitness shop)
+- 9 users (including admin and demo)
 
 ## API
 
@@ -185,56 +185,56 @@ fitwell/
 - Swagger UI: http://localhost:8000/swagger/
 - Redoc: http://localhost:8000/redoc/
 
-### Authentification (JWT)
+### Authentication (JWT)
 
-| Methode | Endpoint | Description |
+| Method | Endpoint | Description |
 |---|---|---|
-| POST | /api/register/ | Inscription d'un nouvel utilisateur |
-| POST | /api/token/ | Connexion: retourne access et refresh |
-| POST | /api/token/refresh/ | Rafraichir le token d'acces |
+| POST | /api/register/ | Register a new user |
+| POST | /api/token/ | Login: returns access and refresh |
+| POST | /api/token/refresh/ | Refresh access token |
 
 ### Articles
 
-| Methode | Endpoint | Description | Permission |
+| Method | Endpoint | Description | Permission |
 |---|---|---|---|
-| GET | /api/articles/ | Liste paginee des articles | Anonyme OK |
-| GET | /api/articles/?search= | Recherche par titre, contenu ou tag | Anonyme OK |
-| GET | /api/articles/?tags__name= | Filtre par tag | Anonyme OK |
-| GET | /api/articles/?ordering= | Tri par auteur | Anonyme OK |
-| GET | /api/articles/<id>/ | Detail d'un article et ses commentaires | Anonyme OK |
-| POST | /api/articles/ | Creer un article | Authentifie |
-| PUT/PATCH | /api/articles/<id>/ | Modifier un article | Auteur uniquement |
-| DELETE | /api/articles/<id>/ | Supprimer un article | Auteur uniquement |
+| GET | /api/articles/ | Paginated article list | Anonymous OK |
+| GET | /api/articles/?search= | Search by title, content or tag | Anonymous OK |
+| GET | /api/articles/?tags__name= | Filter by tag | Anonymous OK |
+| GET | /api/articles/?ordering= | Sort by author | Anonymous OK |
+| GET | /api/articles/<id>/ | Article detail and comments | Anonymous OK |
+| POST | /api/articles/ | Create an article | Authenticated |
+| PUT/PATCH | /api/articles/<id>/ | Modify an article | Author only |
+| DELETE | /api/articles/<id>/ | Delete an article | Author only |
 
-### Commentaires
+### Comments
 
-| Methode | Endpoint | Description | Permission |
+| Method | Endpoint | Description | Permission |
 |---|---|---|---|
-| GET | /api/articles/<id>/comments/ | Liste des commentaires d'un article | Anonyme OK |
-| POST | /api/articles/<id>/comments/ | Poster un commentaire | Authentifie |
-| DELETE | /api/comments/<id>/ | Supprimer son commentaire | Auteur uniquement |
+| GET | /api/articles/<id>/comments/ | List of article comments | Anonymous OK |
+| POST | /api/articles/<id>/comments/ | Post a comment | Authenticated |
+| DELETE | /api/comments/<id>/ | Delete own comment | Author only |
 
 ### Tags
 
-| Methode | Endpoint | Description |
+| Method | Endpoint | Description |
 |---|---|---|
-| GET | /api/tags/ | Liste de tous les tags |
-| GET | /api/tags/?search= | Recherche tag par nom |
+| GET | /api/tags/ | List of all tags |
+| GET | /api/tags/?search= | Search tag by name |
 
-### Modeles de donnees
+### Data Models
 
-| Modele | Champs cles | Relations |
+| Model | Key Fields | Relations |
 |---|---|---|
 | User | username (unique), email (unique), password | articles, comments |
 | Article | title, content, created_at (auto), updated_at (auto) | FK author, M2M tags, M2M likes, FK category |
 | Comment | content, created_at (auto) | FK article, FK author, M2M tags |
 | Tag | name (unique), slug (auto) | M2M articles, M2M comments |
 
-## Deploiement
+## Deployment
 
-### Variables d'environnement
+### Environment Variables
 
-Creer .env a la racine:
+Create .env at root:
 
 ```env
 SECRET_KEY=your-secret-key-here
@@ -243,9 +243,9 @@ ALLOWED_HOSTS=localhost,127.0.0.1
 DATABASE_URL=postgresql://user:password@host:port/dbname
 ```
 
-### Deploiement Render
+### Render Deployment
 
-1. Push sur GitHub
+1. Push to GitHub
 ```bash
 git push origin main
 ```
@@ -259,39 +259,39 @@ git push origin main
    - Build Command: ./build.sh
    - Start Command: gunicorn config.wsgi:application --log-file - --capture-output --log-level debug
 
-3. Variables d'environnement
+3. Environment Variables
    - PYTHON_VERSION: 3.11.9
    - DEBUG: False
    - RENDER: True
-   - SECRET_KEY: (genere automatiquement)
+   - SECRET_KEY: (auto generated)
    - ALLOWED_HOSTS: .onrender.com
    - CSRF_TRUSTED_ORIGINS: https://.onrender.com
 
-4. Base de donnees
-   - Creer une base de donnees PostgreSQL
-   - Connecter DATABASE_URL
+4. Database
+   - Create a PostgreSQL database
+   - Connect DATABASE_URL
 
-5. Attendre 5-10 minutes pour le deploiement
+5. Wait 5-10 minutes for deployment
 
-## Commandes utiles
+## Useful Commands
 
-### Developpement
+### Development
 
 ```bash
-# Demarrer serveur
+# Start server
 python3 manage.py runserver
 
 # Tests
 python3 manage.py test
 
-# Verifications
+# Checks
 python3 manage.py check
 
-# Shell Django
+# Django shell
 python3 manage.py shell
 ```
 
-### Base de donnees
+### Database
 
 ```bash
 # Migrations
@@ -305,65 +305,65 @@ python3 manage.py seed_recipes
 python3 manage.py seed_badges
 python3 manage.py seed_blog
 
-# Creer superuser
+# Create superuser
 python3 manage.py createsuperuser
 ```
 
-### Internationalisation
+### Internationalization
 
 ```bash
-# Extraire messages
+# Extract messages
 python3 manage.py makemessages -l en
 
-# Compiler messages
+# Compile messages
 python3 manage.py compilemessages
 ```
 
 ### Production
 
 ```bash
-# Collecter static files
+# Collect static files
 python3 manage.py collectstatic
 
-# Verifier deploiement
+# Check deployment
 python3 manage.py check --deploy
 ```
 
-## Statistiques du projet
+## Project Statistics
 
 ### Code
-- 80+ fichiers Python
-- 40+ templates HTML
+- 80+ Python files
+- 40+ HTML templates
 - 2 CSS + 7 JavaScript
-- 9000+ lignes de code
+- 9000+ lines of code
 
-### Base de donnees
-- 18 modeles de donnees
+### Database
+- 18 data models
 - 20+ relations
-- 200+ entrees seed
+- 200+ seed entries
 
 ### Tests
-- 23 tests unitaires
-- 31 tests E2E
-- 30 verifications systeme
+- 23 unit tests
+- 31 E2E tests
+- 30 system checks
 
-## Technologies utilisees
+## Technologies Used
 
-- Django 4.2 - Framework web Python
-- Django REST Framework - API REST
-- TailwindCSS - Framework CSS
-- Chart.js - Graphiques interactifs
-- PostgreSQL - Base de donnees
+- Django 4.2 - Python web framework
+- Django REST Framework - REST API
+- TailwindCSS - CSS framework
+- Chart.js - Interactive charts
+- PostgreSQL - Database
 - Gunicorn - WSGI server
 - WhiteNoise - Static files
-- Playwright - Tests E2E
+- Playwright - E2E tests
 
 ## License
 
-MIT License - Voir LICENSE
+MIT License - See LICENSE
 
-## A propos
+## About
 
-FitWell est une plateforme complete de fitness et wellness developpee avec Django. Elle inclut un coach AI avec interface futuriste, une gamification complete, un planificateur AI pour des plans personnalises, des analytics avancees, et une internationalisation FR/EN complete.
+FitWell is a complete fitness and wellness platform developed with Django. It includes an AI coach with futuristic interface, complete gamification, AI planner for personalized plans, advanced analytics, and complete FR/EN internationalization.
 
-Statut: Production Ready - 100% Complet
+Status: Production Ready - 100% Complete

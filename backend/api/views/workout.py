@@ -8,11 +8,11 @@ from api.serializers import (WorkoutSessionSerializer, WorkoutSessionCreateSeria
 
 class WorkoutSessionViewSet(viewsets.ModelViewSet):
     """
-    API pour gérer les séances d'entraînement.
-    - POST: Démarrer une nouvelle session
-    - GET: Récupérer l'historique des sessions
-    - PATCH: Mettre à jour une session (notes)
-    - DELETE: Supprimer une session
+    API to manage workout sessions.
+    - POST: Start a new session
+    - GET: Retrieve session history
+    - PATCH: Update a session (notes)
+    - DELETE: Delete a session
     - Custom actions: complete_session, add_set
     """
     permission_classes = [permissions.IsAuthenticated]
@@ -31,19 +31,19 @@ class WorkoutSessionViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['post'])
     def complete(self, request, pk=None):
         """
-        Marquer une session comme terminée.
-        Calcule automatiquement la durée, le volume total et attribue l'XP.
+        Mark a session as completed.
+        Automatically calculates duration, total volume and awards XP.
         """
         session = self.get_object()
         
         if session.status == 'completed':
-            return Response({'error': 'Session déjà terminée'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': 'Session already completed'}, status=status.HTTP_400_BAD_REQUEST)
         
         session.complete_session()
         
         serializer = self.get_serializer(session)
         return Response({
-            'message': 'Séance terminée avec succès',
+            'message': 'Session completed successfully',
             'xp_earned': 50 + (session.duration_minutes // 10) * 10,
             'session': serializer.data
         })
@@ -51,12 +51,12 @@ class WorkoutSessionViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['post'])
     def add_set(self, request, pk=None):
         """
-        Ajouter un set à une session active.
+        Add a set to an active session.
         """
         session = self.get_object()
         
         if session.status != 'active':
-            return Response({'error': 'La session n\'est pas active'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': 'Session is not active'}, status=status.HTTP_400_BAD_REQUEST)
         
         serializer = ExerciseSetCreateSerializer(data=request.data)
         if serializer.is_valid():
@@ -67,7 +67,7 @@ class WorkoutSessionViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['get'])
     def active(self, request):
         """
-        Récupérer la session active de l'utilisateur (s'il y en a une).
+        Retrieve user's active session (if any).
         """
         active_session = WorkoutSession.objects.filter(
             user=request.user, 
@@ -77,12 +77,12 @@ class WorkoutSessionViewSet(viewsets.ModelViewSet):
         if active_session:
             serializer = self.get_serializer(active_session)
             return Response(serializer.data)
-        return Response({'message': 'Aucune session active'}, status=status.HTTP_404_NOT_FOUND)
+        return Response({'message': 'No active session'}, status=status.HTTP_404_NOT_FOUND)
     
     @action(detail=False, methods=['get'])
     def stats(self, request):
         """
-        Statistiques globales des entraînements de l'utilisateur.
+        Global statistics of user's workouts.
         """
         sessions = WorkoutSession.objects.filter(user=request.user, status='completed')
         
@@ -100,8 +100,8 @@ class WorkoutSessionViewSet(viewsets.ModelViewSet):
 
 class ExerciseSetViewSet(viewsets.ModelViewSet):
     """
-    API pour gérer les sets individuels.
-    Principalement en lecture seule, la création se fait via WorkoutSession.add_set
+    API to manage individual sets.
+    Mainly read only, creation is done via WorkoutSession.add_set
     """
     serializer_class = ExerciseSetSerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -111,7 +111,7 @@ class ExerciseSetViewSet(viewsets.ModelViewSet):
 
 class ExerciseViewSet(viewsets.ReadOnlyModelViewSet):
     """
-    API pour la bibliothèque d'exercices (lecture seule pour les utilisateurs).
+    API for exercise library (read only for users).
     """
     queryset = Exercise.objects.all()
     serializer_class = ExerciseSerializer

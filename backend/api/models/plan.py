@@ -7,19 +7,19 @@ from .user import User
 # -----------------------------------------------------------------------------
 class CustomEvent(models.Model):
     """
-    Événements personnalisés pour le planning (Sport, Travail, etc.)
+    Custom events for planning (Sport, Work, etc.)
     """
     TYPE_CHOICES = [
         ('sport', _('Sport & fitness')),
-        ('work', _('Travail & carrière')),
-        ('lifestyle', _('Vie perso & loisirs')),
+        ('work', _('Work & career')),
+        ('lifestyle', _('Personal life & leisure')),
         ('nutrition', _('Nutrition')),
     ]
     
     PRIORITY_CHOICES = [
-        ('low', _('Faible')),
-        ('medium', _('Moyenne')),
-        ('high', _('Haute')),
+        ('low', _('Low')),
+        ('medium', _('Medium')),
+        ('high', _('High')),
     ]
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='custom_events')
@@ -37,28 +37,28 @@ class CustomEvent(models.Model):
 
 class WellnessPlan(models.Model):
     """
-    Plan généré par l'IA.
-    Stocke les données biométriques et le résultat JSON.
+    AI generated plan.
+    Stores biometric data and JSON result.
     """
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='plans')
     
     # Choices
     GENDER_CHOICES = [
-        ('male', _('Homme')),
-        ('female', _('Femme')),
+        ('male', _('Male')),
+        ('female', _('Female')),
     ]
     
     GOAL_CHOICES = [
-        ('weight_loss', _('Perte de poids')),
-        ('muscle_gain', _('Prise de masse')),
-        ('maintenance', _('Maintien')),
+        ('weight_loss', _('Weight loss')),
+        ('muscle_gain', _('Muscle gain')),
+        ('maintenance', _('Maintenance')),
     ]
     
     ACTIVITY_CHOICES = [
-        ('sedentary', _('Sédentaire (peu ou pas d\'exercice)')),
-        ('moderate', _('Modéré (1-3 fois par semaine)')),
-        ('active', _('Actif (3-5 fois par semaine)')),
-        ('elite', _('Élite (6-7 fois par semaine)')),
+        ('sedentary', _('Sedentary (little or no exercise)')),
+        ('moderate', _('Moderate (1-3 times per week)')),
+        ('active', _('Active (3-5 times per week)')),
+        ('elite', _('Elite (6-7 times per week)')),
     ]
     
     # Inputs
@@ -79,13 +79,13 @@ class WellnessPlan(models.Model):
         return f"Plan for {self.user.username} ({self.created_at})"
 
 # -----------------------------------------------------------------------------
-# SUIVI QUOTIDIEN (DAILY LOG)
+# DAILY TRACKING (DAILY LOG)
 # -----------------------------------------------------------------------------
 class DailyLog(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='daily_logs')
     date = models.DateField(auto_now_add=True)
     
-    # Métriques
+    # Metrics
     water_liters = models.FloatField(default=0.0)
     sleep_hours = models.FloatField(default=0.0)
     mood = models.IntegerField(default=5) # 1-10

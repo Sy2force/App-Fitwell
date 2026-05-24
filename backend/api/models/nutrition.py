@@ -3,20 +3,20 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.text import slugify
 
 # -----------------------------------------------------------------------------
-# NUTRITION / RECETTES
+# NUTRITION / RECIPES
 # -----------------------------------------------------------------------------
 class Recipe(models.Model):
     DIFFICULTY_CHOICES = [
-        ('easy', _('Facile')),
-        ('medium', _('Moyen')),
-        ('hard', _('Difficile')),
+        ('easy', _('Easy')),
+        ('medium', _('Medium')),
+        ('hard', _('Hard')),
     ]
     
     CATEGORY_CHOICES = [
-        ('breakfast', _('Petit déjeuner')),
-        ('lunch', _('Déjeuner')),
-        ('dinner', _('Dîner')),
-        ('snack', _('Collation')),
+        ('breakfast', _('Breakfast')),
+        ('lunch', _('Lunch')),
+        ('dinner', _('Dinner')),
+        ('snack', _('Snack')),
         ('shake', _('Shake / Smoothie')),
     ]
 
@@ -30,16 +30,16 @@ class Recipe(models.Model):
     carbs_g = models.IntegerField(default=0)
     fats_g = models.IntegerField(default=0)
     
-    ingredients = models.TextField(help_text="Liste des ingrédients séparés par des sauts de ligne")
-    instructions = models.TextField(help_text="Étapes de préparation")
+    ingredients = models.TextField(help_text="List of ingredients separated by line breaks")
+    instructions = models.TextField(help_text="Preparation steps")
     image_url = models.CharField(max_length=500, blank=True, null=True)
     
-    # Champs supplémentaires
-    servings = models.IntegerField(default=1, help_text="Nombre de portions")
-    fiber_g = models.IntegerField(default=0, help_text="Fibres en grammes")
-    sugar_g = models.IntegerField(default=0, help_text="Sucres en grammes")
-    sodium_mg = models.IntegerField(default=0, help_text="Sodium en milligrammes")
-    tags = models.JSONField(default=list, blank=True, help_text="Tags pour le filtrage (ex: vegan, gluten-free)")
+    # Additional fields
+    servings = models.IntegerField(default=1, help_text="Number of servings")
+    fiber_g = models.IntegerField(default=0, help_text="Fiber in grams")
+    sugar_g = models.IntegerField(default=0, help_text="Sugars in grams")
+    sodium_mg = models.IntegerField(default=0, help_text="Sodium in milligrams")
+    tags = models.JSONField(default=list, blank=True, help_text="Tags for filtering (e.g. vegan, gluten-free)")
     
     # Timestamps
     created_at = models.DateTimeField(auto_now_add=True)

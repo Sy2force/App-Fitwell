@@ -19,16 +19,16 @@ class Command(BaseCommand):
         program1, created = Program.objects.update_or_create(
             slug='weight-loss-4-weeks',
             defaults={
-                'name': 'Perte de Poids - 4 Semaines',
+                'name': 'Weight Loss - 4 Weeks',
                 'goal': 'weight_loss',
                 'level': 'beginner',
                 'duration': '4_weeks',
-                'description_short': 'Programme cardio et corps complet pour perdre du poids sainement',
-                'description_long': 'Ce programme combine des exercices cardio et de renforcement musculaire pour maximiser la dépense calorique tout en préservant la masse musculaire. Idéal pour débuter une perte de poids durable.',
+                'description_short': 'Cardio and full body program to lose weight healthily',
+                'description_long': 'This program combines cardio and strength exercises to maximize calorie expenditure while preserving muscle mass. Ideal for starting sustainable weight loss.',
                 'total_sessions': 12,
                 'duration_weeks': 4,
-                'nutrition_tips': 'Réduis les sucres raffinés, augmente ton apport en protéines, bois beaucoup d\'eau. Mange des légumes à chaque repas.',
-                'equipment_needed': 'Aucun équipement nécessaire. Juste ton corps et de la motivation.',
+                'nutrition_tips': 'Reduce refined sugars, increase protein intake, drink plenty of water. Eat vegetables with every meal.',
+                'equipment_needed': 'No equipment needed. Just your body and motivation.',
                 'image': 'https://images.unsplash.com/photo-1518310383802-640c2de311b2?q=80&w=1600'
             }
         )
@@ -40,8 +40,8 @@ class Command(BaseCommand):
                 day = ProgramDay.objects.create(
                     program=program1,
                     day_number=day_num,
-                    name=f"Jour {day_num} - {'Repos Actif' if is_rest else 'Cardio + Renforcement'}",
-                    description="Séance de 30 minutes avec échauffement, entraînement principal et retour au calme." if not is_rest else "Jour de repos léger avec marche ou étirements.",
+                    name=f"Day {day_num} - {'Active Rest' if is_rest else 'Cardio + Strength'}",
+                    description="30-minute session with warm-up, main workout and cool-down." if not is_rest else "Light rest day with walking or stretching.",
                     is_rest_day=is_rest,
                     estimated_duration_minutes=30 if not is_rest else 15
                 )
@@ -61,7 +61,7 @@ class Command(BaseCommand):
                             sets=3,
                             reps='12-15',
                             rest_seconds=60,
-                            weight_note='Poids du corps'
+                            weight_note='Bodyweight'
                         )
         
         self.stdout.write(self.style.SUCCESS(f"{'Created' if created else 'Updated'} program: {program1.name}"))
@@ -70,16 +70,16 @@ class Command(BaseCommand):
         program2, created = Program.objects.update_or_create(
             slug='muscle-gain-8-weeks',
             defaults={
-                'name': 'Prise de Masse - 8 Semaines',
+                'name': 'Muscle Gain - 8 Weeks',
                 'goal': 'muscle_gain',
                 'level': 'intermediate',
                 'duration': '8_weeks',
-                'description_short': 'Programme musculation progressive pour gagner en force et en volume',
-                'description_long': 'Programme structuré en 8 semaines avec une progression progressive des charges. Focus sur les mouvements composants pour une prise de masse maximale.',
+                'description_short': 'Progressive strength program to gain strength and volume',
+                'description_long': 'Structured 8-week program with progressive load increase. Focus on compound movements for maximum mass gain.',
                 'total_sessions': 24,
                 'duration_weeks': 8,
-                'nutrition_tips': 'Augmente ton apport calorique de 300-500 kcal. Priorité aux protéines (2g/kg de poids corporel). Consomme des glucides complexes avant et après l\'entraînement.',
-                'equipment_needed': 'Haltères ou barbell, banc, poids de corps.',
+                'nutrition_tips': 'Increase calorie intake by 300-500 kcal. Prioritize protein (2g/kg body weight). Consume complex carbs before and after training.',
+                'equipment_needed': 'Dumbbells or barbell, bench, bodyweight.',
                 'image': 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1600'
             }
         )
@@ -90,20 +90,20 @@ class Command(BaseCommand):
                 is_rest = day_num in [7, 14, 21]
                 split_type = day_num % 3
                 if split_type == 1:
-                    name = "Push (Pectoraux, Épaules, Triceps)"
+                    name = "Push (Chest, Shoulders, Triceps)"
                     muscles = ['chest', 'shoulders', 'arms']
                 elif split_type == 2:
-                    name = "Pull (Dos, Biceps)"
+                    name = "Pull (Back, Biceps)"
                     muscles = ['back', 'arms']
                 else:
-                    name = "Legs (Jambes)"
+                    name = "Legs (Legs)"
                     muscles = ['legs']
                 
                 day = ProgramDay.objects.create(
                     program=program2,
                     day_number=day_num,
-                    name=f"Jour {day_num} - {name if not is_rest else 'Repos'}",
-                    description="Séance de 45-60 minutes avec focus sur l\'intensité et la progression." if not is_rest else "Repos complet pour permettre la récupération musculaire.",
+                    name=f"Day {day_num} - {name if not is_rest else 'Rest'}",
+                    description="45-60 minute session with focus on intensity and progression." if not is_rest else "Full rest to allow muscle recovery.",
                     is_rest_day=is_rest,
                     estimated_duration_minutes=60 if not is_rest else 0
                 )
@@ -122,7 +122,7 @@ class Command(BaseCommand):
                             sets=4,
                             reps='8-12',
                             rest_seconds=90,
-                            weight_note='Progressif'
+                            weight_note='Progressive'
                         )
         
         self.stdout.write(self.style.SUCCESS(f"{'Created' if created else 'Updated'} program: {program2.name}"))
@@ -131,16 +131,16 @@ class Command(BaseCommand):
         program3, created = Program.objects.update_or_create(
             slug='mobility-yoga-7-days',
             defaults={
-                'name': 'Mobilité & Yoga - 7 Jours',
+                'name': 'Mobility & Yoga - 7 Days',
                 'goal': 'mobility',
                 'level': 'beginner',
                 'duration': '7_days',
-                'description_short': 'Programme de mobilité et yoga pour améliorer souplesse et posture',
-                'description_long': '7 jours d\'exercices de mobilité et de yoga pour améliorer ta posture, réduire les tensions et prévenir les blessures. Parfait pour les débutants ou comme récupération active.',
+                'description_short': 'Mobility and yoga program to improve flexibility and posture',
+                'description_long': '7 days of mobility and yoga exercises to improve your posture, reduce tension and prevent injuries. Perfect for beginners or as active recovery.',
                 'total_sessions': 7,
                 'duration_weeks': 1,
-                'nutrition_tips': 'Hydratation essentielle pour la mobilité. Magnésium et potassium pour prévenir les crampes.',
-                'equipment_needed': 'Tapis de yoga recommandé, mais pas obligatoire.',
+                'nutrition_tips': 'Hydration essential for mobility. Magnesium and potassium to prevent cramps.',
+                'equipment_needed': 'Yoga mat recommended, but not required.',
                 'image': 'https://images.unsplash.com/photo-1545205597-3d9d02c29597?q=80&w=1600'
             }
         )
@@ -150,8 +150,8 @@ class Command(BaseCommand):
                 day = ProgramDay.objects.create(
                     program=program3,
                     day_number=day_num,
-                    name=f"Jour {day_num} - Flow Yoga & Étirements",
-                    description="Séance de 20 minutes de yoga et d'étirements dynamiques.",
+                    name=f"Day {day_num} - Yoga Flow & Stretching",
+                    description="20-minute session of yoga and dynamic stretching.",
                     is_rest_day=False,
                     estimated_duration_minutes=20
                 )
@@ -164,9 +164,9 @@ class Command(BaseCommand):
                         exercise=exercise,
                         order=idx,
                         sets=2,
-                        reps='30-60 secondes',
+                        reps='30-60 seconds',
                         rest_seconds=30,
-                        weight_note='Sans poids'
+                        weight_note='No weight'
                     )
         
         self.stdout.write(self.style.SUCCESS(f"{'Created' if created else 'Updated'} program: {program3.name}"))
